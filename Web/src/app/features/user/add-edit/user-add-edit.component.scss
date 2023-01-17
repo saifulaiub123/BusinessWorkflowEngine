@@ -1,0 +1,105 @@
+
+.add-form{
+  width: 100%;
+}
+nb-checkbox {
+  margin-bottom: 1rem;
+}
+
+.form-inline [fullWidth] {
+  flex: 1;
+}
+
+.form-inline > * {
+  margin: 0 1.5rem 1.5rem 0;
+}
+
+nb-card.inline-form-card nb-card-body {
+  padding-bottom: 0;
+}
+input,
+input::placeholder {
+    font-size: 0.75rem !important;
+    line-height: 1rem !important;
+}
+
+
+// not working
+.inputFlightDeparted.custom-checkbox{
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+}
+.nb-card-custom{
+  max-height: 96vh;
+  overflow-y: scroll;
+}
+
+// :host /deep/ .nb-theme-default nb-checkbox .custom-checkbox{
+//   width: 1.15rem !important;
+//   height: 1.15rem !important;
+//   display: unset;
+//   }
+  // not working end
+
+  ::ng-deep nb-layout-column {
+    height: 80vw;
+  }
+  ::ng-deep  .nb-theme-default ng2-smart-table table-cell-edit-mode
+  {
+    margin-right: 0px !important;
+  }
+
+  //plaeholser size for select option
+  ::ng-deep .nb-theme-default nb-select.appearance-outline.size-tiny .select-button
+  {
+    font-size: 12px !important;
+  }
+
+
+  //ng2-smart-talbe add button customization
+  ::ng-deep .nb-theme-default ng2-smart-table th.ng2-smart-actions-title-add a{
+    display: inherit !important;
+    font-size: 1.4rem !important;
+    padding: 1px !important;
+  }
+
+  ::ng-deep .ng2-smart-action ng2-smart-action-add-create
+  {
+    margin-top: 38px !important;
+  }
+
+  // .custom-timpepicker input{
+  //   background: red !important;
+  //   font-size: 5px !important;
+  // }
+  ngb-timepicker.changeSize .ngb-tp-input{
+    padding: 0;
+    font-size: 0.5rem !important;
+  }
+
+  bootstrap-timepicker-hour{
+    font-size:0.5rem !important;
+    }
+
+    .form-control-sm
+    {
+      font-size: 0.5rem !important;
+    }
+
+    .nb-card-main {
+      height: 700px;
+      width: 800px;
+      max-width: 1800px;
+      max-height: 900px;
+    }
+
+//   :host ::ng-deep .ng2-smart-actions ng2-st-tbody-edit-delete {display: none !important;}
+
+// :host ::ng-deep ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
+//     display: inline-block;
+//     width: 80px;
+//     text-align: center;
+//     padding-top: 10px;
+// }
+
+

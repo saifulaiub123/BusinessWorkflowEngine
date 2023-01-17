@@ -1,0 +1,166 @@
+
+<div class="row">
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>{{pageTitle}}</nb-card-header>
+      <nb-card-body>
+        <form class="add-edit-form" *ngIf="userAddEditFormGroup" [formGroup]="userAddEditFormGroup">
+          <div class="form-group row">
+            <label for="inputName" class="label col-sm-3 col-form-label">Name*</label>
+            <div class="col-sm-9">
+              <input type="text"
+                      nbInput
+                      formControlName="name"
+                      fullWidth
+                      id="inputName"
+                      fieldSize="medium"
+                      placeholder="Name"
+                      [status]="name.dirty ? (name.invalid  ? 'danger' : 'success') : ''"
+                      [attr.aria-invalid]="name.invalid && name.touched ? true : null"
+                    >
+                    <ngx-validation-message label="Name" [showRequired]="name?.errors?.required && name.touched"></ngx-validation-message>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputEmail" class="label col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="text"
+                      nbInput
+                      formControlName="email"
+                      fullWidth
+                      id="inputEmail"
+                      fieldSize="medium"
+                      placeholder="Email"
+                      disabled
+                    >
+                    <ngx-validation-message label="Email" [showRequired]="email?.errors?.required && email.touched"></ngx-validation-message>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPhoneNumber" class="col-sm-3 label">Phone Number</label>
+            <div class="col-sm-9">
+              <input type="text"
+                      nbInput
+                      formControlName="phoneNumber"
+                      fullWidth
+                      id="inputPhoneNumber"
+                      fieldSize="medium"
+                      placeholder="Phone number"
+                    >
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPhoneNumber" class="col-sm-3 label">Roles</label>
+            <div class="col-sm-9">
+              <nb-card>
+                <nb-card-body>
+                  <div class="mr-2" *ngFor="let role of rolesData; let i = index">
+                    <input type="checkbox" [disabled]="!isAdmin" style="margin-right: 2px" formArrayName="roles" [value]="role.id" (change)="onCheckboxChange($event)" id="roleCheckbox{{i}}" [checked]="roles.value.includes(role.id)"/>
+                  <label for="roleCheckbox{{i}}" class="label col-form-label">  {{rolesData[i].name}}</label>
+                </div>
+                <ngx-validation-message customLabel="Plese select at least one role" *ngIf="roles.controls.length <= 0"></ngx-validation-message>
+                <ngx-validation-message label="Checkbox" [min]="roles?.errors?.min"></ngx-validation-message>
+              </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+      <nb-card-footer>
+        <button nbButton status="primary" type="button"
+        [disabled]="!userAddEditFormGroup.valid || roles.value.length == 0 || submitted" [nbSpinner]="loading" nbSpinnerStatus="control" size="medium" style="float: right" (click)="submit()">Update</button>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
+
+<app-change-password></app-change-password>
+
+
+
+
+
+
+<!--
+<form class="add-edit-form" *ngIf="userAddEditFormGroup" [formGroup]="userAddEditFormGroup">
+  <nb-card>
+    <nb-card-header>
+      {{pageTitle}}
+    </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+            <div class="row show-grid">
+              <div class="col-6 col-sm-12">
+                <div class="form-group row">
+                  <label for="inputName" class="label col-sm-4 col-form-label">Name*</label>
+                  <div class="col-sm-8">
+                    <input type="text"
+                      nbInput
+                      formControlName="name"
+                      fullWidth
+                      id="inputName"
+                      fieldSize="medium"
+                      placeholder="Name"
+                    >
+                    <ngx-validation-message label="Name" [showRequired]="name?.errors?.required && name.touched"></ngx-validation-message>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputEmail" class="label col-sm-4 col-form-label">Email</label>
+                  <div class="col-sm-8">
+                    <input type="text"
+                      nbInput
+                      formControlName="email"
+                      fullWidth
+                      id="inputEmail"
+                      fieldSize="medium"
+                      placeholder="Email"
+                      disabled
+                    >
+                    <ngx-validation-message label="Email" [showRequired]="email?.errors?.required && email.touched"></ngx-validation-message>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputPhoneNumber" class="label col-sm-4 col-form-label">Phone Number</label>
+                  <div class="col-sm-8">
+                    <input type="text"
+                      nbInput
+                      formControlName="phoneNumber"
+                      fullWidth
+                      id="inputPhoneNumber"
+                      fieldSize="medium"
+                      placeholder="Phone number"
+                    >
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputRole" class="label col-sm-4 col-form-label">Role</label>
+                  <div class="col-sm-8">
+                      <nb-card>
+                        <nb-card-body>
+                          <div class="mr-2" *ngFor="let role of rolesData; let i = index">
+                            <input type="checkbox" style="margin-right: 2px" formArrayName="roles" [value]="role.id" (change)="onCheckboxChange($event)" id="roleCheckbox{{i}}" [checked]="roles.value.includes(role.id)"/>
+                          <label for="roleCheckbox{{i}}" class="label col-form-label">  {{rolesData[i].name}}</label>
+                        </div>
+                        <ngx-validation-message customLabel="Plese select at least one role" *ngIf="roles.controls.length <= 0"></ngx-validation-message>
+                        <ngx-validation-message label="Checkbox" [min]="roles?.errors?.min"></ngx-validation-message>
+                      </nb-card-body>
+                      </nb-card>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton type="button" status="primary" [disabled]="!userAddEditFormGroup.valid || roles.value.length == 0" [nbSpinner]="loading" nbSpinnerStatus="control" size="medium" style="float: right" (click)="submit()">Save</button>
+      <button nbButton type="button" size="medium" style="float: right;margin-right: 5px;" (click)="cancel()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</form> -->
+
+
+
+
