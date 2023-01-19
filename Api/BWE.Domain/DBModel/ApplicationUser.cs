@@ -15,6 +15,7 @@ namespace BWE.Domain.DBModel
         public virtual ICollection<UserRole> UserRoles { get; set; }
 
 
+
         //public virtual Permission CreatedByPermission { get; set; }
         //public virtual Permission? UpdatedByPermission { get; set; }
 
