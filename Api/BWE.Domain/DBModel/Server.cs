@@ -9,5 +9,7 @@ namespace BWE.Domain.DBModel
         public string? MachineName { get; set; }
         public string? UserName { get; set; }
         public string? Password { get; set; }
+
+        //public virtual ICollection<Script> Scripts { get; set; }
     }
 }
