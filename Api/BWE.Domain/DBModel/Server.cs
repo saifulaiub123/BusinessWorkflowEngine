@@ -10,6 +10,9 @@ namespace BWE.Domain.DBModel
         public string? UserName { get; set; }
         public string? Password { get; set; }
 
-        //public virtual ICollection<Script> Scripts { get; set; }
+        public virtual ICollection<Script> Scripts { get; set; }
+
+        public virtual ApplicationUser CreatedByUser { get; set; }
+        public virtual ApplicationUser UpdateByUser { get; set; }
     }
 }

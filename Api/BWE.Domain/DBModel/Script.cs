@@ -9,6 +9,10 @@ namespace BWE.Domain.DBModel
         public int DestinationServerId { get; set; }
         public string Content { get; set; }
         
-        //public virtual Server Server { get; set; }
+        public virtual Server Server { get; set; }
+
+
+        public virtual ApplicationUser CreatedByUser { get; set; }
+        public virtual ApplicationUser UpdateByUser { get; set; }
     }
 }

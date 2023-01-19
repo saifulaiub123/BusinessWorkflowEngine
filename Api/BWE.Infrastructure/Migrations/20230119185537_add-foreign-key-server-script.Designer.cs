@@ -4,6 +4,7 @@ using BWE.Infrastructure.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BWE.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230119185537_add-foreign-key-server-script")]
+    partial class addforeignkeyserverscript
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,10 +180,6 @@ namespace BWE.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("UpdatedBy");
-
                     b.ToTable("Permission");
                 });
 
@@ -249,11 +248,7 @@ namespace BWE.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedBy");
-
                     b.HasIndex("DestinationServerId");
-
-                    b.HasIndex("UpdatedBy");
 
                     b.ToTable("Script");
                 });
@@ -300,10 +295,6 @@ namespace BWE.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("UpdatedBy");
 
                     b.ToTable("Server");
                 });
@@ -431,66 +422,15 @@ namespace BWE.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BWE.Domain.DBModel.Permission", b =>
-                {
-                    b.HasOne("BWE.Domain.DBModel.ApplicationUser", "CreatedByUser")
-                        .WithOne("CreatedByPermission")
-                        .HasForeignKey("BWE.Domain.DBModel.Permission", "CreatedBy")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BWE.Domain.DBModel.ApplicationUser", "UpdateByUser")
-                        .WithOne("UpdatedByPermission")
-                        .HasForeignKey("BWE.Domain.DBModel.Permission", "UpdatedBy")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("UpdateByUser");
-                });
-
             modelBuilder.Entity("BWE.Domain.DBModel.Script", b =>
                 {
-                    b.HasOne("BWE.Domain.DBModel.ApplicationUser", "CreatedByUser")
-                        .WithOne("CreatedByScript")
-                        .HasForeignKey("BWE.Domain.DBModel.Script", "CreatedBy")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("BWE.Domain.DBModel.Server", "Server")
                         .WithMany("Scripts")
                         .HasForeignKey("DestinationServerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BWE.Domain.DBModel.ApplicationUser", "UpdateByUser")
-                        .WithOne("UpdatedByScript")
-                        .HasForeignKey("BWE.Domain.DBModel.Script", "UpdatedBy")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedByUser");
-
                     b.Navigation("Server");
-
-                    b.Navigation("UpdateByUser");
-                });
-
-            modelBuilder.Entity("BWE.Domain.DBModel.Server", b =>
-                {
-                    b.HasOne("BWE.Domain.DBModel.ApplicationUser", "CreatedByUser")
-                        .WithOne("CreatedByServer")
-                        .HasForeignKey("BWE.Domain.DBModel.Server", "CreatedBy")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BWE.Domain.DBModel.ApplicationUser", "UpdateByUser")
-                        .WithOne("UpdatedByServer")
-                        .HasForeignKey("BWE.Domain.DBModel.Server", "UpdatedBy")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("UpdateByUser");
                 });
 
             modelBuilder.Entity("BWE.Domain.DBModel.UserRole", b =>
@@ -563,24 +503,9 @@ namespace BWE.Infrastructure.Migrations
                 {
                     b.Navigation("Claims");
 
-                    b.Navigation("CreatedByPermission")
-                        .IsRequired();
-
-                    b.Navigation("CreatedByScript")
-                        .IsRequired();
-
-                    b.Navigation("CreatedByServer")
-                        .IsRequired();
-
                     b.Navigation("Logins");
 
                     b.Navigation("Tokens");
-
-                    b.Navigation("UpdatedByPermission");
-
-                    b.Navigation("UpdatedByScript");
-
-                    b.Navigation("UpdatedByServer");
 
                     b.Navigation("UserRoles");
                 });

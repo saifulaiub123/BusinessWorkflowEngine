@@ -16,10 +16,13 @@ namespace BWE.Domain.DBModel
 
 
 
-        //public virtual Permission CreatedByPermission { get; set; }
-        //public virtual Permission? UpdatedByPermission { get; set; }
+        public virtual Permission CreatedByPermission { get; set; }
+        public virtual Permission? UpdatedByPermission { get; set; }
 
-        //public virtual Server CreatedByServer { get; set; }
-        //public virtual Server? UpdatedByServer { get; set; }
+        public virtual Server CreatedByServer { get; set; }
+        public virtual Server? UpdatedByServer { get; set; }
+
+        public virtual Script CreatedByScript { get; set; }
+        public virtual Script? UpdatedByScript { get; set; }
     }
 }
