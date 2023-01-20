@@ -15,21 +15,21 @@ export const MENU_ITEMS = [
     role: ['Admin']
   },
   {
-    title: 'My Order',
+    title: 'Script',
     icon: 'keypad-outline',
-    link: '/feature/order',
-    role: ['User']
+    link: '/feature/script',
+    role: ['Admin','User']
   },
-  {
-    title: 'Reward Points',
-    icon: 'keypad-outline',
-    link: '/feature/reward-points',
-    role: ['User']
-  },
-  {
-    title: 'Reports',
-    icon: 'keypad-outline',
-    link: '/feature/reports',
-    role: ['Partner']
-  },
+  // {
+  //   title: 'Reward Points',
+  //   icon: 'keypad-outline',
+  //   link: '/feature/reward-points',
+  //   role: ['User']
+  // },
+  // {
+  //   title: 'Reports',
+  //   icon: 'keypad-outline',
+  //   link: '/feature/reports',
+  //   role: ['Partner']
+  // },
 ];

@@ -31,28 +31,13 @@ const routes: Routes = [{
       .then(m => m.UserModule),
     },
     {
-      path: 'order',
+      path: 'script',
       canActivate: [AuthGuard],
       data: {
-        role: ['User']
+        role: ['Admin','User']
       },
-      component: OrderComponent,
-    },
-    {
-      path: 'reward-points',
-      canActivate: [AuthGuard],
-      data: {
-        role: ['User']
-      },
-      component: RewardPointsComponent,
-    },
-    {
-      path: 'reports',
-      canActivate: [AuthGuard],
-      data: {
-        role: ['Partner']
-      },
-      component: ReportsComponent,
+      loadChildren: () => import('./script/script.module')
+      .then(m => m.ScriptModule),
     },
     // {
     //   path: 'settings',

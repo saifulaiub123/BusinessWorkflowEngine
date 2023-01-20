@@ -1,6 +1,8 @@
 
 import { NbAuthJWTToken, NbAuthOAuth2JWTToken, NbPasswordAuthStrategy } from '@nebular/auth';
 import { environment } from '../../environments/environment';
+// import * as settings from '../../environments/settings.json'
+const settings = require('../../environments/settings.json');
 
 export const socialLinks = [
   {
@@ -24,7 +26,7 @@ export const authOptions = {
   strategies: [
     NbPasswordAuthStrategy.setup({
       name: 'email',
-      baseEndpoint: environment.apiUrl,
+      baseEndpoint: settings.apiUrl,
       token: {
         class: NbAuthJWTToken,
         key: 'token'

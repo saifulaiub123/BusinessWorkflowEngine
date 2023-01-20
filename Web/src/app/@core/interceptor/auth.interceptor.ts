@@ -37,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.tokenService.clear();
           this.router.navigate(['auth/login']);
         }
-        this.toastrService.show('Error',error.message,{ duration : 10000, status : 'danger' });
+        this.toastrService.show('Error','Something went wrong',{ duration : 10000, status : 'danger' });
         return throwError(error);
       }
       ));

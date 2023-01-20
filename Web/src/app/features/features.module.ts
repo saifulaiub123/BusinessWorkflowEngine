@@ -19,7 +19,6 @@ import { ReportsComponent } from './reports/reports.component';
 @NgModule({
   imports: [
     FeaturesRoutingModule,
-
     ThemeModule,
     NbMenuModule,
     Ng2SmartTableModule,
@@ -33,7 +32,7 @@ import { ReportsComponent } from './reports/reports.component';
     DashboardComponent,
     OrderComponent,
     RewardPointsComponent,
-    ReportsComponent
+    ReportsComponent,
   ],
 })
 export class FeaturesModule {

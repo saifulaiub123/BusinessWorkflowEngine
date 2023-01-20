@@ -27,6 +27,7 @@ import { AuthModule } from './auth/auth.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageModule } from './page/page.module';
 import { RouterModule } from '@angular/router';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,7 +53,7 @@ import { RouterModule } from '@angular/router';
     PageModule,
   ],
   bootstrap: [AppComponent],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
 })
 export class AppModule {
 }
