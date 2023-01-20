@@ -14,6 +14,8 @@ namespace BWE.Application.Dependency
             services.AddScoped<IOtpService, OtpService>();
             services.AddScoped<ICurrentUser, CurrentUser>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IServerService, ServerService>();
+            services.AddScoped<IPermissionService, PermissionService>();
 
             return services;
         }

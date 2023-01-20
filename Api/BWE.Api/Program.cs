@@ -1,4 +1,5 @@
 using BWE.Api;
+using BWE.Domain.Constant;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
@@ -18,26 +19,32 @@ public class Program
     {
         try
         {
-            string connectionString = Configuration.GetConnectionString("DBConnectionString");
-            var columnOptions = new ColumnOptions
-            {
-                AdditionalColumns = new Collection<SqlColumn>
-               {
-                   new SqlColumn("UserName", SqlDbType.NVarChar)
-                 }
-            };
+            string connectionString = Configuration.GetConnectionString(ConfigOptions.DbConnName);
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.MSSqlServer(connectionString, sinkOptions: new MSSqlServerSinkOptions { TableName = "Log" }
-                , null, null, LogEventLevel.Information, null, columnOptions: columnOptions, null, null)
-                .CreateLogger();
+                .WriteTo.MSSqlServer(
+                    connectionString,
+                    sinkOptions: new MSSqlServerSinkOptions { TableName = "Log" },
+                    null,
+                    null,
+                    LogEventLevel.Information,
+                    null,
+                    null,
+                    null,
+                    null
+                ).CreateLogger();
+
 
             Log.Information("Application starting....");
             CreateHostBuilder(args).Build().Run();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Log.Fatal(e, "Host terminated unexpectedly");
+            Log.Fatal(ex, "Host terminated unexpectedly");
+        }
+        finally
+        {
+            Log.CloseAndFlush();
         }
     }
 

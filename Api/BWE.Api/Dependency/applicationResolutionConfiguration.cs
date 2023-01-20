@@ -1,4 +1,8 @@
 ﻿using BWE.Api.Authentication;
+using BWE.Application.IService;
+using BWE.Application.Service;
+using BWE.Domain.DBModel;
+using BWE.Domain.IRepository;
 
 namespace BWE.Api.Dependency
 {
