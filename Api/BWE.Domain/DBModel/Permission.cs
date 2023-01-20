@@ -8,5 +8,7 @@ namespace BWE.Domain.DBModel
 
         public virtual ApplicationUser CreatedByUser { get; set; }
         public virtual ApplicationUser UpdateByUser { get; set; }
+        public virtual ICollection<ScriptUserPermission> ScriptUserPermissions { get; set; }
+
     }
 }
