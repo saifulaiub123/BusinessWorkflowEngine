@@ -51,9 +51,6 @@ namespace BWE.Api
                             options => options.EnableRetryOnFailure())
                 );
 
-            
-            
-
             services.AddServices();
             services.AddRepositories();
             services.ApplicationServices();

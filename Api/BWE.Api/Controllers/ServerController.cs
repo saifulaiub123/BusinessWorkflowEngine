@@ -14,7 +14,8 @@ namespace BWE.Api.Controllers
             _serverService = serverService;
         }
 
-        [HttpGet("GetAllServer")]
+        [HttpGet]
+        [Route("GetAllServer")]
         public async Task<IActionResult> GetAllServer()
         {
            var data = await _serverService.GetAllServer();

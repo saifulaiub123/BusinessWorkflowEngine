@@ -1,0 +1,71 @@
+<div class="row">
+  <!-- <form class="add-edit-form" *ngIf="scriptAddEditFormGroup" [formGroup]="scriptAddEditFormGroup"> -->
+    <div class="col-md-12">
+  <nb-card class="nb-card-main">
+    <nb-card-header>
+      {{pageTitle}}
+    </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+            <div class="row show-grid">
+              <div class="col-6 col-sm-12">
+                <div class="form-group row">
+                  <label for="inputName" class="label col-sm-4 col-form-label">Name*</label>
+                  <div class="col-sm-8">
+                    <input type="text"
+                      nbInput
+                      formControlName="name"
+                      fullWidth
+                      id="inputName"
+                      fieldSize="medium"
+                      placeholder="Name"
+                    >
+                    <ngx-validation-message label="Name" [showRequired]="name?.errors?.required && name.touched"></ngx-validation-message>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputEmail" class="label col-sm-4 col-form-label">Description</label>
+                  <div class="col-sm-8">
+                    <input type="text"
+                      nbInput
+                      formControlName="description"
+                      fullWidth
+                      id="inputDescription"
+                      fieldSize="medium"
+                      placeholder="Description"
+                    >
+                    <ngx-validation-message label="Description" [showRequired]="description?.errors?.required && description.touched"></ngx-validation-message>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputEmail" class="label col-sm-4 col-form-label">Destination Server</label>
+                  <div class="col-sm-8">
+                      <nb-select id="inputDestinationServer" formControlName="destinationServerId" placeholder="Destination Server">
+                        <nb-option *ngFor="let server of serverData" [value]="server.id">{{server.name}}</nb-option>
+                      </nb-select>
+                    <ngx-validation-message label="Description" [showRequired]="destinationServerId?.errors?.required && destinationServerId.touched"></ngx-validation-message>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputContent" class="label col-sm-4 col-form-label">Content</label>
+                  <div class="col-sm-8">
+
+                  <ngx-validation-message label="Description" [showRequired]="content?.errors?.required && content.touched"></ngx-validation-message>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton type="button" status="primary" [disabled]="!scriptAddEditFormGroup.valid" size="medium" style="float: right" (click)="submit()">Save</button>
+    </nb-card-footer>
+  </nb-card>
+  </div>
+<!-- </form> -->
+</div>
+
+
+

@@ -4,12 +4,14 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { User } from '../model/user';
+
+const settings = require('../../../environments/settings.json');
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private api: string = environment.apiUrl + "/User";
+  private api: string = settings.apiUrl + "/User";
   constructor(private http: HttpClient){
 
   }

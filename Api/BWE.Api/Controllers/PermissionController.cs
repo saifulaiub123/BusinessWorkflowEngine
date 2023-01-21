@@ -13,7 +13,8 @@ namespace BWE.Api.Controllers
             _permissionService = permissionService;
         }
 
-        [HttpGet("GetAllPermission")]
+        [HttpGet]
+        [Route("GetAllPermission")]
         public async Task<IActionResult> GetAllPermission()
         {
             var data = await _permissionService.GetAllPermission();

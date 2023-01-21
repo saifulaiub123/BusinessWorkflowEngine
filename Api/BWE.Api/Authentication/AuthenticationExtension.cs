@@ -7,7 +7,6 @@ using BWE.Domain.Constant;
 using BWE.Domain.DBModel;
 using BWE.Infrastructure.DBContext;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 
 namespace BWE.Api.Authentication
 {
@@ -16,6 +15,21 @@ namespace BWE.Api.Authentication
         public static IServiceCollection TokenAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtSettings = configuration.GetSection(ConfigOptions.JWT).Get<JWTSettings>();
+
+            services.AddIdentity<ApplicationUser, Role>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //.AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 4;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredUniqueChars = 0;
+            });
 
             services.AddAuthentication(option =>
                 {
@@ -47,18 +61,18 @@ namespace BWE.Api.Authentication
                     };
                 });
 
-                services.AddIdentity<ApplicationUser, Role>(options =>
-                {
-                    options.Password.RequiredLength = 4;
-                    options.Password.RequireDigit = false;
-                    options.Password.RequireUppercase = false;
+                //services.AddIdentity<ApplicationUser, Role>(options =>
+                //{
+                //    options.Password.RequiredLength = 4;
+                //    options.Password.RequireDigit = false;
+                //    options.Password.RequireUppercase = false;
 
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequiredUniqueChars = 0;
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                //    options.Password.RequireLowercase = false;
+                //    options.Password.RequireNonAlphanumeric = false;
+                //    options.Password.RequiredUniqueChars = 0;
+                //})
+                //.AddEntityFrameworkStores<ApplicationDbContext>()
+                //.AddDefaultTokenProviders();
             return services;
         }
     }
