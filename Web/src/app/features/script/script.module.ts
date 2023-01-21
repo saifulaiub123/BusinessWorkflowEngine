@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ScriptAddEditComponent } from './add-edit/script-add-edit.component';
 import { ScriptRoutingModule } from './script-routing-module';
 import { ListComponent } from './list/list.component';
-import { NbButtonModule, NbCardModule, NbCheckboxModule, NbInputModule, NbMenuModule, NbSpinnerModule } from '@nebular/theme';
+import { NbActionsModule, NbAlertModule, NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbDialogModule, NbIconModule, NbInputModule, NbMenuModule, NbPopoverModule, NbRadioModule, NbSearchModule, NbSelectModule, NbSpinnerModule, NbTimepickerModule, NbUserModule } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ComponentsModule } from '../../@components/components.module';
 import { UserRoutingModule } from '../user/user-routing.module';
+import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { ThemeModule } from '../../@theme/theme.module';
+import { FormsRoutingModule } from '../../pages/forms/forms-routing.module';
 
 
 
@@ -20,18 +23,31 @@ import { UserRoutingModule } from '../user/user-routing.module';
     CommonModule,
     ScriptRoutingModule,
 
-    NbMenuModule,
-    Ng2SmartTableModule,
     NbCardModule,
-    NbButtonModule,
-    ComponentsModule,
-    ReactiveFormsModule,
-    UserRoutingModule,
+    NbPopoverModule,
+    NbSearchModule,
+    NbIconModule,
+    NbAlertModule,
+    ThemeModule,
+
     NbInputModule,
-    NbSpinnerModule,
-    CommonModule,
-    NbCardModule,
+    NbButtonModule,
+    NbActionsModule,
+    NbUserModule,
     NbCheckboxModule,
+    NbRadioModule,
+    NbDatepickerModule,
+    FormsRoutingModule,
+    NbSelectModule,
+    // ngFormsModule,
+
+    ReactiveFormsModule,
+    Ng2SmartTableModule,
+    NbTimepickerModule,
+    NbAutocompleteModule,
+    ComponentsModule,
+    NbDialogModule.forChild(),
+    NgbTimepickerModule
   ]
 })
 export class ScriptModule { }

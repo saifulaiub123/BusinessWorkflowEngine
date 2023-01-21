@@ -1,5 +1,11 @@
 <nb-card>
   <nb-card-body>
     <button nbButton type="button" status="basic" size="medium" style="float: left" (click)="navigateToAddScript()">Add Script</button>
+    <ng2-smart-table
+        [settings]="settingsSourceScript"
+        [source]="sourceScripts"
+      ></ng2-smart-table>
   </nb-card-body>
 </nb-card>
+
+

@@ -1,3 +1,4 @@
+import { ScriptService } from './../../../@core/services/script.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NbToastrService, NbDialogRef } from '@nebular/theme';
@@ -20,7 +21,7 @@ import { UserSharedService } from '../../user/user-shared.service';
 })
 export class ScriptAddEditComponent implements OnInit {
 
-@Input() userId : number = 1;
+@Input() userId : number = 0;
 
 serverData: Server[] = [];
 selectedRoles: number[] = [];
@@ -89,6 +90,7 @@ pageTitle: string = "Script Add/Edit"
   constructor(
     private _userService: UserService,
     private _serverService: ServerService,
+    private _scriptService: ScriptService,
     private _fb: FormBuilder,
     private _toastrService: NbToastrService,
     ) { }
@@ -97,8 +99,8 @@ pageTitle: string = "Script Add/Edit"
     get id() { return this.scriptAddEditFormGroup.get('id'); }
     get name() { return this.scriptAddEditFormGroup.get('name'); }
     get description() { return this.scriptAddEditFormGroup.get('description'); }
-    get destinationServerId() { return <FormArray> this.scriptAddEditFormGroup.get('destinationServerId'); }
-    get content() { return <FormArray> this.scriptAddEditFormGroup.get('content'); }
+    get destinationServerId() { return this.scriptAddEditFormGroup.get('destinationServerId'); }
+    get content() { return this.scriptAddEditFormGroup.get('content'); }
 
 
   ngOnInit(): void {
@@ -108,29 +110,23 @@ pageTitle: string = "Script Add/Edit"
   createFormGroup()
   {
     this.scriptAddEditFormGroup = this._fb.group({
-      id: this._fb.control(null, [Validators.required]),
+      id: this._fb.control(null, []),
       name: this._fb.control(null, [Validators.required]),
       description: this._fb.control(null, [Validators.required]),
-      destinationServerId: this._fb.control(null, []),
-      content: this._fb.array([],Validators.min(1))
+      destinationServerId: this._fb.control(null, [Validators.required]),
+      content: this._fb.control(null,[Validators.required])
     });
   }
 
   loadData()
   {
-    // const serverPromise = this._serverService.getAllServer();
-    // forkJoin([serverPromise]).subscribe(responses => {
-    //   this.serverData = responses[0];
-    // });
+    const serverPromise = this._serverService.getAllServer();
+    forkJoin([serverPromise]).subscribe(responses => {
+      this.serverData = responses[0];
+    });
 
     if(this.userId != 0)
     {
-      this._serverService.getAllServer().subscribe(data => {
-        //this.user = data;
-      let p = data;
-
-      //this.userAddEditFormGroup.patchValue(data);
-    })
         this._userService.getUserById(this.userId).subscribe(data => {
           //this.user = data;
         let p = data;
@@ -156,19 +152,24 @@ pageTitle: string = "Script Add/Edit"
   //     });
   //   }
   // }
-  // submit()
-  // {
-  //   this.loading = false;
-  //   let data = this.userAddEditFormGroup.value;
-  //   this._userService.updateUser(data).subscribe(() =>{
-  //     this._userSharedService.setUserUpdateStatus(true);
-  //     this._toastrService.success("Successfull","Updated Successfully");
-  //     this._modalRef.close(true);
-  //   })
-  // }
   submit()
   {
+    this.loading = false;
+    let data = this.scriptAddEditFormGroup.value;
+    this._scriptService.addScript(data).subscribe(() =>{
+      this._toastrService.success("Successfull","Added Successfully");
+    })
+  }
 
+  onChange(fileList: FileList)
+  {
+    let file = fileList[0];
+    let fileReader: FileReader = new FileReader();
+    let self = this;
+    fileReader.onloadend = function(x) {
+      self.content.setValue(fileReader.result);
+    }
+    fileReader.readAsText(file);
   }
 
 }
