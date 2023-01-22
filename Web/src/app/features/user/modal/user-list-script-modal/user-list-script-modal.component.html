@@ -1,0 +1,16 @@
+<nb-card class="nb-card-main">
+  <nb-card-header>
+    Select User
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table
+        [settings]="settings"
+        [source]="source"
+        (userRowSelect)="onRowSelect($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton size="medium" style="float: right" (click)="saveSelectedBookings($event)">Add</button>
+    <button nbButton size="medium" style="float: right;margin-right: 5px;" (click)="cancel($event)">Cancel</button>
+  </nb-card-footer>
+</nb-card>

@@ -5,6 +5,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { UserCustomActionComponent } from '../../../@components/custom-smart-table-components/user-custom-action/user-custom-action.component';
 import { InitUserService } from '../../../@theme/services/init-user.service';
 import { Script } from '../../../@core/model/script';
+import { ScriptActionComponent } from '../../../@components/custom-smart-table-components/script-action-component/script-action.component';
 
 @Component({
   selector: 'ngx-list',
@@ -51,12 +52,15 @@ settingsSourceScript = {
     action: {
       title: 'Action',
       type: 'custom',
-      renderComponent: UserCustomActionComponent,
+      renderComponent: ScriptActionComponent,
       valuePrepareFunction: (value, row, cell) => {
         return {
           id : row.id,
-          edit : false,
-          delete : true,
+          isViewable : true,
+          isEditable : true,
+          isDeletable : true,
+          isRunnable : true,
+
         };
       },
       filter: false,

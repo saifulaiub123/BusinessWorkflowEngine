@@ -28,6 +28,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageModule } from './page/page.module';
 import { RouterModule } from '@angular/router';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,6 +52,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     ThemeModule.forRoot(),
     NgbModule,
     PageModule,
+    NbEvaIconsModule,
   ],
   bootstrap: [AppComponent],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],

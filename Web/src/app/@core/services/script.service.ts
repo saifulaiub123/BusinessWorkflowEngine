@@ -20,9 +20,12 @@ export class ScriptService {
   getScriptsByUserId(id: number): Observable<Script[]>{
     return this.http.get<Script[]>(`${this.api}/GetScriptsByUserId?userId=${id}`);
   }
-  // updateBooking(booking: BookingModel): Observable<any>{
-  //   return this.http.patch(`${this.api}/UpdateBooking`,booking);
-  // }
+  getScriptById(id: number): Observable<Script>{
+    return this.http.get<Script>(`${this.api}/GetScriptById?id=${id}`);
+  }
+  updateScript(script: Script): Observable<any>{
+    return this.http.patch(`${this.api}/UpdateScript`,script);
+  }
   // deleteBooking(id: Number): Observable<any>{
   //   return this.http.delete<any>(`${this.api}/DeleteBooking?id=`+id);
   // }

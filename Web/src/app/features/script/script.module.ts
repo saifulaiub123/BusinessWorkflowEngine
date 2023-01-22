@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ScriptAddEditComponent } from './add-edit/script-add-edit.component';
 import { ScriptRoutingModule } from './script-routing-module';
 import { ListComponent } from './list/list.component';
-import { NbActionsModule, NbAlertModule, NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbDialogModule, NbIconModule, NbInputModule, NbMenuModule, NbPopoverModule, NbRadioModule, NbSearchModule, NbSelectModule, NbSpinnerModule, NbTimepickerModule, NbUserModule } from '@nebular/theme';
+import { NbActionsModule, NbAlertModule, NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbDialogModule, NbIconModule, NbInputModule, NbMenuModule, NbPopoverModule, NbRadioModule, NbSearchModule, NbSelectModule, NbSpinnerModule, NbTabsetModule, NbTimepickerModule, NbUserModule } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ComponentsModule } from '../../@components/components.module';
@@ -22,6 +22,7 @@ import { FormsRoutingModule } from '../../pages/forms/forms-routing.module';
   imports: [
     CommonModule,
     ScriptRoutingModule,
+    NbTabsetModule,
 
     NbCardModule,
     NbPopoverModule,

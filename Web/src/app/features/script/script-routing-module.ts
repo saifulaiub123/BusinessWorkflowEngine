@@ -24,6 +24,14 @@ const routes: Routes = [{
       component: ScriptAddEditComponent,
     },
     {
+      path: 'add-edit/:id',
+      canActivate: [AuthGuard],
+      data: {
+        role: ['Admin','User']
+      },
+      component: ScriptAddEditComponent,
+    },
+    {
       path: '',
       redirectTo: 'list',
       pathMatch: 'full',

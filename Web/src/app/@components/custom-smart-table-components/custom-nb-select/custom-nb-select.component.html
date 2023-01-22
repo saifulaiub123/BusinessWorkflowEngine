@@ -1,0 +1,5 @@
+
+
+<nb-select id="inputPermissionId" placeholder="Permission" [(ngModel)]="selectedPermissionId">
+  <nb-option *ngFor="let permission of permissions" [value]="permission.id">{{permission.name}}</nb-option>
+</nb-select>

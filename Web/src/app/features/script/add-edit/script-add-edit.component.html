@@ -1,78 +1,101 @@
-<div class="row">
-  <form style="width: 100%;" *ngIf="scriptAddEditFormGroup" [formGroup]="scriptAddEditFormGroup">
-    <div class="col-md-12">
-  <nb-card class="nb-card-main">
-    <nb-card-header>
-      {{pageTitle}}
-    </nb-card-header>
-    <nb-card-body>
-      <nb-card>
-        <nb-card-body>
-            <div class="row show-grid">
-              <div class="col-6 col-sm-12">
-                <div class="form-group row">
-                  <label for="inputName" class="label col-sm-4 col-form-label">Name*</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                      nbInput
-                      formControlName="name"
-                      fullWidth
-                      id="inputName"
-                      fieldSize="large"
-                      placeholder="Name"
-                    >
-                    <ngx-validation-message label="Name" [showRequired]="name?.errors?.required && name.touched"></ngx-validation-message>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputDescription" class="label col-sm-4 col-form-label">Description</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                      nbInput
-                      formControlName="description"
-                      fullWidth
-                      id="inputDescription"
-                      fieldSize="medium"
-                      fieldSize="large"
-                      placeholder="Description"
-                    >
-                    <ngx-validation-message label="Description" [showRequired]="description?.errors?.required && description.touched"></ngx-validation-message>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputDestinationServer" class="label col-sm-4 col-form-label">Destination Server</label>
-                  <div class="col-sm-8">
-                      <nb-select id="inputDestinationServer" formControlName="destinationServerId" placeholder="Destination Server">
-                        <nb-option *ngFor="let server of serverData" [value]="server.id">{{server.name}}</nb-option>
-                      </nb-select>
-                    <ngx-validation-message label="Description" [showRequired]="destinationServerId?.errors?.required && destinationServerId.touched"></ngx-validation-message>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputContent" class="label col-sm-4 col-form-label">Content</label>
-                  <div class="col-sm-8">
+<nb-card>
+  <nb-card-body>
+    <nb-tabset>
+      <nb-tab tabTitle="Script">
+        <div class="row">
+          <form style="width: 100%;" *ngIf="scriptAddEditFormGroup" [formGroup]="scriptAddEditFormGroup">
+            <div class="col-md-12">
+          <nb-card class="nb-card-main">
+            <nb-card-header>
+              {{pageTitle}}
+            </nb-card-header>
+            <nb-card-body>
+              <nb-card>
+                <nb-card-body>
+                    <div class="row show-grid">
+                      <div class="col-6 col-sm-12">
+                        <div class="form-group row">
+                          <label for="inputName" class="label col-sm-4 col-form-label">Name*</label>
+                          <div class="col-sm-8">
+                            <input type="text"
+                              nbInput
+                              formControlName="name"
+                              fullWidth
+                              id="inputName"
+                              fieldSize="large"
+                              placeholder="Name"
+                            >
+                            <ngx-validation-message label="Name" [showRequired]="name?.errors?.required && name.touched"></ngx-validation-message>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputDescription" class="label col-sm-4 col-form-label">Description*</label>
+                          <div class="col-sm-8">
+                            <input type="text"
+                              nbInput
+                              formControlName="description"
+                              fullWidth
+                              id="inputDescription"
+                              fieldSize="medium"
+                              fieldSize="large"
+                              placeholder="Description"
+                            >
+                            <ngx-validation-message label="Description" [showRequired]="description?.errors?.required && description.touched"></ngx-validation-message>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputDestinationServer" class="label col-sm-4 col-form-label">Destination Server*</label>
+                          <div class="col-sm-8">
+                              <nb-select id="inputDestinationServer" formControlName="destinationServerId" placeholder="Destination Server">
+                                <nb-option *ngFor="let server of serverData" [value]="server.id">{{server.name}}</nb-option>
+                              </nb-select>
+                            <ngx-validation-message label="Description" [showRequired]="destinationServerId?.errors?.required && destinationServerId.touched"></ngx-validation-message>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputContent" class="label col-sm-4 col-form-label">Content*</label>
+                          <div class="col-sm-8">
 
-                      <input nbInput type="file" id="avatar" name="avatar" accept=".txt, .ps" (change)="onChange($event.target.files)">
-                      <div>
-                        <label class="label col-sm-4 col-form-label">Or</label>
+                              <input nbInput type="file" *ngIf="actionMode != 'view'" id="avatar" name="avatar" accept=".txt, .ps" (change)="onChange($event.target.files)">
+                              <div>
+                                <label *ngIf="actionMode != 'view'" class="label col-sm-4 col-form-label">Or</label>
+                              </div>
+                              <textarea rows="15" nbInput fullWidth formControlName="content"  placeholder="Copy Powershell Script"></textarea>
+                          <ngx-validation-message label="Powershell script" [showRequired]="content?.errors?.required && content.touched"></ngx-validation-message>
+                          </div>
+                        </div>
                       </div>
-                      <textarea rows="15" nbInput fullWidth formControlName="content"  placeholder="Copy Powershell Script"></textarea>
+                    </div>
+                </nb-card-body>
+              </nb-card>
+            </nb-card-body>
+            <nb-card-footer>
+              <button nbButton type="button" status="primary" [disabled]="!scriptAddEditFormGroup.valid || actionMode == 'view'" size="medium" style="float: right" (click)="submit()">Save</button>
+            </nb-card-footer>
+          </nb-card>
+          </div>
+        </form>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Share to User">
+        <nb-card>
+          <nb-card-header>
+            <button nbButton type="button" status="basic" size="medium" style="float: left" (click)="openUsersModal()"><nb-icon icon="plus-outline"></nb-icon>Add User</button>
+          </nb-card-header>
+          <nb-card-body>
+            <form>
+              <ng2-smart-table
+                [settings]="settingsUserList"
+                [source]="sourceUserList"
+              ></ng2-smart-table>
+            </form>
+          </nb-card-body>
+        </nb-card>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>
 
-                  <ngx-validation-message label="Description" [showRequired]="content?.errors?.required && content.touched"></ngx-validation-message>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </nb-card-body>
-      </nb-card>
-    </nb-card-body>
-    <nb-card-footer>
-      <button nbButton type="button" status="primary" [disabled]="!scriptAddEditFormGroup.valid" size="medium" style="float: right" (click)="submit()">Save</button>
-    </nb-card-footer>
-  </nb-card>
-  </div>
-</form>
-</div>
 
 
 

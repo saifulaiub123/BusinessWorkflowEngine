@@ -23,11 +23,28 @@ namespace BWE.Api.Controllers
         }
 
         [HttpGet]
+        [Route("GetScriptById")]
+        public async Task<ActionResult> GetScriptById([FromQuery] int id)
+        {
+            var result = await _scriptService.GetScriptById(id);
+            return Ok(result);
+        }
+
+        [HttpGet]
         [Route("GetScriptsByUserId")]
         public async Task<ActionResult> GetScriptsByUserId([FromQuery]int userId)
         {
             var result = await _scriptService.GetScriptsByUserId(userId);
             return Ok(result);
         }
+
+        [HttpPatch]
+        [Route("UpdateScript")]
+        public async Task<ActionResult> UpdateScript([FromBody] ScriptModel script)
+        {
+            await _scriptService.UpdateScript(script);
+            return Ok();
+        }
+
     }
 }

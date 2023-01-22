@@ -8,5 +8,7 @@ namespace BWE.Application.IService
     {
         Task AddScript(ScriptModel model);
         Task<List<ScriptViewModel>> GetScriptsByUserId(int userId);
+        Task<ScriptViewModel> GetScriptById(int id);
+        Task UpdateScript(ScriptModel script);
     }
 }

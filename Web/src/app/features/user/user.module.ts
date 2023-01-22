@@ -8,6 +8,7 @@ import { ComponentsModule } from '../../@components/components.module';
 import { UserListComponent } from './list/user-list.component';
 import { UserAddEditComponent } from './add-edit/user-add-edit.component';
 import { CommonModule } from '@angular/common';
+import { UserListScriptModalComponent } from './modal/user-list-script-modal/user-list-script-modal.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { CommonModule } from '@angular/common';
   ],
   declarations: [
     UserListComponent,
-    UserAddEditComponent
+    UserAddEditComponent,
+    UserListScriptModalComponent
   ],
 })
 export class UserModule {

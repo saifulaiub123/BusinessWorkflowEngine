@@ -1,11 +1,10 @@
 import { ScriptService } from './../../../@core/services/script.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NbToastrService, NbDialogRef } from '@nebular/theme';
+import { NbToastrService, NbDialogRef, NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { forkJoin } from 'rxjs';
 import { UserCustomActionComponent } from '../../../@components/custom-smart-table-components/user-custom-action/user-custom-action.component';
-import { User } from '../../../@core/data/users';
 import { Role } from '../../../@core/model/role';
 import { Server } from '../../../@core/model/server';
 import { RoleService } from '../../../@core/services/role.service';
@@ -13,6 +12,12 @@ import { ServerService } from '../../../@core/services/server.service';
 import { UserService } from '../../../@core/services/user.service';
 import { UserAddEditComponent } from '../../user/add-edit/user-add-edit.component';
 import { UserSharedService } from '../../user/user-shared.service';
+import { ActivatedRoute } from '@angular/router';
+import { UserListScriptModalComponent } from '../../user/modal/user-list-script-modal/user-list-script-modal.component';
+import { CustomNbSelectComponent } from '../../../@components/custom-smart-table-components/custom-nb-select/custom-nb-select.component';
+import { PermissionService } from '../../../@core/services/permission.service';
+import { PermissionStore } from '../../../@core/stores/permission.store';
+import { User } from '../../../@core/model/user';
 
 @Component({
   selector: 'ngx-script-add-edit',
@@ -21,62 +26,73 @@ import { UserSharedService } from '../../user/user-shared.service';
 })
 export class ScriptAddEditComponent implements OnInit {
 
-@Input() userId : number = 0;
+@Input() scriptId : number = 0;
+@Input() actionMode: string;
+
 
 serverData: Server[] = [];
 selectedRoles: number[] = [];
 checkArray: FormArray;
 scriptAddEditFormGroup: FormGroup;
-sourceUser: LocalDataSource = new LocalDataSource();
+sourceUserList: LocalDataSource = new LocalDataSource();
 
 submitted: boolean = false;
 loading = false;
 isFormValid = false;
-isEditMode = this.userId != 0 ? true : false;
 
 pageTitle: string = "Script Add/Edit"
 
 
 
- settingsSourceUser = {
+settingsUserList = {
   edit : false,
-    delete : false,
-    add : false,
+  delete : false,
+  add : false,
   actions: {
     add: false,
     delete: false,
     edit: false
   },
-   hideSubHeader : false,
-   noDataMessage : "No data found",
+   hideSubHeader : true,
+   noDataMessage : "No shared user found",
    columns: {
     id: {
       title: 'Id',
       type: 'number',
       filter: false,
-      hide: true
+      hide: false
     },
     name: {
       title: 'Name',
       type: 'string',
       filter: true,
+      valuePrepareFunction: (value, row, cell) => {
+        return row.name;
+       },
     },
     email: {
       title: 'Email',
       type: 'string',
       filter:true,
     },
-    phoneNumber: {
-      title: 'Phone Number',
-      type: 'string',
-      filter:true,
+    permissionId:{
+      title: 'PermissionId',
+      type: 'number',
+      defaultValue: 1,
+      hide: true
     },
-    action: {
-      title: 'Action',
+    permission: {
+      title: 'Permission',
       type: 'custom',
-      renderComponent: UserCustomActionComponent,
-      valuePrepareFunction: (value, row, cell) => {
-        return value;
+      renderComponent: CustomNbSelectComponent,
+      valuePrepareFunction: (cell, row, value) => {
+
+        return row.permissionId;
+      },
+      onComponentInitFunction(instance) {
+        instance.save.subscribe(row => {
+           console.log(row);
+        });
       },
       filter: false,
     }
@@ -89,10 +105,14 @@ pageTitle: string = "Script Add/Edit"
 
   constructor(
     private _userService: UserService,
+    private _permissionService: PermissionService,
     private _serverService: ServerService,
     private _scriptService: ScriptService,
     private _fb: FormBuilder,
     private _toastrService: NbToastrService,
+    private _route: ActivatedRoute,
+    private _dialogService: NbDialogService,
+    private _permissionStore: PermissionStore,
     ) { }
 
 
@@ -104,6 +124,10 @@ pageTitle: string = "Script Add/Edit"
 
 
   ngOnInit(): void {
+
+    this.scriptId = parseInt(this._route.snapshot.paramMap.get('id'));
+    this.scriptId = isNaN(this.scriptId) ? 0 : this.scriptId;
+    this.actionMode = this._route.snapshot.paramMap.get('actionMode');
     this.createFormGroup();
     this.loadData();
   }
@@ -111,27 +135,27 @@ pageTitle: string = "Script Add/Edit"
   {
     this.scriptAddEditFormGroup = this._fb.group({
       id: this._fb.control(null, []),
-      name: this._fb.control(null, [Validators.required]),
-      description: this._fb.control(null, [Validators.required]),
-      destinationServerId: this._fb.control(null, [Validators.required]),
-      content: this._fb.control(null,[Validators.required])
+      name: this._fb.control({value: null,disabled: this.actionMode == 'view'}, [Validators.required]),
+      description: this._fb.control({value: null,disabled: this.actionMode == 'view'}, [Validators.required]),
+      destinationServerId: this._fb.control({value: null,disabled: this.actionMode == 'view'}, [Validators.required]),
+      content: this._fb.control({value: null,disabled: this.actionMode == 'view'},[Validators.required])
     });
   }
 
   loadData()
   {
     const serverPromise = this._serverService.getAllServer();
-    forkJoin([serverPromise]).subscribe(responses => {
+    const permissionPromise = this._permissionService.getAllPermission();
+
+    forkJoin([serverPromise,permissionPromise]).subscribe(responses => {
       this.serverData = responses[0];
+      this._permissionStore.setUPermissions(responses[1]);
     });
 
-    if(this.userId != 0)
+    if(this.scriptId != 0)
     {
-        this._userService.getUserById(this.userId).subscribe(data => {
-          //this.user = data;
-        let p = data;
-
-        //this.userAddEditFormGroup.patchValue(data);
+        this._scriptService.getScriptById(this.scriptId).subscribe(data => {
+        this.scriptAddEditFormGroup.patchValue(data);
       })
     }
   }
@@ -156,9 +180,19 @@ pageTitle: string = "Script Add/Edit"
   {
     this.loading = false;
     let data = this.scriptAddEditFormGroup.value;
-    this._scriptService.addScript(data).subscribe(() =>{
-      this._toastrService.success("Successfull","Added Successfully");
-    })
+    if(this.scriptId == 0)
+    {
+      this._scriptService.addScript(data).subscribe(() =>{
+        this._toastrService.success("Successfull","Added Successfully");
+      })
+    }
+    else{
+      data.id = this.scriptId;
+      this._scriptService.updateScript(data).subscribe(() =>{
+        this._toastrService.success("Successfull","Updated Successfully");
+      })
+    }
+
   }
 
   onChange(fileList: FileList)
@@ -170,6 +204,19 @@ pageTitle: string = "Script Add/Edit"
       self.content.setValue(fileReader.result);
     }
     fileReader.readAsText(file);
+  }
+
+  openUsersModal()
+  {
+    this._dialogService.open(UserListScriptModalComponent, {
+      hasScroll: true,
+      closeOnBackdropClick: true
+    })
+    .onClose.subscribe((data: User[]) => {
+      let p = data;
+      this.sourceUserList.load(data);
+    }
+    );
   }
 
 }

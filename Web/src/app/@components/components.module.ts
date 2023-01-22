@@ -1,3 +1,4 @@
+import { NbSelectModule } from '@nebular/theme';
 /*
  * Copyright (c) Akveo 2019. All Rights Reserved.
  * Licensed under the Single Application / Multi Application License.
@@ -12,14 +13,18 @@ import {
   NgxFilterByNumberComponent,
 } from './custom-smart-table-components/filter-by-number/filter-by-number.component';
 
-import { NbButtonModule, NbCheckboxModule } from '@nebular/theme';
+import { NbButtonModule, NbCheckboxModule, NbIconModule } from '@nebular/theme';
 import { CustomNg2CheckboxComponent } from './custom-smart-table-components/custom-checkbox/custom-checkbox.component';
 import { UserCustomActionComponent } from './custom-smart-table-components/user-custom-action/user-custom-action.component';
+import { ScriptActionComponent } from './custom-smart-table-components/script-action-component/script-action.component';
+import { CustomNbSelectComponent } from './custom-smart-table-components/custom-nb-select/custom-nb-select.component';
 
 const COMPONENTS = [
   NgxValidationMessageComponent,
   NgxFilterByNumberComponent,
-  UserCustomActionComponent
+  UserCustomActionComponent,
+  ScriptActionComponent,
+  CustomNbSelectComponent
 ];
 
 @NgModule({
@@ -28,7 +33,9 @@ const COMPONENTS = [
     FormsModule,
     CommonModule,
     NbCheckboxModule,
-    NbButtonModule
+    NbButtonModule,
+    NbIconModule,
+    NbSelectModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS, CustomNg2CheckboxComponent],

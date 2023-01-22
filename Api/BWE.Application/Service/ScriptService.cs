@@ -41,5 +41,26 @@ namespace BWE.Application.Service
             var result = _mapper.Map<List<ScriptViewModel>>(data);
             return result;
         }
+
+        public async Task<ScriptViewModel> GetScriptById(int id)
+        {
+            var data = await _scriptRepository.FindBy(x => x.Id == id && !x.IsDeleted, include => include.Server, includes => includes.CreatedByUser);
+            var result = _mapper.Map<ScriptViewModel>(data);
+            return result;
+        }
+
+        public async Task UpdateScript(ScriptModel script)
+        {
+            var data = await _scriptRepository.GetById((int)script.Id);
+            if(data != null)
+            {
+                data.Name = script.Name;
+                data.Description = script.Description;
+                data.DestinationServerId = script.DestinationServerId;
+                data.Content = script.Content;
+            }
+            await _scriptRepository.Update(data);
+            await _scriptRepository.SaveAsync();
+        }
     }
 }
