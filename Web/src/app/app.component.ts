@@ -19,9 +19,9 @@ export class AppComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private analytics: AnalyticsService,
-              // private initUserService: InitUserService
+              private initUserService: InitUserService
               ) {
-              // this.initUser();
+              this.initUser();
               NbDateTimePickerComponent.prototype.ngOnInit = function () {
                 this.format = this.format || this.buildTimeFormat();
                 this.init$.next();
@@ -38,6 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
     //     takeUntil(this.destroy$),
     //   )
     //   .subscribe();
+    this.initUserService.initCurrentUser();
   }
 
   ngOnDestroy() {

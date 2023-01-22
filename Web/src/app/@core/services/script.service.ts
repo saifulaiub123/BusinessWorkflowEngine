@@ -17,6 +17,9 @@ export class ScriptService {
   addScript(script: Script): Observable<any>{
     return this.http.post(`${this.api}/AddScript`,script);
   }
+  getScriptsByUserId(id: number): Observable<Script[]>{
+    return this.http.get<Script[]>(`${this.api}/GetScriptsByUserId?userId=${id}`);
+  }
   // updateBooking(booking: BookingModel): Observable<any>{
   //   return this.http.patch(`${this.api}/UpdateBooking`,booking);
   // }

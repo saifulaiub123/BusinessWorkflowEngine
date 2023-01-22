@@ -7,20 +7,31 @@
 import { Observable } from 'rxjs';
 import { DataSource } from 'ng2-smart-table/lib/lib/data-source/data-source';
 import { Settings } from './settings';
+import { UserRole } from '../../model/user-role';
 
-export interface User {
-  id: number;
-  role: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  name?: string;
-  age: number;
-  login: string;
-  picture: string;
-  address: Address;
-  settings: Settings;
+// export interface User {
+//   id: number;
+//   role: string;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   name?: string;
+//   age: number;
+//   login: string;
+//   picture: string;
+//   address: Address;
+//   settings: Settings;
+// }
+
+export interface IUser {
+  id?: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  userRoles? : UserRole[];
 }
+
 
 export interface Address {
   street: string;
@@ -28,13 +39,13 @@ export interface Address {
   zipCode: string;
 }
 
-export abstract class UserData {
+export abstract class   UserData {
   abstract get gridDataSource(): DataSource;
-  abstract getCurrentUser(): Observable<User>;
-  abstract list(pageNumber: number, pageSize: number): Observable<User[]>;
-  abstract get(id: number): Observable<User>;
-  abstract update(user: User): Observable<User>;
-  abstract updateCurrent(user: User): Observable<User>;
-  abstract create(user: User): Observable<User>;
+  abstract getCurrentUser(): Observable<IUser>;
+  abstract list(pageNumber: number, pageSize: number): Observable<IUser[]>;
+  abstract get(id: number): Observable<IUser>;
+  abstract update(user: IUser): Observable<IUser>;
+  abstract updateCurrent(user: IUser): Observable<IUser>;
+  abstract create(user: IUser): Observable<IUser>;
   abstract delete(id: number): Observable<boolean>;
 }

@@ -34,6 +34,8 @@ import { LoginComponent } from './components/login/login.component';
 import { NgxAuthComponent } from './auth.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DateHttpInterceptor } from '../@core/interceptor/date-http-interceptor';
+import { InitUserService } from '../@theme/services/init-user.service';
+import { UserData } from '../@core/data/users';
 
 const GUARDS = [AuthGuard, AdminGuard];
 const PIPES = [AuthPipe];
@@ -94,7 +96,7 @@ export class AuthModule {
         { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         // { provide: HTTP_INTERCEPTORS, useClass: DateHttpInterceptor, multi: true },
-
+         InitUserService,
         ...GUARDS],
     };
   }

@@ -13,11 +13,11 @@ import { takeWhile } from 'rxjs/operators';
       <nb-layout-column>
         <nb-card>
           <nb-card-header>
-            <nav class="navigation">
+            <!-- <nav class="navigation">
               <a href="#" (click)="back()" class="link back-link" aria-label="Back">
                 <nb-icon icon="arrow-back"></nb-icon>
               </a>
-            </nav>
+            </nav> -->
           </nb-card-header>
           <nb-card-body>
             <nb-auth-block>

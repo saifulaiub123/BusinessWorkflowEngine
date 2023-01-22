@@ -8,5 +8,6 @@ namespace BWE.Domain.Model
         public string? Description { get; set; }
         public int DestinationServerId { get; set; }
         public string Content { get; set; }
+        public int CreatedBy { get; set; }
     }
 }

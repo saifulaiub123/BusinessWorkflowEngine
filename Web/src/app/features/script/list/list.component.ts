@@ -1,7 +1,10 @@
+import { ScriptService } from './../../../@core/services/script.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { UserCustomActionComponent } from '../../../@components/custom-smart-table-components/user-custom-action/user-custom-action.component';
+import { InitUserService } from '../../../@theme/services/init-user.service';
+import { Script } from '../../../@core/model/script';
 
 @Component({
   selector: 'ngx-list',
@@ -14,11 +17,11 @@ sourceScripts: LocalDataSource = new LocalDataSource();
 
 settingsSourceScript = {
     edit : false,
-    delete : true,
+    delete : false,
     add : false,
   actions: {
     add: false,
-    delete: true,
+    delete: false,
     edit: false
   },
    hideSubHeader : false,
@@ -40,7 +43,7 @@ settingsSourceScript = {
       type: 'string',
       filter:false,
     },
-    destinationServerId: {
+    destinationServerName: {
       title: 'Destination Server',
       type: 'string',
       filter:true,
@@ -50,7 +53,11 @@ settingsSourceScript = {
       type: 'custom',
       renderComponent: UserCustomActionComponent,
       valuePrepareFunction: (value, row, cell) => {
-        return row.id;
+        return {
+          id : row.id,
+          edit : false,
+          delete : true,
+        };
       },
       filter: false,
     }
@@ -59,11 +66,21 @@ settingsSourceScript = {
     class: 'table table-bordered'
   }
 };
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private _scriptService: ScriptService,
+    private _initUserService: InitUserService
+    ) { }
 
   ngOnInit(): void {
+    this.loadData();
   }
-
+  loadData()
+  {
+    const user = this._initUserService.getCurrentUser();
+    this._scriptService.getScriptsByUserId(user.id).subscribe((data : Script[]) => {
+      this.sourceScripts.load(data);
+    })
+  }
   navigateToAddScript()
   {
     this.router.navigateByUrl('feature/script/add-edit')

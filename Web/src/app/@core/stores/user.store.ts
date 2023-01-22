@@ -1,11 +1,6 @@
-/*
- * Copyright (c) Akveo 2019. All Rights Reserved.
- * Licensed under the Single Application / Multi Application License.
- * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
- */
 
 import { Injectable } from '@angular/core';
-import { User } from '../interfaces/common/users';
+import { IUser } from '../interfaces/common/users';
 import { BehaviorSubject } from 'rxjs';
 import { share } from 'rxjs/operators';
 
@@ -13,37 +8,36 @@ import { share } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class UserStore {
-  private user: User;
+  private user: IUser = {};
 
-  // protected userState$ = new BehaviorSubject(this.user);
+  protected userState$ = new BehaviorSubject(this.user);
 
-  getUser(): User {
+  getUser(): IUser {
     return this.user;
   }
 
-  setUser(paramUser: User) {
+  setUser(paramUser: IUser) {
     this.user = paramUser;
-
     this.changeUserState(paramUser);
   }
 
   onUserStateChange() {
-    // return this.userState$.pipe(share());
+    return this.userState$.pipe(share());
   }
 
-  changeUserState(paramUser: User) {
-    // this.userState$.next(paramUser);
+  changeUserState(paramUser: IUser) {
+    this.userState$.next(paramUser);
   }
 
-  setSetting(themeName: string) {
-    if (this.user) {
-      if (this.user.settings) {
-        this.user.settings.themeName = themeName;
-      } else {
-        this.user.settings = { themeName: themeName };
-      }
+  // setSetting(themeName: string) {
+  //   if (this.user) {
+  //     if (this.user.settings) {
+  //       this.user.settings.themeName = themeName;
+  //     } else {
+  //       this.user.settings = { themeName: themeName };
+  //     }
 
-      this.changeUserState(this.user);
-    }
-  }
+  //     this.changeUserState(this.user);
+  //   }
+  // }
 }

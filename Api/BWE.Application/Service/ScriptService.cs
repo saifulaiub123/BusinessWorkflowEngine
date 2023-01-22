@@ -3,6 +3,7 @@ using BWE.Application.IService;
 using BWE.Domain.DBModel;
 using BWE.Domain.IRepository;
 using BWE.Domain.Model;
+using BWE.Domain.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
@@ -32,10 +33,13 @@ namespace BWE.Application.Service
             await _scriptRepository.SaveAsync();
         }
 
-        public async Task<List<Script>> GetScriptsByUserId(int userId)
+        public async Task<List<ScriptViewModel>> GetScriptsByUserId(int userId)
         {
-            var data = (await _scriptRepository.GetAll(x => x.CreatedBy == userId && !x.IsDeleted, include => include.Server)).ToList();
-            return data;
+            var data = (await _scriptRepository.GetAll(x => x.CreatedBy == userId && !x.IsDeleted, include => include.Server, includes => includes.CreatedByUser))
+                .OrderByDescending(x => x.DateCreated)
+                .ToList();
+            var result = _mapper.Map<List<ScriptViewModel>>(data);
+            return result;
         }
     }
 }

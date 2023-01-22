@@ -1,11 +1,12 @@
 ﻿using BWE.Domain.DBModel;
 using BWE.Domain.Model;
+using BWE.Domain.ViewModel;
 
 namespace BWE.Application.IService
 {
     public interface IScriptService
     {
         Task AddScript(ScriptModel model);
-        Task<List<Script>> GetScriptsByUserId(int userId);
+        Task<List<ScriptViewModel>> GetScriptsByUserId(int userId);
     }
 }

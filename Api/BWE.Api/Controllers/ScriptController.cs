@@ -24,7 +24,7 @@ namespace BWE.Api.Controllers
 
         [HttpGet]
         [Route("GetScriptsByUserId")]
-        public async Task<ActionResult> GetScriptsByUserId(int userId)
+        public async Task<ActionResult> GetScriptsByUserId([FromQuery]int userId)
         {
             var result = await _scriptService.GetScriptsByUserId(userId);
             return Ok(result);

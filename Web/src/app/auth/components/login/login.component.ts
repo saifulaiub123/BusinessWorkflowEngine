@@ -12,6 +12,8 @@ import { getDeepFromObject } from '../../helpers';
 import { NbThemeService } from '@nebular/theme';
 import { EMAIL_PATTERN } from '../../../@core/const/constants';
 import { InitUserService } from '../../../@theme/services/init-user.service';
+import { UserStore } from '../../../@core/stores/user.store';
+import { IUser } from '../../../@core/interfaces/common/users';
 
 @Component({
   selector: 'ngx-login',
@@ -33,10 +35,11 @@ export class LoginComponent implements OnInit {
 
   errors: string[] = [];
   messages: string[] = [];
-  user: any = {};
+  user: IUser = {};
   submitted: boolean = false;
   loginForm: FormGroup;
   alive: boolean = true;
+
 
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
@@ -47,7 +50,8 @@ export class LoginComponent implements OnInit {
     protected themeService: NbThemeService,
     private fb: FormBuilder,
     protected router: Router,
-    // protected initUserService: InitUserService
+    protected initUserService: InitUserService,
+    protected userStore: UserStore,
     ) {
       this.service.getToken().subscribe((data : any) =>
         {
@@ -79,17 +83,20 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.user = this.loginForm.value;
+    //this.user = this.loginForm.value;
     this.errors = [];
     this.messages = [];
     this.submitted = true;
-    this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
+    this.service.authenticate(this.strategy, this.loginForm.value).subscribe((result: NbAuthResult) => {
       this.submitted = false;
 
       if (result.isSuccess()) {
         localStorage.setItem("UserData",JSON.stringify(result.getResponse().body))
         this.messages = result.getMessages();
-        // this.initUserService.initCurrentUser().subscribe();
+        this.user = result.getResponse().body;
+        this.userStore.setUser(this.user);
+        let p = this.userStore.getUser();
+        //this.initUserService.initCurrentUser().subscribe();
       } else {
         this.errors = result.getErrors();
       }
