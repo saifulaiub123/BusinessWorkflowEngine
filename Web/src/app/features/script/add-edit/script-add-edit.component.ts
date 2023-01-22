@@ -18,6 +18,7 @@ import { CustomNbSelectComponent } from '../../../@components/custom-smart-table
 import { PermissionService } from '../../../@core/services/permission.service';
 import { PermissionStore } from '../../../@core/stores/permission.store';
 import { User } from '../../../@core/model/user';
+import { ScriptUserPermission } from '../../../@core/model/script-user-permission';
 
 @Component({
   selector: 'ngx-script-add-edit',
@@ -31,6 +32,7 @@ export class ScriptAddEditComponent implements OnInit {
 
 
 serverData: Server[] = [];
+scriptUserPermission: ScriptUserPermission[] = [];
 selectedRoles: number[] = [];
 checkArray: FormArray;
 scriptAddEditFormGroup: FormGroup;
@@ -66,9 +68,9 @@ settingsUserList = {
       title: 'Name',
       type: 'string',
       filter: true,
-      valuePrepareFunction: (value, row, cell) => {
-        return row.name;
-       },
+      // valuePrepareFunction: (value, row, cell) => {
+      //   return row.name;
+      //  },
     },
     email: {
       title: 'Email',
@@ -91,7 +93,6 @@ settingsUserList = {
       },
       onComponentInitFunction(instance) {
         instance.save.subscribe(row => {
-           console.log(row);
         });
       },
       filter: false,
@@ -180,18 +181,30 @@ settingsUserList = {
   {
     this.loading = false;
     let data = this.scriptAddEditFormGroup.value;
-    if(this.scriptId == 0)
-    {
-      this._scriptService.addScript(data).subscribe(() =>{
-        this._toastrService.success("Successfull","Added Successfully");
+    this.sourceUserList.getAll().then((userData) => {
+      userData.forEach(data =>{
+        this.scriptUserPermission.push({
+            userId : data.id,
+            permissionId: data.permissionId
+          }
+        )
       })
-    }
-    else{
-      data.id = this.scriptId;
-      this._scriptService.updateScript(data).subscribe(() =>{
-        this._toastrService.success("Successfull","Updated Successfully");
-      })
-    }
+      data['scriptUserPermissions'] = this.scriptUserPermission;
+      if(this.scriptId == 0)
+      {
+        this._scriptService.addScript(data).subscribe(() =>{
+          this._toastrService.success("Successfull","Added Successfully");
+        })
+      }
+      else{
+        data.id = this.scriptId;
+        this._scriptService.updateScript(data).subscribe(() =>{
+          this._toastrService.success("Successfull","Updated Successfully");
+        })
+      }
+    });
+
+
 
   }
 

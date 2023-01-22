@@ -26,5 +26,10 @@ export class CustomNbSelectComponent implements ViewCell, OnInit {
     this.selectedPermissionId = this.value;
     this.permissions = this._permissionStore.getUPermissions();
   }
+  onChange(event)
+  {
+    this.rowData.permissionId = event;
+    this.save.emit(this.rowData)
+  }
 
 }

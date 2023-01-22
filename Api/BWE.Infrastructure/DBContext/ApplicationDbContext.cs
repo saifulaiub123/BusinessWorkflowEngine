@@ -20,7 +20,7 @@ namespace BWE.Infrastructure.DBContext
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Permission> Permission { get; set; }
         public DbSet<Server> Server { get; set; }
-        public DbSet<ScriptUserPermission> ScriptPermission { get; set; }
+        public DbSet<ScriptUserPermission> ScriptUserPermission { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -13,6 +13,8 @@ namespace BWE.Domain.Mapping
             CreateMap<Script,ScriptViewModel>()
                 .ForMember(a => a.DestinationServerName, b => b.MapFrom(b => b.Server.Name))
                 .ForMember(a => a.UserName, b => b.MapFrom(b => b.CreatedByUser.Email));
+
+            CreateMap<ScriptUserPermission, ScriptUserPermissionModel>().ReverseMap();
         }
     }
 }
