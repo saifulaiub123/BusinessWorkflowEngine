@@ -1,17 +1,12 @@
 import { ScriptService } from './../../../@core/services/script.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NbToastrService, NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { forkJoin } from 'rxjs';
-import { UserCustomActionComponent } from '../../../@components/custom-smart-table-components/user-custom-action/user-custom-action.component';
-import { Role } from '../../../@core/model/role';
 import { Server } from '../../../@core/model/server';
-import { RoleService } from '../../../@core/services/role.service';
 import { ServerService } from '../../../@core/services/server.service';
 import { UserService } from '../../../@core/services/user.service';
-import { UserAddEditComponent } from '../../user/add-edit/user-add-edit.component';
-import { UserSharedService } from '../../user/user-shared.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserListScriptModalComponent } from '../../user/modal/user-list-script-modal/user-list-script-modal.component';
 import { CustomNbSelectComponent } from '../../../@components/custom-smart-table-components/custom-nb-select/custom-nb-select.component';
@@ -19,6 +14,10 @@ import { PermissionService } from '../../../@core/services/permission.service';
 import { PermissionStore } from '../../../@core/stores/permission.store';
 import { User } from '../../../@core/model/user';
 import { ScriptUserPermission } from '../../../@core/model/script-user-permission';
+import { InitUserService } from '../../../@theme/services/init-user.service';
+import { IUser } from '../../../@core/interfaces/common/users';
+import { Script } from '../../../@core/model/script';
+import { isAdminOrScriptOwner } from '../../../@core/helper/script.helper';
 
 @Component({
   selector: 'ngx-script-add-edit',
@@ -34,13 +33,17 @@ export class ScriptAddEditComponent implements OnInit {
 serverData: Server[] = [];
 scriptUserPermission: ScriptUserPermission[] = [];
 selectedRoles: number[] = [];
+script: Script = {};
+currentUser: IUser = {};
 checkArray: FormArray;
 scriptAddEditFormGroup: FormGroup;
+
 sourceUserList: LocalDataSource = new LocalDataSource();
 
 submitted: boolean = false;
 loading = false;
 isFormValid = false;
+isAdminOrScriptOwner: boolean = false;
 
 pageTitle: string = "Script Add/Edit"
 
@@ -109,6 +112,7 @@ settingsUserList = {
     private _permissionService: PermissionService,
     private _serverService: ServerService,
     private _scriptService: ScriptService,
+    private _initUserService: InitUserService,
     private _fb: FormBuilder,
     private _toastrService: NbToastrService,
     private _route: ActivatedRoute,
@@ -125,7 +129,7 @@ settingsUserList = {
 
 
   ngOnInit(): void {
-
+    this.currentUser = this._initUserService.getCurrentUser();
     this.scriptId = parseInt(this._route.snapshot.paramMap.get('id'));
     this.scriptId = isNaN(this.scriptId) ? 0 : this.scriptId;
     this.actionMode = this._route.snapshot.paramMap.get('actionMode');
@@ -156,27 +160,12 @@ settingsUserList = {
     if(this.scriptId != 0)
     {
         this._scriptService.getScriptById(this.scriptId).subscribe(data => {
+        this.script = data;
+        this.isAdminOrScriptOwner = isAdminOrScriptOwner(this.script,this.currentUser);
         this.scriptAddEditFormGroup.patchValue(data);
       })
     }
   }
-
-
-  // onCheckboxChange(e) {
-  //    this.checkArray = this.userAddEditFormGroup.get('roles') as FormArray;
-  //   if (e.target.checked) {
-  //     this.checkArray.push(new FormControl(e.target.value));
-  //   } else {
-  //     let i: number = 0;
-  //     this.checkArray.controls.forEach((item: FormControl) => {
-  //       if (item.value == e.target.value) {
-  //         this.checkArray.removeAt(i);
-  //         return;
-  //       }
-  //       i++;
-  //     });
-  //   }
-  // }
   submit()
   {
     this.loading = false;
@@ -203,9 +192,6 @@ settingsUserList = {
         })
       }
     });
-
-
-
   }
 
   onChange(fileList: FileList)
@@ -226,12 +212,10 @@ settingsUserList = {
       closeOnBackdropClick: true
     })
     .onClose.subscribe((data: User[]) => {
-      let p = data;
       this.sourceUserList.load(data);
     }
     );
   }
-
 }
 
 

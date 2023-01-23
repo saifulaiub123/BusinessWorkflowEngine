@@ -26,11 +26,11 @@ export class AuthGuard implements CanActivate {
   checkUserRole(route: ActivatedRouteSnapshot, url: any): boolean {
     if (this.authService.isAuthenticated()) {
       const userRoles = (JSON.parse(localStorage.getItem("UserData")).role).split(',');
-      if (route.data.role) {
+        if (route.data.role) {
         const found = userRoles.find((val, index) => {
            return route.data.role.includes(val)
         })
-      if(found === undefined)
+        if(found === undefined)
         {
           this.router.navigate(['/page/access-denied']);
         }

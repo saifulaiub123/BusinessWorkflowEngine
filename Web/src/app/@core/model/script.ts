@@ -6,5 +6,6 @@ export class Script {
   destinationServerId?: string;
   destinationServerName?: string;
   content?: string;
+  createdBy?: number;
   scriptUserPermissions?: ScriptUserPermission[];
 }

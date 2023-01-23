@@ -77,7 +77,7 @@
         </form>
         </div>
       </nb-tab>
-      <nb-tab tabTitle="Share to User">
+      <nb-tab tabTitle="Share to User" *ngIf="isAdminOrScriptOwner">
         <nb-card>
           <nb-card-header>
             <button nbButton type="button" status="basic" size="medium" style="float: left" (click)="openUsersModal()"><nb-icon icon="plus-outline"></nb-icon>Add User</button>
