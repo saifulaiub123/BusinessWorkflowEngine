@@ -6,6 +6,8 @@ import { UserCustomActionComponent } from '../../../@components/custom-smart-tab
 import { InitUserService } from '../../../@theme/services/init-user.service';
 import { Script } from '../../../@core/model/script';
 import { ScriptActionComponent } from '../../../@components/custom-smart-table-components/script-action-component/script-action.component';
+import { forkJoin } from 'rxjs';
+import { PermissionType } from '../../../@core/enum/PermissionType';
 
 @Component({
   selector: 'ngx-list',
@@ -14,20 +16,80 @@ import { ScriptActionComponent } from '../../../@components/custom-smart-table-c
 })
 export class ListComponent implements OnInit {
 
-sourceScripts: LocalDataSource = new LocalDataSource();
+  ownScripts: Script[] = [];
+  sharedScripts: Script[] = [];
 
-settingsSourceScript = {
-    edit : false,
-    delete : false,
-    add : false,
+  sourceScripts: LocalDataSource = new LocalDataSource();
+  sourceSharedScripts: LocalDataSource = new LocalDataSource();
+
+
+  settingsSourceScript = {
+      edit : false,
+      delete : false,
+      add : false,
+    actions: {
+      add: false,
+      delete: false,
+      edit: false
+    },
+    hideSubHeader : true,
+    noDataMessage : "No script found",
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'number',
+        filter: false,
+        hide: true
+      },
+      name: {
+        title: 'Name',
+        type: 'string',
+        filter: true,
+      },
+      description: {
+        title: 'Description',
+        type: 'string',
+        filter:false,
+      },
+      destinationServerName: {
+        title: 'Destination Server',
+        type: 'string',
+        filter:true,
+      },
+      action: {
+        title: 'Action',
+        type: 'custom',
+        renderComponent: ScriptActionComponent,
+        valuePrepareFunction: (value, row, cell) => {
+          return {
+            id : row.id,
+            isViewable : true,
+            isEditable : true,
+            isDeletable : true,
+            isRunnable : true,
+
+          };
+        },
+        filter: false,
+      }
+    },
+    attr: {
+      class: 'table table-bordered'
+    }
+  };
+
+  settingsSourceSharedScript = {
+  edit : false,
+  delete : false,
+  add : false,
   actions: {
     add: false,
     delete: false,
     edit: false
   },
-   hideSubHeader : false,
-   noDataMessage : "No data found",
-   columns: {
+  hideSubHeader : false,
+  noDataMessage : "No shared script found",
+  columns: {
     id: {
       title: 'Id',
       type: 'number',
@@ -37,7 +99,7 @@ settingsSourceScript = {
     name: {
       title: 'Name',
       type: 'string',
-      filter: true,
+      filter: false,
     },
     description: {
       title: 'Description',
@@ -47,7 +109,12 @@ settingsSourceScript = {
     destinationServerName: {
       title: 'Destination Server',
       type: 'string',
-      filter:true,
+      filter:false,
+    },
+    userName: {
+      title: 'Shared By',
+      type: 'string',
+      filter:false,
     },
     action: {
       title: 'Action',
@@ -57,10 +124,9 @@ settingsSourceScript = {
         return {
           id : row.id,
           isViewable : true,
-          isEditable : true,
-          isDeletable : true,
+          isEditable : row.scriptUserPermissions[0].permissionId === PermissionType.Modify ? true : false,
+          isDeletable : row.scriptUserPermissions[0].permissionId === PermissionType.Modify ? true : false,
           isRunnable : true,
-
         };
       },
       filter: false,
@@ -81,9 +147,18 @@ settingsSourceScript = {
   loadData()
   {
     const user = this._initUserService.getCurrentUser();
-    this._scriptService.getScriptsByUserId(user.id).subscribe((data : Script[]) => {
-      this.sourceScripts.load(data);
-    })
+
+    const ownScriptsPromise = this._scriptService.getScriptsByUserId(user.id);
+    const sharedScriptsPromise = this._scriptService.getSharedScriptsByUserId(user.id);
+
+    forkJoin([ownScriptsPromise,sharedScriptsPromise]).subscribe(responses => {
+      this.ownScripts = responses[0];
+      this.sharedScripts = responses[1];
+
+      this.sourceScripts.load(this.ownScripts);
+      this.sourceSharedScripts.load(this.sharedScripts);
+
+    });
   }
   navigateToAddScript()
   {

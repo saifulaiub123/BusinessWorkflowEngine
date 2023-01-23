@@ -1,13 +1,38 @@
+
+
 <nb-card>
   <nb-card-header>
     <button nbButton type="button" status="basic" size="medium" style="float: left" (click)="navigateToAddScript()"><nb-icon icon="plus-outline"></nb-icon>Add Script</button>
   </nb-card-header>
   <nb-card-body>
-    <ng2-smart-table
-        [settings]="settingsSourceScript"
-        [source]="sourceScripts"
-      ></ng2-smart-table>
+    <nb-tabset>
+      <nb-tab tabTitle="Own Scripts" tabIcon="person-outline" responsive badgeText="{{ownScripts.length}}" badgeStatus="success">
+        <nb-card class="nb-card-main">
+          <nb-card-body>
+            <ng2-smart-table
+                [settings]="settingsSourceScript"
+                [source]="sourceScripts"
+              ></ng2-smart-table>
+          </nb-card-body>
+        </nb-card>
+      </nb-tab>
+      <nb-tab tabTitle="Shared Scripts" tabIcon="people-outline" responsive badgeText="{{sharedScripts.length}}" badgeStatus="success">
+        <nb-card class="nb-card-main">
+          <nb-card-body>
+            <ng2-smart-table
+              [settings]="settingsSourceSharedScript"
+              [source]="sourceSharedScripts"
+            ></ng2-smart-table>
+          </nb-card-body>
+        </nb-card>
+      </nb-tab>
+    </nb-tabset>
   </nb-card-body>
 </nb-card>
+
+
+
+
+
 
 

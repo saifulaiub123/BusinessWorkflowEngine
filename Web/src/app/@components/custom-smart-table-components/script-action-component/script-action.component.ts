@@ -22,7 +22,7 @@ export class ScriptActionComponent implements OnInit {
   }
   editScript()
   {
-
+    this._router.navigate(['/feature/script/add-edit',{id : this.value.id, actionMode: 'edit'}]);
   }
   runScript()
   {

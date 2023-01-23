@@ -19,12 +19,14 @@ namespace BWE.Application.Service
     public class ScriptService : IScriptService
     {
         private readonly IRepository<Script, int> _scriptRepository;
+        private readonly IRepository<ScriptUserPermission, int> _scriptUserPermissionRepository;
         private readonly IMapper _mapper;
 
-        public ScriptService(IRepository<Script, int> scriptRepository, IMapper mapper)
+        public ScriptService(IRepository<Script, int> scriptRepository, IMapper mapper, IRepository<ScriptUserPermission, int> scriptUserPermissionRepository)
         {
             _scriptRepository = scriptRepository;
             _mapper = mapper;
+            _scriptUserPermissionRepository = scriptUserPermissionRepository;
         }
         public async Task AddScript(ScriptModel model)
         {
@@ -49,6 +51,21 @@ namespace BWE.Application.Service
             return result;
         }
 
+        public async Task<List<ScriptViewModel>> GetSharedScriptsByUserId(int userId)
+        {
+            var sharedScript = (await _scriptUserPermissionRepository.GetAll(x => x.UserId == userId && !x.Script.IsDeleted, 
+                include => include.Script, 
+                include => include.Script.Server, 
+                include => include.Script.CreatedByUser,
+                include => include.Permission
+                ))
+                .OrderByDescending(x => x.DateCreated)
+                .Select(x => x.Script)
+                .ToList();
+            var result = _mapper.Map<List<ScriptViewModel>>(sharedScript);
+            return result;
+        }
+        
         public async Task UpdateScript(ScriptModel script)
         {
             var data = await _scriptRepository.GetById((int)script.Id);

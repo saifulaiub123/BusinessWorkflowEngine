@@ -95,7 +95,6 @@ export class LoginComponent implements OnInit {
         this.messages = result.getMessages();
         this.user = result.getResponse().body;
         this.userStore.setUser(this.user);
-        let p = this.userStore.getUser();
         //this.initUserService.initCurrentUser().subscribe();
       } else {
         this.errors = result.getErrors();

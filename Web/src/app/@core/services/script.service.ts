@@ -20,6 +20,9 @@ export class ScriptService {
   getScriptsByUserId(id: number): Observable<Script[]>{
     return this.http.get<Script[]>(`${this.api}/GetScriptsByUserId?userId=${id}`);
   }
+  getSharedScriptsByUserId(id: number): Observable<Script[]>{
+    return this.http.get<Script[]>(`${this.api}/GetSharedScriptsByUserId?userId=${id}`);
+  }
   getScriptById(id: number): Observable<Script>{
     return this.http.get<Script>(`${this.api}/GetScriptById?id=${id}`);
   }
