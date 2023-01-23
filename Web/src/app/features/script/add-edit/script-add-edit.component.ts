@@ -15,9 +15,9 @@ import { PermissionStore } from '../../../@core/stores/permission.store';
 import { User } from '../../../@core/model/user';
 import { ScriptUserPermission } from '../../../@core/model/script-user-permission';
 import { InitUserService } from '../../../@theme/services/init-user.service';
-import { IUser } from '../../../@core/interfaces/common/users';
 import { Script } from '../../../@core/model/script';
 import { isAdminOrScriptOwner } from '../../../@core/helper/script.helper';
+import { ILoginUser } from '../../../@core/interfaces/common/ILoginUser';
 
 @Component({
   selector: 'ngx-script-add-edit',
@@ -27,14 +27,14 @@ import { isAdminOrScriptOwner } from '../../../@core/helper/script.helper';
 export class ScriptAddEditComponent implements OnInit {
 
 @Input() scriptId : number = 0;
-@Input() actionMode: string;
+@Input() actionMode: string = "add";
 
 
 serverData: Server[] = [];
 scriptUserPermission: ScriptUserPermission[] = [];
 selectedRoles: number[] = [];
 script: Script = {};
-currentUser: IUser = {};
+currentUser: ILoginUser = {};
 checkArray: FormArray;
 scriptAddEditFormGroup: FormGroup;
 
@@ -132,7 +132,10 @@ settingsUserList = {
     this.currentUser = this._initUserService.getCurrentUser();
     this.scriptId = parseInt(this._route.snapshot.paramMap.get('id'));
     this.scriptId = isNaN(this.scriptId) ? 0 : this.scriptId;
-    this.actionMode = this._route.snapshot.paramMap.get('actionMode');
+    if(this.scriptId != 0)
+    {
+      this.actionMode = this._route.snapshot.paramMap.get('actionMode');
+    }
     this.createFormGroup();
     this.loadData();
   }
@@ -141,7 +144,7 @@ settingsUserList = {
     this.scriptAddEditFormGroup = this._fb.group({
       id: this._fb.control(null, []),
       name: this._fb.control({value: null,disabled: this.actionMode == 'view'}, [Validators.required]),
-      description: this._fb.control({value: null,disabled: this.actionMode == 'view'}, [Validators.required]),
+      description: this._fb.control({value: null,disabled: this.actionMode == 'view'}, []),
       destinationServerId: this._fb.control({value: null,disabled: this.actionMode == 'view'}, [Validators.required]),
       content: this._fb.control({value: null,disabled: this.actionMode == 'view'},[Validators.required])
     });

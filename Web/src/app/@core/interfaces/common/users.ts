@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { DataSource } from 'ng2-smart-table/lib/lib/data-source/data-source';
 import { Settings } from './settings';
 import { UserRole } from '../../model/user-role';
+import { ILoginUser } from './ILoginUser';
 
 // export interface User {
 //   id: number;
@@ -41,11 +42,11 @@ export interface Address {
 
 export abstract class   UserData {
   abstract get gridDataSource(): DataSource;
-  abstract getCurrentUser(): Observable<IUser>;
-  abstract list(pageNumber: number, pageSize: number): Observable<IUser[]>;
-  abstract get(id: number): Observable<IUser>;
-  abstract update(user: IUser): Observable<IUser>;
-  abstract updateCurrent(user: IUser): Observable<IUser>;
-  abstract create(user: IUser): Observable<IUser>;
+  abstract getCurrentUser(): Observable<ILoginUser>;
+  abstract list(pageNumber: number, pageSize: number): Observable<ILoginUser[]>;
+  abstract get(id: number): Observable<ILoginUser>;
+  abstract update(user: ILoginUser): Observable<ILoginUser>;
+  abstract updateCurrent(user: ILoginUser): Observable<ILoginUser>;
+  abstract create(user: ILoginUser): Observable<ILoginUser>;
   abstract delete(id: number): Observable<boolean>;
 }

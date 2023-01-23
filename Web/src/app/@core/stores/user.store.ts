@@ -1,22 +1,22 @@
 
 import { Injectable } from '@angular/core';
-import { IUser } from '../interfaces/common/users';
 import { BehaviorSubject } from 'rxjs';
 import { share } from 'rxjs/operators';
+import { ILoginUser } from '../interfaces/common/ILoginUser';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserStore {
-  private user: IUser = {};
+  private user: ILoginUser = {};
 
   protected userState$ = new BehaviorSubject(this.user);
 
-  getUser(): IUser {
+  getUser(): ILoginUser {
     return this.user;
   }
 
-  setUser(paramUser: IUser) {
+  setUser(paramUser: ILoginUser) {
     this.user = paramUser;
     this.changeUserState(paramUser);
   }
@@ -25,7 +25,7 @@ export class UserStore {
     return this.userState$.pipe(share());
   }
 
-  changeUserState(paramUser: IUser) {
+  changeUserState(paramUser: ILoginUser) {
     this.userState$.next(paramUser);
   }
 

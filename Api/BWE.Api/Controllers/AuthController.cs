@@ -88,7 +88,8 @@ namespace BWE.Api.Controllers
                 FirstName = user.FirstName,
                 LastName= user.LastName,
                 Email = user.Email,
-                Role = string.Join(",",userRoles.ToList())
+                //Role = string.Join(",",userRoles.ToList())
+                Role = userRoles.ToList()
             });
         }
 

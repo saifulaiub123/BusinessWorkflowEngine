@@ -13,7 +13,7 @@ import { NbThemeService } from '@nebular/theme';
 import { EMAIL_PATTERN } from '../../../@core/const/constants';
 import { InitUserService } from '../../../@theme/services/init-user.service';
 import { UserStore } from '../../../@core/stores/user.store';
-import { IUser } from '../../../@core/interfaces/common/users';
+import { ILoginUser } from '../../../@core/interfaces/common/ILoginUser';
 
 @Component({
   selector: 'ngx-login',
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   errors: string[] = [];
   messages: string[] = [];
-  user: IUser = {};
+  user: ILoginUser = {};
   submitted: boolean = false;
   loginForm: FormGroup;
   alive: boolean = true;

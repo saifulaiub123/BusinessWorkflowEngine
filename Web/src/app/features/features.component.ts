@@ -31,7 +31,7 @@ export class FeaturesComponent implements OnInit,OnDestroy {
   }
 
   generateMenuItems(){
-    this.roles = (JSON.parse(localStorage.getItem("UserData")).role).split(',');
+    this.roles = JSON.parse(localStorage.getItem("UserData")).role;
     MENU_ITEMS.forEach((item,index) => {
       let data = item;
       // if(item.children && item.children.length > 0)

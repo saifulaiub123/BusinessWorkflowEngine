@@ -5,11 +5,11 @@
  */
 
 import { Observable } from 'rxjs';
-import { IUser, UserData } from '../../@core/interfaces/common/users';
 import { tap } from 'rxjs/operators';
 import { UserStore } from '../../@core/stores/user.store';
 import { Inject, Injectable } from '@angular/core';
 import { NbJSThemesRegistry, NbThemeService } from '@nebular/theme';
+import { ILoginUser } from '../../@core/interfaces/common/ILoginUser';
 
 @Injectable()
 export class InitUserService {
@@ -34,9 +34,8 @@ export class InitUserService {
     // }
 
     initCurrentUser(){
-      let user : IUser = JSON.parse(localStorage.getItem("UserData"));
+      let user : ILoginUser = JSON.parse(localStorage.getItem("UserData"));
       this.userStore.setUser(user);
-      //return null;
     }
     getCurrentUser(){
       return this.userStore.getUser();

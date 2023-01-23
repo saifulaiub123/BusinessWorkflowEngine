@@ -1,15 +1,15 @@
 import { ROLES } from "../../auth/roles";
-import { IUser } from "../interfaces/common/users";
+import { ILoginUser } from "../interfaces/common/ILoginUser";
 import { Script } from "../model/script";
 
 
-export function isAdminOrScriptOwner(script: Script,currentUser: IUser)
+export function isAdminOrScriptOwner(script: Script,currentUser: ILoginUser)
 {
-  // const userRoles = currentUser.userRoles;
-  // const isAdmin = userRoles.includes(ROLES.ADMIN);
+  const userRoles = currentUser.role;
+  const isAdmin = userRoles.includes(ROLES.ADMIN);
 
-  // if(isAdmin) return true;
-  if(script.createdBy === currentUser.id) return true;
+  if(script.createdBy === currentUser.id || isAdmin)
+    return true;
 
   return false;
 }

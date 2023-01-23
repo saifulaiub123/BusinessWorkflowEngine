@@ -25,6 +25,7 @@ export class LogoutComponent implements OnInit {
 
   logout(): void {
     this.tokenService.clear();
+    localStorage.removeItem("UserData");
         setTimeout(() => {
           return this.router.navigateByUrl("/auth/login");
         }, this.redirectDelay);
