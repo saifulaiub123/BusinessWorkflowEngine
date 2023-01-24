@@ -100,7 +100,7 @@ export class UserListScriptModalComponent implements OnInit {
     const data = [];
     this.selectedUser.forEach(user => {
       data.push({
-        id: user.id,
+        userId: user.id,
         name: user.firstName + " " + user.lastName,
         email: user.email,
         permissionId: 1

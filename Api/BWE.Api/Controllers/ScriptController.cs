@@ -46,6 +46,14 @@ namespace BWE.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("GetScriptSharedUser")]
+        public async Task<ActionResult> GetScriptSharedUser([FromQuery] int scriptId)
+        {
+            var result = await _scriptService.GetScriptSharedUser(scriptId);
+            return Ok(result);
+        }
+
         [HttpPatch]
         [Route("UpdateScript")]
         public async Task<ActionResult> UpdateScript([FromBody] ScriptModel script)

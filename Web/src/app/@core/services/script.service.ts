@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Script } from '../model/script';
+import { SharedScriptUser } from '../view-model/shared-script-user';
 
 const settings = require('../../../environments/settings.json');
 @Injectable({
@@ -22,6 +23,9 @@ export class ScriptService {
   }
   getSharedScriptsByUserId(id: number): Observable<Script[]>{
     return this.http.get<Script[]>(`${this.api}/GetSharedScriptsByUserId?userId=${id}`);
+  }
+  getScriptSharedUser(id: number): Observable<SharedScriptUser[]>{
+    return this.http.get<SharedScriptUser[]>(`${this.api}/GetScriptSharedUser?scriptId=${id}`);
   }
   getScriptById(id: number): Observable<Script>{
     return this.http.get<Script>(`${this.api}/GetScriptById?id=${id}`);

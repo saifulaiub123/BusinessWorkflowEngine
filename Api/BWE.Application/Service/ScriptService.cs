@@ -65,6 +65,17 @@ namespace BWE.Application.Service
             var result = _mapper.Map<List<ScriptViewModel>>(sharedScript);
             return result;
         }
+        public async Task<List<SharedScriptUserViewModel>> GetScriptSharedUser(int scriptId)
+        {
+            var sharedScript = (await _scriptUserPermissionRepository.GetAll(x => x.ScriptId == scriptId && !x.Script.IsDeleted, 
+                include => include.User,
+                include => include.Permission
+                ))
+                .OrderByDescending(x => x.DateCreated)
+                .ToList();
+            var result = _mapper.Map<List<SharedScriptUserViewModel>>(sharedScript);
+            return result;
+        }
         
         public async Task UpdateScript(ScriptModel script)
         {

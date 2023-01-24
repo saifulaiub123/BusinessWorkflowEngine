@@ -18,6 +18,7 @@ import { InitUserService } from '../../../@theme/services/init-user.service';
 import { Script } from '../../../@core/model/script';
 import { isAdminOrScriptOwner } from '../../../@core/helper/script.helper';
 import { ILoginUser } from '../../../@core/interfaces/common/ILoginUser';
+import { SharedScriptUser } from '../../../@core/view-model/shared-script-user';
 
 @Component({
   selector: 'ngx-script-add-edit',
@@ -34,6 +35,7 @@ serverData: Server[] = [];
 scriptUserPermission: ScriptUserPermission[] = [];
 selectedRoles: number[] = [];
 script: Script = {};
+sharedScriptUser: SharedScriptUser[] = [];
 currentUser: ILoginUser = {};
 checkArray: FormArray;
 scriptAddEditFormGroup: FormGroup;
@@ -51,17 +53,20 @@ pageTitle: string = "Script Add/Edit"
 
 settingsUserList = {
   edit : false,
-  delete : false,
+  delete : {
+    deleteButtonContent: '<span *ngIf="loading"><i class="ion-trash-a"></i></span>',
+  },
   add : false,
   actions: {
     add: false,
-    delete: false,
-    edit: false
+    delete: true,
+    edit: false,
+    position: 'right'
   },
    hideSubHeader : true,
    noDataMessage : "No shared user found",
    columns: {
-    id: {
+    userId: {
       title: 'Id',
       type: 'number',
       filter: false,
@@ -162,10 +167,16 @@ settingsUserList = {
 
     if(this.scriptId != 0)
     {
-        this._scriptService.getScriptById(this.scriptId).subscribe(data => {
-        this.script = data;
+      const scriptByIdPromise = this._scriptService.getScriptById(this.scriptId);
+      const sharedScriptPromise = this._scriptService.getScriptSharedUser(this.scriptId);
+      forkJoin([scriptByIdPromise, sharedScriptPromise]).subscribe(res =>{
+        this.script = res[0];
+        this.sharedScriptUser = res[1];
+
+
         this.isAdminOrScriptOwner = isAdminOrScriptOwner(this.script,this.currentUser);
-        this.scriptAddEditFormGroup.patchValue(data);
+        this.scriptAddEditFormGroup.patchValue(this.script);
+        this.sourceUserList.load(this.sharedScriptUser);
       })
     }
   }
@@ -176,7 +187,7 @@ settingsUserList = {
     this.sourceUserList.getAll().then((userData) => {
       userData.forEach(data =>{
         this.scriptUserPermission.push({
-            userId : data.id,
+            userId : data.userId,
             permissionId: data.permissionId
           }
         )
