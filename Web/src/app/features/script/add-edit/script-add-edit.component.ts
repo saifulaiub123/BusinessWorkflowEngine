@@ -1,3 +1,4 @@
+import { CustomDeleteComponent } from './../../../@components/custom-smart-table-components/custom-delete/custom-delete.component';
 import { ScriptService } from './../../../@core/services/script.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -19,6 +20,8 @@ import { Script } from '../../../@core/model/script';
 import { isAdminOrScriptOwner } from '../../../@core/helper/script.helper';
 import { ILoginUser } from '../../../@core/interfaces/common/ILoginUser';
 import { SharedScriptUser } from '../../../@core/view-model/shared-script-user';
+import { SmartTableSharedervice } from '../../../@core/shared-service/smart-table-shared.service';
+import * as _ from "underscore";
 
 @Component({
   selector: 'ngx-script-add-edit',
@@ -46,6 +49,7 @@ submitted: boolean = false;
 loading = false;
 isFormValid = false;
 isAdminOrScriptOwner: boolean = false;
+isViewMode: boolean = true;
 
 pageTitle: string = "Script Add/Edit"
 
@@ -53,13 +57,11 @@ pageTitle: string = "Script Add/Edit"
 
 settingsUserList = {
   edit : false,
-  delete : {
-    deleteButtonContent: '<span *ngIf="loading"><i class="ion-trash-a"></i></span>',
-  },
+  delete : false,
   add : false,
   actions: {
     add: false,
-    delete: true,
+    delete: false,
     edit: false,
     position: 'right'
   },
@@ -76,9 +78,6 @@ settingsUserList = {
       title: 'Name',
       type: 'string',
       filter: true,
-      // valuePrepareFunction: (value, row, cell) => {
-      //   return row.name;
-      //  },
     },
     email: {
       title: 'Email',
@@ -96,12 +95,22 @@ settingsUserList = {
       type: 'custom',
       renderComponent: CustomNbSelectComponent,
       valuePrepareFunction: (cell, row, value) => {
-
         return row.permissionId;
       },
       onComponentInitFunction(instance) {
         instance.save.subscribe(row => {
         });
+      },
+      filter: false,
+    },
+    action: {
+      title : "Action",
+      type: 'custom',
+      renderComponent: CustomDeleteComponent,
+      valuePrepareFunction: (cell, row, value) => {
+        return row.permissionId;
+      },
+      onComponentInitFunction(instance) {
       },
       filter: false,
     }
@@ -123,6 +132,7 @@ settingsUserList = {
     private _route: ActivatedRoute,
     private _dialogService: NbDialogService,
     private _permissionStore: PermissionStore,
+    private _tableSharedService: SmartTableSharedervice
     ) { }
 
 
@@ -141,8 +151,18 @@ settingsUserList = {
     {
       this.actionMode = this._route.snapshot.paramMap.get('actionMode');
     }
+    this.subscribeSharedData();
     this.createFormGroup();
     this.loadData();
+  }
+
+  subscribeSharedData(){
+    this._tableSharedService.idDeleteRow$.subscribe((row : any) => {
+      if(!_.isEmpty(row))
+      {
+        this.sourceUserList.remove(row);
+      }
+     });
   }
   createFormGroup()
   {
@@ -184,6 +204,7 @@ settingsUserList = {
   {
     this.loading = false;
     let data = this.scriptAddEditFormGroup.value;
+
     this.sourceUserList.getAll().then((userData) => {
       userData.forEach(data =>{
         this.scriptUserPermission.push({

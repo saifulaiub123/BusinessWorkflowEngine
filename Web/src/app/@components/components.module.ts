@@ -18,6 +18,7 @@ import { CustomNg2CheckboxComponent } from './custom-smart-table-components/cust
 import { UserCustomActionComponent } from './custom-smart-table-components/user-custom-action/user-custom-action.component';
 import { ScriptActionComponent } from './custom-smart-table-components/script-action-component/script-action.component';
 import { CustomNbSelectComponent } from './custom-smart-table-components/custom-nb-select/custom-nb-select.component';
+import { CustomDeleteComponent } from './custom-smart-table-components/custom-delete/custom-delete.component';
 
 const COMPONENTS = [
   NgxValidationMessageComponent,
@@ -38,7 +39,7 @@ const COMPONENTS = [
     NbSelectModule
   ],
   exports: [...COMPONENTS],
-  declarations: [...COMPONENTS, CustomNg2CheckboxComponent],
+  declarations: [...COMPONENTS, CustomNg2CheckboxComponent, CustomDeleteComponent],
   entryComponents: [
     NgxFilterByNumberComponent,
   ],
