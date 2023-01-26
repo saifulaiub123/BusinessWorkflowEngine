@@ -69,9 +69,6 @@
                 </nb-card-body>
               </nb-card>
             </nb-card-body>
-            <nb-card-footer>
-              <button nbButton type="button" status="primary" [disabled]="!scriptAddEditFormGroup.valid || actionMode == 'view'" size="medium" style="float: right" (click)="submit()">Save</button>
-            </nb-card-footer>
           </nb-card>
           </div>
         </form>
@@ -94,6 +91,9 @@
       </nb-tab>
     </nb-tabset>
   </nb-card-body>
+  <nb-card-footer>
+    <button nbButton type="button" status="primary" [disabled]="!scriptAddEditFormGroup.valid || actionMode == 'view'" size="medium" style="float: right" (click)="submit()">Save</button>
+  </nb-card-footer>
 </nb-card>
 
 

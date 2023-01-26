@@ -108,7 +108,7 @@ settingsUserList = {
       type: 'custom',
       renderComponent: CustomDeleteComponent,
       valuePrepareFunction: (cell, row, value) => {
-        return row.permissionId;
+        return value;
       },
       onComponentInitFunction(instance) {
       },
@@ -208,6 +208,7 @@ settingsUserList = {
     this.sourceUserList.getAll().then((userData) => {
       userData.forEach(data =>{
         this.scriptUserPermission.push({
+            scriptId : this.scriptId != 0 ? this.scriptId : null,
             userId : data.userId,
             permissionId: data.permissionId
           }
@@ -247,7 +248,10 @@ settingsUserList = {
       closeOnBackdropClick: true
     })
     .onClose.subscribe((data: User[]) => {
-      this.sourceUserList.load(data);
+      data.forEach(item => {
+        this.sourceUserList.prepend(item);
+      })
+
     }
     );
   }
