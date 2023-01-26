@@ -12,5 +12,6 @@ namespace BWE.Application.IService
         Task<List<ScriptViewModel>> GetSharedScriptsByUserId(int userId);
         Task<List<SharedScriptUserViewModel>> GetScriptSharedUser(int scriptId);
         Task UpdateScript(ScriptModel script);
+        Task DeleteScript(int id);
     }
 }

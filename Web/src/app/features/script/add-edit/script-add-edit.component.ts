@@ -31,7 +31,7 @@ import * as _ from "underscore";
 export class ScriptAddEditComponent implements OnInit {
 
 @Input() scriptId : number = 0;
-@Input() actionMode: string = "add";
+@Input() actionMode: string = "add" || "edit" || "view";
 
 
 serverData: Server[] = [];
@@ -52,8 +52,6 @@ isAdminOrScriptOwner: boolean = false;
 isViewMode: boolean = true;
 
 pageTitle: string = "Script Add/Edit"
-
-
 
 settingsUserList = {
   edit : false,
@@ -95,7 +93,10 @@ settingsUserList = {
       type: 'custom',
       renderComponent: CustomNbSelectComponent,
       valuePrepareFunction: (cell, row, value) => {
-        return row.permissionId;
+        return {
+          permissionId : row.permissionId,
+          actionMode : this.actionMode
+        };
       },
       onComponentInitFunction(instance) {
         instance.save.subscribe(row => {
@@ -108,7 +109,7 @@ settingsUserList = {
       type: 'custom',
       renderComponent: CustomDeleteComponent,
       valuePrepareFunction: (cell, row, value) => {
-        return value;
+        return {actionMode : this.actionMode};
       },
       onComponentInitFunction(instance) {
       },
@@ -119,7 +120,6 @@ settingsUserList = {
     class: 'table table-bordered'
   }
 };
-
 
   constructor(
     private _userService: UserService,
@@ -157,7 +157,7 @@ settingsUserList = {
   }
 
   subscribeSharedData(){
-    this._tableSharedService.idDeleteRow$.subscribe((row : any) => {
+    this._tableSharedService.isDeleteSharedUser$.subscribe((row : any) => {
       if(!_.isEmpty(row))
       {
         this.sourceUserList.remove(row);
@@ -192,7 +192,6 @@ settingsUserList = {
       forkJoin([scriptByIdPromise, sharedScriptPromise]).subscribe(res =>{
         this.script = res[0];
         this.sharedScriptUser = res[1];
-
 
         this.isAdminOrScriptOwner = isAdminOrScriptOwner(this.script,this.currentUser);
         this.scriptAddEditFormGroup.patchValue(this.script);

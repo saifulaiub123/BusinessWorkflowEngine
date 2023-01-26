@@ -1,1 +1,7 @@
-<i class="ion-trash-a" (click)="onDelete($event)"></i>
+<nb-icon icon="trash-2-outline"
+  [status]="value.actionMode == 'view'? 'basic' : 'danger'"
+  [ngClass]="value.actionMode == 'view'? 'custom-view' : 'custom-edit'"
+  (click)="onDelete($event)"
+  >
+</nb-icon>
+

@@ -124,5 +124,15 @@ namespace BWE.Application.Service
 
             await _scriptRepository.SaveAsync();
         }
+
+        public async Task DeleteScript(int id)
+        {
+            var scriptPermissions = (await _scriptUserPermissionRepository.GetAll(x => x.ScriptId == id)).ToList();
+            await _scriptUserPermissionRepository.DeleteRange(scriptPermissions);
+            await _scriptUserPermissionRepository.SaveAsync();
+
+            await _scriptRepository.Delete(id);
+            await _scriptRepository.SaveAsync();
+        }
     }
 }

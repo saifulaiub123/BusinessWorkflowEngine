@@ -61,6 +61,13 @@ namespace BWE.Api.Controllers
             await _scriptService.UpdateScript(script);
             return Ok();
         }
+        [HttpDelete]
+        [Route("DeleteScript")]
+        public async Task<ActionResult> DeleteScript([FromQuery] int id)
+        {
+            await _scriptService.DeleteScript(id);
+            return Ok();
+        }
 
     }
 }

@@ -33,7 +33,7 @@ export class ScriptService {
   updateScript(script: Script): Observable<any>{
     return this.http.patch(`${this.api}/UpdateScript`,script);
   }
-  // deleteBooking(id: Number): Observable<any>{
-  //   return this.http.delete<any>(`${this.api}/DeleteBooking?id=`+id);
-  // }
+  deleteScript(id: Number): Observable<any>{
+    return this.http.delete<any>(`${this.api}/DeleteScript?id=`+id);
+  }
 }

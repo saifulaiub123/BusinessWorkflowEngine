@@ -19,12 +19,15 @@ export class CustomDeleteComponent implements OnInit {
   constructor(private _tableSharedService: SmartTableSharedervice) { }
 
   ngOnInit(): void {
-    this.source = this.value;
+
   }
   onDelete(event)
   {
     //this.value.dataSet.data.shift();
     //this.value.dataSet.rows.shift();
-    this._tableSharedService.deleteRow(this.rowData);
+    if(this.value.actionMode == 'edit')
+    {
+      this._tableSharedService.deleteSharedUser(this.rowData);
+    }
   }
 }

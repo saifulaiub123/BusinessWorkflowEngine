@@ -2,12 +2,14 @@ import { ScriptService } from './../../../@core/services/script.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
-import { UserCustomActionComponent } from '../../../@components/custom-smart-table-components/user-custom-action/user-custom-action.component';
 import { InitUserService } from '../../../@theme/services/init-user.service';
 import { Script } from '../../../@core/model/script';
 import { ScriptActionComponent } from '../../../@components/custom-smart-table-components/script-action-component/script-action.component';
 import { forkJoin } from 'rxjs';
 import { PermissionType } from '../../../@core/enum/PermissionType';
+import { SmartTableSharedervice } from '../../../@core/shared-service/smart-table-shared.service';
+import * as _ from "underscore";
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-list',
@@ -138,11 +140,23 @@ export class ListComponent implements OnInit {
 };
   constructor(private router: Router,
     private _scriptService: ScriptService,
-    private _initUserService: InitUserService
+    private _initUserService: InitUserService,
+    private _tableSharedService: SmartTableSharedervice,
+    private _toastrService: NbToastrService,
     ) { }
 
   ngOnInit(): void {
+    this.subscribeSharedData();
     this.loadData();
+  }
+  subscribeSharedData(){
+    this._tableSharedService.isDeleteScript$.subscribe((row : any) => {
+      if(!_.isEmpty(row))
+      {
+        this.sourceScripts.remove(row);
+        this.deleteScript(row.id);
+      }
+     });
   }
   loadData()
   {
@@ -159,6 +173,12 @@ export class ListComponent implements OnInit {
       this.sourceSharedScripts.load(this.sharedScripts);
 
     });
+  }
+  deleteScript(id: number)
+  {
+    this._scriptService.deleteScript(id).subscribe((data) =>{
+      this._toastrService.success("Successfull","Deleted Successfully");
+    })
   }
   navigateToAddScript()
   {

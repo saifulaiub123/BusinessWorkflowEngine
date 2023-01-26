@@ -1,4 +1,4 @@
-import { NbSelectModule } from '@nebular/theme';
+import { NbCardModule, NbSelectModule } from '@nebular/theme';
 /*
  * Copyright (c) Akveo 2019. All Rights Reserved.
  * Licensed under the Single Application / Multi Application License.
@@ -19,13 +19,17 @@ import { UserCustomActionComponent } from './custom-smart-table-components/user-
 import { ScriptActionComponent } from './custom-smart-table-components/script-action-component/script-action.component';
 import { CustomNbSelectComponent } from './custom-smart-table-components/custom-nb-select/custom-nb-select.component';
 import { CustomDeleteComponent } from './custom-smart-table-components/custom-delete/custom-delete.component';
+import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.component';
 
 const COMPONENTS = [
   NgxValidationMessageComponent,
   NgxFilterByNumberComponent,
   UserCustomActionComponent,
   ScriptActionComponent,
-  CustomNbSelectComponent
+  CustomNbSelectComponent,
+  ConfirmModalComponent,
+  CustomDeleteComponent,
+  CustomNg2CheckboxComponent
 ];
 
 @NgModule({
@@ -36,10 +40,11 @@ const COMPONENTS = [
     NbCheckboxModule,
     NbButtonModule,
     NbIconModule,
-    NbSelectModule
+    NbSelectModule,
+    NbCardModule,
   ],
   exports: [...COMPONENTS],
-  declarations: [...COMPONENTS, CustomNg2CheckboxComponent, CustomDeleteComponent],
+  declarations: [...COMPONENTS],
   entryComponents: [
     NgxFilterByNumberComponent,
   ],
