@@ -187,7 +187,7 @@ settingsUserList = {
 
     if(this.scriptId != 0)
     {
-      const scriptByIdPromise = this._scriptService.getScriptById(this.scriptId);
+      const scriptByIdPromise = this._scriptService.getScriptById(this.scriptId,this.actionMode);
       const sharedScriptPromise = this._scriptService.getScriptSharedUser(this.scriptId);
       forkJoin([scriptByIdPromise, sharedScriptPromise]).subscribe(res =>{
         this.script = res[0];
@@ -218,6 +218,7 @@ settingsUserList = {
       {
         this._scriptService.addScript(data).subscribe(() =>{
           this._toastrService.success("Successfull","Added Successfully");
+          this.scriptAddEditFormGroup.reset();
         })
       }
       else{

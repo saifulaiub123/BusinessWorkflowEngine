@@ -7,5 +7,6 @@ namespace BWE.Application.IService
     {
         Task<UserViewModel> GetUserById(int id);
         Task UpdateUser(UserModel user);
+        Task<bool> IsAdmin(int userId);
     }
 }

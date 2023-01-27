@@ -5,6 +5,7 @@ using BWE.Domain.DBModel;
 using BWE.Domain.IRepository;
 using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
+using BWE.Domain.Constant;
 
 namespace BWE.Application.Service
 {
@@ -26,6 +27,15 @@ namespace BWE.Application.Service
             var result = _mapper.Map<UserViewModel>(user);
 
             return result;
+        }
+
+        public async Task<bool> IsAdmin(int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var isAdmin = (await _userManager.GetRolesAsync(user)).Where(x => x == RoleConst.ADMIN);
+            if (isAdmin != null) return true;
+
+            return false;
         }
 
         public async Task UpdateUser(UserModel user)

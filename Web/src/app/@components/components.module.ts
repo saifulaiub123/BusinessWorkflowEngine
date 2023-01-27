@@ -20,6 +20,7 @@ import { ScriptActionComponent } from './custom-smart-table-components/script-ac
 import { CustomNbSelectComponent } from './custom-smart-table-components/custom-nb-select/custom-nb-select.component';
 import { CustomDeleteComponent } from './custom-smart-table-components/custom-delete/custom-delete.component';
 import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.component';
+import { BackComponent } from './back/back.component';
 
 const COMPONENTS = [
   NgxValidationMessageComponent,
@@ -29,7 +30,8 @@ const COMPONENTS = [
   CustomNbSelectComponent,
   ConfirmModalComponent,
   CustomDeleteComponent,
-  CustomNg2CheckboxComponent
+  CustomNg2CheckboxComponent,
+  BackComponent
 ];
 
 @NgModule({

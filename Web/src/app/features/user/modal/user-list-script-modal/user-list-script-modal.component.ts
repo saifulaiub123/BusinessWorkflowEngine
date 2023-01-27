@@ -74,7 +74,7 @@ export class UserListScriptModalComponent implements OnInit {
 
   loadData()
   {
-    this._userService.getUsers().subscribe(data => {
+    this._userService.getShareableUsers().subscribe(data => {
       this.source.load(data);
     })
   }
@@ -88,15 +88,6 @@ export class UserListScriptModalComponent implements OnInit {
   }
   saveSelectedBookings(event)
   {
-    let p = this.source;
-    // if(this.selectedBookings.length > 0)
-    // {
-    //   this.bookingSharedService.setBookings(this.selectedBookings);
-    //   this.ref.close();
-    // }
-    // const data = {
-    //   name : this.
-    // }
     const data = [];
     this.selectedUser.forEach(user => {
       data.push({

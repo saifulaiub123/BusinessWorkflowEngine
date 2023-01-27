@@ -7,6 +7,11 @@ using BWE.Domain.DBModel;
 using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using BWE.Application.Enum;
+using BWE.Domain.IEntity;
+using AutoMapper.QueryableExtensions;
+using AutoMapper;
+using Z.EntityFramework.Plus;
 
 namespace BWE.Api.Controllers
 {
@@ -16,11 +21,15 @@ namespace BWE.Api.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IUserService _userService;
-        public UserController(UserManager<ApplicationUser> userManager, RoleManager<Role> roleManager, IUserService userService)
+        private readonly ICurrentUser _currentUser;
+        private readonly IMapper _mapper;
+        public UserController(UserManager<ApplicationUser> userManager, RoleManager<Role> roleManager, IUserService userService, ICurrentUser currentUser = null, IMapper mapper = null)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _userService = userService;
+            _currentUser = currentUser;
+            _mapper = mapper;
         }
 
 
@@ -30,6 +39,17 @@ namespace BWE.Api.Controllers
         {
             var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).Where(x => x.Status == 1).ToListAsync();
             return Ok(users);
+        }
+        [HttpGet]
+        [Route("GetShareableUsers")]
+        public async Task<IActionResult> GetShareableUsers()
+        {
+            var users = await _userManager.Users
+                .Where(x => x.UserRoles.Any(y => y.RoleId != (int)RoleEnum.Admin))
+                .Where(x => x.Id != _currentUser.User.Id)
+                .ToListAsync();
+            var result = _mapper.Map<List<UserViewModel>>(users);
+            return Ok(result);
         }
         [HttpGet]
         [Route("GetUserById")]

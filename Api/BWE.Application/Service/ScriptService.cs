@@ -1,17 +1,13 @@
 ﻿using AutoMapper;
+using BWE.Application.Enum;
 using BWE.Application.IService;
+using BWE.Domain.Constant;
 using BWE.Domain.DBModel;
 using BWE.Domain.IRepository;
 using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace BWE.Application.Service
 {
@@ -20,13 +16,16 @@ namespace BWE.Application.Service
     {
         private readonly IRepository<Script, int> _scriptRepository;
         private readonly IRepository<ScriptUserPermission, int> _scriptUserPermissionRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
-        public ScriptService(IRepository<Script, int> scriptRepository, IMapper mapper, IRepository<ScriptUserPermission, int> scriptUserPermissionRepository)
+
+        public ScriptService(IRepository<Script, int> scriptRepository, IMapper mapper, IRepository<ScriptUserPermission, int> scriptUserPermissionRepository, UserManager<ApplicationUser> userManager)
         {
             _scriptRepository = scriptRepository;
             _mapper = mapper;
             _scriptUserPermissionRepository = scriptUserPermissionRepository;
+            _userManager = userManager;
         }
         public async Task AddScript(ScriptModel model)
         {
@@ -133,6 +132,55 @@ namespace BWE.Application.Service
 
             await _scriptRepository.Delete(id);
             await _scriptRepository.SaveAsync();
+        }
+
+        public async Task<bool> HasPermissionToModify(int scriptId, int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var userRoles = (await _userManager.GetRolesAsync(user)).ToList();
+
+            var isAdmin = userRoles.Where(x => x == RoleConst.ADMIN).FirstOrDefault();
+            if (isAdmin != null) return true;
+
+            var isScriptOwner = await _scriptRepository.FindBy(x => x.Id == scriptId && x.CreatedBy == userId);
+            if (isScriptOwner != null) return true;
+
+            var hasPermissionToModify = await _scriptUserPermissionRepository.FindBy(x => x.ScriptId == scriptId && x.UserId == userId && x.PermissionId == (int)PermissionEnum.Modify);
+            if (hasPermissionToModify != null) return true;
+
+            return false;
+
+        }
+        public async Task<bool> HasPermissionToView(int scriptId, int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var userRoles = (await _userManager.GetRolesAsync(user)).ToList();
+
+            var isAdmin = userRoles.Where(x => x == RoleConst.ADMIN).FirstOrDefault();
+            if (isAdmin != null) return true;
+
+            var isScriptOwner = await _scriptRepository.FindBy(x => x.Id == scriptId && x.CreatedBy == userId);
+            if (isScriptOwner != null) return true;
+
+            var hasPermissionToView = await _scriptUserPermissionRepository.FindBy(x => x.ScriptId == scriptId && x.UserId == userId && x.PermissionId == (int)PermissionEnum.Read);
+            if (hasPermissionToView != null) return true;
+
+            return false;
+
+        }
+
+        public async Task<bool> IsScriptOwnerOrAdmin(int scriptId, int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var userRoles = (await _userManager.GetRolesAsync(user)).ToList();
+
+            var isAdmin = userRoles.Where(x => x == RoleConst.ADMIN).FirstOrDefault();
+            if (isAdmin != null) return true;
+
+            var isScriptOwner = await _scriptRepository.FindBy(x => x.Id == scriptId && x.CreatedBy == userId);
+            if (isScriptOwner != null) return true;
+
+            return false;
         }
     }
 }

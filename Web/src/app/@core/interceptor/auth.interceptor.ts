@@ -32,13 +32,22 @@ export class AuthInterceptor implements HttpInterceptor {
       }
     }
     return next.handle(req)
-      .pipe(catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
+      .pipe(catchError((err: HttpErrorResponse) => {
+        if (err.status === 401) {
           this.tokenService.clear();
           this.router.navigate(['auth/login']);
         }
-        this.toastrService.show('Error','Something went wrong',{ duration : 10000, status : 'danger' });
-        return throwError(error);
+        else if (err.status === 400) {
+          this.toastrService.show('Error',err.error,{ duration : 10000, status : 'danger' });
+        }
+        else if (err.status === 403) {
+          this.router.navigate(['page/access-denied']);
+        }
+        else{
+          this.toastrService.show('Error',err.message,{ duration : 10000, status : 'danger' });
+        }
+
+        return throwError(err);
       }
       ));
   }

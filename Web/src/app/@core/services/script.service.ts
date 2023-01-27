@@ -27,8 +27,8 @@ export class ScriptService {
   getScriptSharedUser(id: number): Observable<SharedScriptUser[]>{
     return this.http.get<SharedScriptUser[]>(`${this.api}/GetScriptSharedUser?scriptId=${id}`);
   }
-  getScriptById(id: number): Observable<Script>{
-    return this.http.get<Script>(`${this.api}/GetScriptById?id=${id}`);
+  getScriptById(id: number,actionMode: string): Observable<Script>{
+    return this.http.get<Script>(`${this.api}/GetScriptById?id=${id}&&actionMode=`+actionMode);
   }
   updateScript(script: Script): Observable<any>{
     return this.http.patch(`${this.api}/UpdateScript`,script);

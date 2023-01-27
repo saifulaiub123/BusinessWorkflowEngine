@@ -13,5 +13,8 @@ namespace BWE.Application.IService
         Task<List<SharedScriptUserViewModel>> GetScriptSharedUser(int scriptId);
         Task UpdateScript(ScriptModel script);
         Task DeleteScript(int id);
+        Task<bool> HasPermissionToModify(int scriptId, int userId);
+        Task<bool> HasPermissionToView(int scriptId, int userId);
+        Task<bool> IsScriptOwnerOrAdmin(int scriptId, int userId);
     }
 }

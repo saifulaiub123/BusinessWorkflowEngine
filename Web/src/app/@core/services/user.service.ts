@@ -19,6 +19,9 @@ export class UserService {
   getUsers(): Observable<User[]>{
     return this.http.get<User[]>(`${this.api}/GetUsers`);
   }
+  getShareableUsers(): Observable<User[]>{
+    return this.http.get<User[]>(`${this.api}/GetShareableUsers`);
+  }
   getUserById(id: number): Observable<User>{
     return this.http.get<User>(`${this.api}/GetUserById?id=`+id);
   }

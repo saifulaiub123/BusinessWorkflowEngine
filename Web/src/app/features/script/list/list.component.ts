@@ -154,6 +154,7 @@ export class ListComponent implements OnInit {
       if(!_.isEmpty(row))
       {
         this.sourceScripts.remove(row);
+        this.sourceSharedScripts.remove(row);
         this.deleteScript(row.id);
       }
      });

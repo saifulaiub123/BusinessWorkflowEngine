@@ -1,4 +1,6 @@
 ﻿using BWE.Application.IService;
+using BWE.Domain.Constant;
+using BWE.Domain.IEntity;
 using BWE.Domain.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +11,13 @@ namespace BWE.Api.Controllers
     public class ScriptController : BaseController
     {
         private readonly IScriptService _scriptService;
-        public ScriptController(IScriptService scriptService)
+        private readonly IUserService _usrService;
+        private readonly ICurrentUser _currentUser;
+        public ScriptController(IScriptService scriptService, ICurrentUser currentUser, IUserService usrService)
         {
             _scriptService = scriptService;
+            _currentUser = currentUser;
+            _usrService = usrService;
         }
 
         [HttpPost]
@@ -24,8 +30,24 @@ namespace BWE.Api.Controllers
 
         [HttpGet]
         [Route("GetScriptById")]
-        public async Task<ActionResult> GetScriptById([FromQuery] int id)
+        public async Task<ActionResult> GetScriptById([FromQuery] int id,string actionMode)
         {
+            bool hasPermission;
+            if (actionMode == ActionModeConst.View)
+            {
+                hasPermission = await _scriptService.HasPermissionToView(id, _currentUser.User.Id);
+            }
+            else if(actionMode == ActionModeConst.Edit)
+            {
+                hasPermission = await _scriptService.HasPermissionToModify(id, _currentUser.User.Id);
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
+            if (!hasPermission) return Forbid();
+
             var result = await _scriptService.GetScriptById(id);
             return Ok(result);
         }
@@ -34,6 +56,11 @@ namespace BWE.Api.Controllers
         [Route("GetScriptsByUserId")]
         public async Task<ActionResult> GetScriptsByUserId([FromQuery]int userId)
         {
+            var isAdmin = await _usrService.IsAdmin(userId);
+            if(!isAdmin || _currentUser.User.Id != userId)
+            {
+                return Forbid();
+            }
             var result = await _scriptService.GetScriptsByUserId(userId);
             return Ok(result);
         }
@@ -42,6 +69,11 @@ namespace BWE.Api.Controllers
         [Route("GetSharedScriptsByUserId")]
         public async Task<ActionResult> GetSharedScriptsByUserId([FromQuery] int userId)
         {
+            var isAdmin = await _usrService.IsAdmin(userId);
+            if (!isAdmin || _currentUser.User.Id != userId)
+            {
+                return Forbid();
+            }
             var result = await _scriptService.GetSharedScriptsByUserId(userId);
             return Ok(result);
         }
@@ -50,6 +82,13 @@ namespace BWE.Api.Controllers
         [Route("GetScriptSharedUser")]
         public async Task<ActionResult> GetScriptSharedUser([FromQuery] int scriptId)
         {
+            var script = await _scriptService.GetScriptById(scriptId);
+
+            var isAdmin = await _usrService.IsAdmin(_currentUser.User.Id);
+            if (!isAdmin || _currentUser.User.Id != script.CreatedBy)
+            {
+                return Forbid();
+            }
             var result = await _scriptService.GetScriptSharedUser(scriptId);
             return Ok(result);
         }
@@ -58,6 +97,12 @@ namespace BWE.Api.Controllers
         [Route("UpdateScript")]
         public async Task<ActionResult> UpdateScript([FromBody] ScriptModel script)
         {
+            var hasPermission = await _scriptService.HasPermissionToModify((int)script.Id, _currentUser.User.Id);
+            if(!hasPermission)
+            {
+                return Forbid();
+            }
+
             await _scriptService.UpdateScript(script);
             return Ok();
         }
@@ -65,6 +110,11 @@ namespace BWE.Api.Controllers
         [Route("DeleteScript")]
         public async Task<ActionResult> DeleteScript([FromQuery] int id)
         {
+            var hasPermission = await _scriptService.HasPermissionToModify((int)id, _currentUser.User.Id);
+            if (!hasPermission)
+            {
+                return Forbid();
+            }
             await _scriptService.DeleteScript(id);
             return Ok();
         }

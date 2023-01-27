@@ -60,7 +60,7 @@ namespace BWE.Api.Controllers
                 var errors = result.Errors.Select(x => x.Description).ToList();
                 return BadRequest(new AuthResponse(){ Errors = errors });
             }
-            await _userManager.AddToRoleAsync(user, Application.Enum.Role.User.ToString());
+            await _userManager.AddToRoleAsync(user, RoleEnum.User.ToString());
             return Ok();
         }
 
