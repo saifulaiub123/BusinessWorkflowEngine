@@ -32,7 +32,7 @@ namespace BWE.Application.Service
         public async Task<bool> IsAdmin(int userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
-            var isAdmin = (await _userManager.GetRolesAsync(user)).Where(x => x == RoleConst.ADMIN);
+            var isAdmin = (await _userManager.GetRolesAsync(user)).Where(x => x == RoleConst.ADMIN).FirstOrDefault();
             if (isAdmin != null) return true;
 
             return false;

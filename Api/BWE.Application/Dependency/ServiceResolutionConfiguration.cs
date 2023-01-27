@@ -2,8 +2,6 @@
 using BWE.Application.Service;
 using BWE.Domain.IEntity;
 using Microsoft.Extensions.DependencyInjection;
-using BWE.Domain.IRepository;
-using BWE.Infrastructure.Repository;
 
 namespace BWE.Application.Dependency
 {
@@ -17,6 +15,7 @@ namespace BWE.Application.Dependency
             services.AddScoped<IServerService, ServerService>();
             services.AddScoped<IScriptService, ScriptService>();
             services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IScriptUserPermissionService, ScriptUserPermissionService>();
 
             return services;
         }

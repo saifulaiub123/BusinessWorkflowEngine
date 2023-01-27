@@ -2,6 +2,7 @@
 using BWE.Domain.Constant;
 using BWE.Domain.IEntity;
 using BWE.Domain.Model;
+using BWE.Domain.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +12,15 @@ namespace BWE.Api.Controllers
     public class ScriptController : BaseController
     {
         private readonly IScriptService _scriptService;
+        private readonly IScriptUserPermissionService _scriptUserPermissionService;
         private readonly IUserService _usrService;
         private readonly ICurrentUser _currentUser;
-        public ScriptController(IScriptService scriptService, ICurrentUser currentUser, IUserService usrService)
+        public ScriptController(IScriptService scriptService, ICurrentUser currentUser, IUserService usrService, IScriptUserPermissionService scriptUserPermissionService)
         {
             _scriptService = scriptService;
             _currentUser = currentUser;
             _usrService = usrService;
+            _scriptUserPermissionService = scriptUserPermissionService;
         }
 
         [HttpPost]
@@ -57,7 +60,7 @@ namespace BWE.Api.Controllers
         public async Task<ActionResult> GetScriptsByUserId([FromQuery]int userId)
         {
             var isAdmin = await _usrService.IsAdmin(userId);
-            if(!isAdmin || _currentUser.User.Id != userId)
+            if(!isAdmin && _currentUser.User.Id != userId)
             {
                 return Forbid();
             }
@@ -70,7 +73,7 @@ namespace BWE.Api.Controllers
         public async Task<ActionResult> GetSharedScriptsByUserId([FromQuery] int userId)
         {
             var isAdmin = await _usrService.IsAdmin(userId);
-            if (!isAdmin || _currentUser.User.Id != userId)
+            if (!isAdmin && _currentUser.User.Id != userId)
             {
                 return Forbid();
             }
@@ -83,14 +86,21 @@ namespace BWE.Api.Controllers
         public async Task<ActionResult> GetScriptSharedUser([FromQuery] int scriptId)
         {
             var script = await _scriptService.GetScriptById(scriptId);
+            var scriptUserPermission = await _scriptUserPermissionService.GetScriptUserPermissionsByScriptId(scriptId);
 
             var isAdmin = await _usrService.IsAdmin(_currentUser.User.Id);
-            if (!isAdmin || _currentUser.User.Id != script.CreatedBy)
+            if (isAdmin || _currentUser.User.Id == script.CreatedBy)
             {
-                return Forbid();
+                var result = await _scriptService.GetScriptSharedUser(scriptId);
+                return Ok(result);
             }
-            var result = await _scriptService.GetScriptSharedUser(scriptId);
-            return Ok(result);
+            else if(scriptUserPermission.Any(x => x.UserId == _currentUser.User.Id && x.ScriptId == scriptId))
+            {
+                return Ok(new List<SharedScriptUserViewModel>());
+            }
+
+            return Forbid();
+            
         }
 
         [HttpPatch]
