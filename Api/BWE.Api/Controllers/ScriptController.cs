@@ -60,6 +60,10 @@ namespace BWE.Api.Controllers
         public async Task<ActionResult> GetScriptsByUserId([FromQuery]int userId)
         {
             var isAdmin = await _usrService.IsAdmin(userId);
+            if(isAdmin)
+            {
+                return Ok(await _scriptService.GetAll());
+            }
             if(!isAdmin && _currentUser.User.Id != userId)
             {
                 return Forbid();

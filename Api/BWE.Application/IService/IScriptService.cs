@@ -7,6 +7,7 @@ namespace BWE.Application.IService
     public interface IScriptService
     {
         Task AddScript(ScriptModel model);
+        Task<List<ScriptViewModel>> GetAll();
         Task<List<ScriptViewModel>> GetScriptsByUserId(int userId);
         Task<ScriptViewModel> GetScriptById(int id);
         Task<List<ScriptViewModel>> GetSharedScriptsByUserId(int userId);

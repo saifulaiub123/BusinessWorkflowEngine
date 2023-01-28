@@ -13,6 +13,6 @@ namespace BWE.Domain.DBModel
         public virtual Permission Permission { get; set; }
 
         public virtual ApplicationUser CreatedByUser { get; set; }
-        public virtual ApplicationUser UpdateByUser { get; set; }
+        public virtual ApplicationUser? UpdateByUser { get; set; }
     }
 }

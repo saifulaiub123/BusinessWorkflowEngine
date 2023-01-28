@@ -14,7 +14,7 @@ namespace BWE.Domain.DBModel
         public virtual ICollection<IdentityUserToken<int>> Tokens { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
 
-        public virtual ICollection<ScriptUserPermission> ScriptUserPermissions { get; set; }
+        public virtual ICollection<ScriptUserPermission>? ScriptUserPermissions { get; set; }
 
 
         public virtual Permission CreatedByPermission { get; set; }

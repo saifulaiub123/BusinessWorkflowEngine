@@ -22,29 +22,30 @@ namespace BWE.Infrastructure.Configuration
             builder.HasOne(x => x.Script)
                 .WithMany(x => x.ScriptUserPermissions)
                 .HasForeignKey(x => x.ScriptId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.User)
                 .WithMany(x => x.ScriptUserPermissions)
                 .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.Permission)
                 .WithMany(x => x.ScriptUserPermissions)
                 .HasForeignKey(x => x.PermissionId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 
             builder.HasOne(x => x.CreatedByUser)
                .WithOne(y => y.CreatedByScriptUserPermission)
                .HasForeignKey<ScriptUserPermission>(z => z.CreatedBy)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.UpdateByUser)
                .WithOne(y => y.UpdatedByScriptUserPermission)
                .HasForeignKey<ScriptUserPermission>(z => z.UpdatedBy)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.NoAction)
+               .IsRequired(false);
         }
     }
 }

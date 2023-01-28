@@ -31,7 +31,7 @@ import * as _ from "underscore";
 export class ScriptAddEditComponent implements OnInit {
 
 @Input() scriptId : number = 0;
-@Input() actionMode: string = "add" || "edit" || "view";
+@Input() actionMode: string = 'add' || 'edit' || 'view';
 
 
 serverData: Server[] = [];
@@ -203,6 +203,7 @@ settingsUserList = {
   {
     this.loading = false;
     let data = this.scriptAddEditFormGroup.value;
+    this.scriptUserPermission = [];
 
     this.sourceUserList.getAll().then((userData) => {
       userData.forEach(data =>{
@@ -247,11 +248,19 @@ settingsUserList = {
       hasScroll: true,
       closeOnBackdropClick: true
     })
-    .onClose.subscribe((data: User[]) => {
+    .onClose.subscribe((data: any[]) => {
       data.forEach(item => {
-        this.sourceUserList.prepend(item);
-      })
 
+        this.sourceUserList.getAll().then((data) =>{
+        const isExist = data.some(function(el) {
+          return el.userId === item.userId;
+        });
+        if(!isExist)
+        {
+          this.sourceUserList.prepend(item);
+        }
+        })
+      })
     }
     );
   }

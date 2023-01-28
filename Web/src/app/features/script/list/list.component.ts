@@ -10,6 +10,7 @@ import { PermissionType } from '../../../@core/enum/PermissionType';
 import { SmartTableSharedervice } from '../../../@core/shared-service/smart-table-shared.service';
 import * as _ from "underscore";
 import { NbToastrService } from '@nebular/theme';
+import { ROLES } from '../../../auth/roles';
 
 @Component({
   selector: 'ngx-list',
@@ -21,14 +22,16 @@ export class ListComponent implements OnInit {
   ownScripts: Script[] = [];
   sharedScripts: Script[] = [];
 
+  isAdmin: boolean = false;
+
   sourceScripts: LocalDataSource = new LocalDataSource();
   sourceSharedScripts: LocalDataSource = new LocalDataSource();
 
 
   settingsSourceScript = {
-      edit : false,
-      delete : false,
-      add : false,
+    edit : false,
+    delete : false,
+    add : false,
     actions: {
       add: false,
       delete: false,
@@ -57,6 +60,11 @@ export class ListComponent implements OnInit {
         title: 'Destination Server',
         type: 'string',
         filter:true,
+      },
+      userName: {
+        title: 'Created By',
+        type: 'string',
+        filter: true,
       },
       action: {
         title: 'Action',
@@ -162,7 +170,10 @@ export class ListComponent implements OnInit {
   loadData()
   {
     const user = this._initUserService.getCurrentUser();
-
+    if(user.role.includes(ROLES.ADMIN))
+    {
+      this.isAdmin = true;
+    }
     const ownScriptsPromise = this._scriptService.getScriptsByUserId(user.id);
     const sharedScriptsPromise = this._scriptService.getSharedScriptsByUserId(user.id);
 

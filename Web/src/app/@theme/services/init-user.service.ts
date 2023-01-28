@@ -40,4 +40,7 @@ export class InitUserService {
     getCurrentUser(){
       return this.userStore.getUser();
     }
+    getCurrentUserRoles(){
+      return this.userStore.getUser().role;
+    }
 }

@@ -33,7 +33,14 @@ namespace BWE.Application.Service
             await _scriptRepository.Insert(data);
             await _scriptRepository.SaveAsync();
         }
-
+        public async Task<List<ScriptViewModel>> GetAll()
+        {
+            var data = (await _scriptRepository.GetAll(x => !x.IsDeleted, include => include.Server, includes => includes.CreatedByUser))
+                .OrderByDescending(x => x.DateCreated)
+                .ToList();
+            var result = _mapper.Map<List<ScriptViewModel>>(data);
+            return result;
+        }
         public async Task<List<ScriptViewModel>> GetScriptsByUserId(int userId)
         {
             var data = (await _scriptRepository.GetAll(x => x.CreatedBy == userId && !x.IsDeleted, include => include.Server, includes => includes.CreatedByUser))
@@ -108,7 +115,7 @@ namespace BWE.Application.Service
                 var isExist = existingScript.ScriptUserPermissions.Where(x => x.ScriptId == newScriptPemission.ScriptId && x.UserId == newScriptPemission.UserId).FirstOrDefault();
                 if (isExist is null)
                 {
-                    newScriptUserPermissions.Add(new ScriptUserPermission
+                    await _scriptUserPermissionRepository.Insert(new ScriptUserPermission
                     {
                         ScriptId = newScriptPemission.ScriptId,
                         UserId = newScriptPemission.UserId,
@@ -118,10 +125,13 @@ namespace BWE.Application.Service
             }
 
             await _scriptRepository.Update(existingScript);
-            await _scriptUserPermissionRepository.DeleteRange(removeScriptUserPermissions);
-            await _scriptUserPermissionRepository.InsertRange(newScriptUserPermissions);
-
             await _scriptRepository.SaveAsync();
+
+            //await _scriptUserPermissionRepository.DeleteRange(removeScriptUserPermissions);
+            //await _scriptUserPermissionRepository.InsertRange(newScriptUserPermissions);
+            await _scriptUserPermissionRepository.SaveAsync();
+
+            
         }
 
         public async Task DeleteScript(int id)

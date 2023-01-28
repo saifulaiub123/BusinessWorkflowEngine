@@ -31,7 +31,7 @@ export class UserListScriptModalComponent implements OnInit {
       name: {
         title: 'Name',
         type: 'string',
-        filter: false,
+        filter: true,
         valuePrepareFunction: (value, row, cell) => {
           return row.firstName +" "+ row.lastName;
          },
@@ -84,7 +84,7 @@ export class UserListScriptModalComponent implements OnInit {
   }
   cancel(event)
   {
-    this._ref.close();
+    this._ref.close([]);
   }
   saveSelectedBookings(event)
   {

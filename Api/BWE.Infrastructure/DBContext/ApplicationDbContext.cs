@@ -77,6 +77,7 @@ namespace BWE.Infrastructure.DBContext
                     case EntityState.Added:
                         item.Entity.DateCreated = DateTime.Now;
                         item.Entity.CreatedBy = item.Entity.CreatedBy != 0 ? item.Entity.CreatedBy : _currentUser.User.Id;
+                        item.Entity.UpdatedBy = item.Entity.UpdatedBy != null ? item.Entity.UpdatedBy : _currentUser.User.Id;
                         break;
                     case EntityState.Modified:
                         item.Entity.LastUpdated = DateTime.Now;

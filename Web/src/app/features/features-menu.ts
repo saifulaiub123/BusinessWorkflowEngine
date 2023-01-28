@@ -8,12 +8,12 @@ export const MENU_ITEMS = [
     role: ['Admin','User','Partner'],
     home: true,
   },
-  {
-    title: 'User',
-    icon: 'keypad-outline',
-    link: '/feature/user',
-    role: ['Admin']
-  },
+  // {
+  //   title: 'User',
+  //   icon: 'keypad-outline',
+  //   link: '/feature/user',
+  //   role: ['Admin']
+  // },
   {
     title: 'Script',
     icon: 'keypad-outline',

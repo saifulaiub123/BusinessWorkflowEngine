@@ -11,7 +11,7 @@ namespace BWE.Domain.DBModel
         public bool IsDeleted { get; set; }
         
         public virtual Server Server { get; set; }
-        public virtual ICollection<ScriptUserPermission> ScriptUserPermissions { get; set; }
+        public virtual ICollection<ScriptUserPermission>? ScriptUserPermissions { get; set; }
 
 
 

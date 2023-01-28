@@ -77,7 +77,7 @@
       <nb-tab tabTitle="Share to User" *ngIf="isAdminOrScriptOwner || actionMode=='add'" badgeText="{{sharedScriptUser.length}}" badgeStatus="success">
         <nb-card>
           <nb-card-header>
-            <button nbButton type="button" status="basic" size="medium" style="float: left" (click)="openUsersModal()"><nb-icon icon="plus-outline"></nb-icon>Add User</button>
+            <button *ngIf="actionMode !== 'view'" nbButton type="button" status="basic" size="medium" style="float: left" (click)="openUsersModal()"><nb-icon icon="plus-outline"></nb-icon>Add User</button>
           </nb-card-header>
           <nb-card-body>
             <form>
