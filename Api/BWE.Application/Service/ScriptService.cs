@@ -117,7 +117,7 @@ namespace BWE.Application.Service
                 {
                     await _scriptUserPermissionRepository.Insert(new ScriptUserPermission
                     {
-                        ScriptId = newScriptPemission.ScriptId,
+                        ScriptId = (int)newScriptPemission.ScriptId,
                         UserId = newScriptPemission.UserId,
                         PermissionId = newScriptPemission.PermissionId
                     });
