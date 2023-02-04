@@ -109,7 +109,7 @@ namespace BWE.Api.Controllers
 
         [HttpPatch]
         [Route("UpdateScript")]
-        public async Task<ActionResult> UpdateScript([FromBody] ScriptModel script)
+        public async Task<ActionResult> UpdateScript([FromBody] UpdateScriptModel script)
         {
             var hasPermission = await _scriptService.HasPermissionToModify((int)script.Id, _currentUser.User.Id);
             if(!hasPermission)

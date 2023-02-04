@@ -35,13 +35,16 @@ export class ScriptAddEditComponent implements OnInit {
 
 
 serverData: Server[] = [];
-scriptUserPermission: ScriptUserPermission[] = [];
 selectedRoles: number[] = [];
 script: Script = {};
 sharedScriptUser: SharedScriptUser[] = [];
 currentUser: ILoginUser = {};
 checkArray: FormArray;
 scriptAddEditFormGroup: FormGroup;
+
+deletedUserPermissions: any[] = [];
+addOrUpdatedUserPermissions: any[] = [];
+
 
 sourceUserList: LocalDataSource = new LocalDataSource();
 
@@ -160,7 +163,7 @@ settingsUserList = {
     this._tableSharedService.isDeleteSharedUser$.subscribe((row : any) => {
       if(!_.isEmpty(row))
       {
-        this.sourceUserList.remove(row);
+        this.removeFromSharedUserSource(row);
       }
      });
   }
@@ -203,18 +206,20 @@ settingsUserList = {
   {
     this.loading = false;
     let data = this.scriptAddEditFormGroup.value;
-    this.scriptUserPermission = [];
+    this.addOrUpdatedUserPermissions = [];
 
-    this.sourceUserList.getAll().then((userData) => {
+    this.sourceUserList.getAll().then(async (userData) => {
       userData.forEach(data =>{
-        this.scriptUserPermission.push({
+        this.addOrUpdatedUserPermissions.push({
             scriptId : this.scriptId != 0 ? this.scriptId : null,
             userId : data.userId,
             permissionId: data.permissionId
           }
         )
       })
-      data['scriptUserPermissions'] = this.scriptUserPermission;
+      data['addOrUpdatedScriptUserPermissions'] = this.addOrUpdatedUserPermissions;
+      data['deletedScriptUserPermissions'] = this.deletedUserPermissions;
+
       if(this.scriptId == 0)
       {
         this._scriptService.addScript(data).subscribe(() =>{
@@ -224,7 +229,7 @@ settingsUserList = {
       }
       else{
         data.id = this.scriptId;
-        this._scriptService.updateScript(data).subscribe(() =>{
+        this._scriptService.updateScript(data).subscribe(() => {
           this._toastrService.success("Successfull","Updated Successfully");
         })
       }
@@ -242,6 +247,24 @@ settingsUserList = {
     fileReader.readAsText(file);
   }
 
+  removeFromSharedUserSource(row: any)
+  {
+    this.sourceUserList.remove(row);
+    const isExist = this.deletedUserPermissions.some(function(el) {
+      return el.userId === row.userId;
+    });
+    if(!isExist)
+    {
+      this.deletedUserPermissions.push({
+        scriptId : this.scriptId != 0 ? this.scriptId : null,
+        userId : row.userId,
+        permissionId: row.permissionId
+      });
+      // this.addOrUpdatedUserPermissions = this.addOrUpdatedUserPermissions.filter(obj => {
+      //   return obj.userId != row.userId;
+      // });
+    }
+  }
   openUsersModal()
   {
     this._dialogService.open(UserListScriptModalComponent, {
@@ -258,6 +281,14 @@ settingsUserList = {
         if(!isExist)
         {
           this.sourceUserList.prepend(item);
+          // this.addOrUpdatedUserPermissions.push({
+          //   scriptId : this.scriptId != 0 ? this.scriptId : null,
+          //   userId : item.userId,
+          //   permissionId: item.permissionId
+          // });
+          // this.deletedUserPermissions = this.deletedUserPermissions.filter(obj => {
+          //   return obj.userId != item.userId;
+          // });
         }
         })
       })
