@@ -1,23 +1,24 @@
 import { ScriptService } from './../../../@core/services/script.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { InitUserService } from '../../../@theme/services/init-user.service';
 import { Script } from '../../../@core/model/script';
 import { ScriptActionComponent } from '../../../@components/custom-smart-table-components/script-action-component/script-action.component';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject, Subscription } from 'rxjs';
 import { PermissionType } from '../../../@core/enum/PermissionType';
 import { SmartTableSharedervice } from '../../../@core/shared-service/smart-table-shared.service';
 import * as _ from "underscore";
 import { NbToastrService } from '@nebular/theme';
 import { ROLES } from '../../../auth/roles';
+import { first, take, takeUntil, takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy  {
 
   ownScripts: Script[] = [];
   sharedScripts: Script[] = [];
@@ -27,6 +28,7 @@ export class ListComponent implements OnInit {
   sourceScripts: LocalDataSource = new LocalDataSource();
   sourceSharedScripts: LocalDataSource = new LocalDataSource();
 
+  ngDestroy = new Subject();
 
   settingsSourceScript = {
     edit : false,
@@ -151,21 +153,21 @@ export class ListComponent implements OnInit {
     private _initUserService: InitUserService,
     private _tableSharedService: SmartTableSharedervice,
     private _toastrService: NbToastrService,
-    ) { }
+    ) {}
 
   ngOnInit(): void {
     this.subscribeSharedData();
     this.loadData();
   }
   subscribeSharedData(){
-    this._tableSharedService.isDeleteScript$.subscribe((row : any) => {
-      if(!_.isEmpty(row))
-      {
-        this.sourceScripts.remove(row);
-        this.sourceSharedScripts.remove(row);
-        this.deleteScript(row.id);
-      }
-     });
+      this._tableSharedService.isDeleteScript$.pipe(takeUntil(this.ngDestroy)).subscribe((row : any) => {
+        if(!_.isEmpty(row))
+          {
+          this.sourceScripts.remove(row);
+            this.sourceSharedScripts.remove(row);
+            this.deleteScript(row.id);
+        }
+      });
   }
   loadData()
   {
@@ -190,6 +192,7 @@ export class ListComponent implements OnInit {
   {
     this._scriptService.deleteScript(id).subscribe((data) =>{
       this._toastrService.success("Successfull","Deleted Successfully");
+      this._tableSharedService.unsetDeleteScript();
     })
   }
   navigateToAddScript()
@@ -197,4 +200,8 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl('feature/script/add-edit')
   }
 
+  ngOnDestroy(): void {
+    this.ngDestroy.next(true);
+    this.ngDestroy.complete();
+  }
 }

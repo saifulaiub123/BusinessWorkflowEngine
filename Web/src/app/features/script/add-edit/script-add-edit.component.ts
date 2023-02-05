@@ -38,13 +38,12 @@ serverData: Server[] = [];
 selectedRoles: number[] = [];
 script: Script = {};
 sharedScriptUser: SharedScriptUser[] = [];
+scriptUserPermissions: ScriptUserPermission[] = [];
 currentUser: ILoginUser = {};
 checkArray: FormArray;
 scriptAddEditFormGroup: FormGroup;
 
 deletedUserPermissions: any[] = [];
-addOrUpdatedUserPermissions: any[] = [];
-
 
 sourceUserList: LocalDataSource = new LocalDataSource();
 
@@ -206,19 +205,18 @@ settingsUserList = {
   {
     this.loading = false;
     let data = this.scriptAddEditFormGroup.value;
-    this.addOrUpdatedUserPermissions = [];
+    this.scriptUserPermissions = [];
 
     this.sourceUserList.getAll().then(async (userData) => {
       userData.forEach(data =>{
-        this.addOrUpdatedUserPermissions.push({
+        this.scriptUserPermissions.push({
             scriptId : this.scriptId != 0 ? this.scriptId : null,
             userId : data.userId,
             permissionId: data.permissionId
           }
         )
       })
-      data['addOrUpdatedScriptUserPermissions'] = this.addOrUpdatedUserPermissions;
-      data['deletedScriptUserPermissions'] = this.deletedUserPermissions;
+      data['scriptUserPermissions'] = this.scriptUserPermissions;
 
       if(this.scriptId == 0)
       {
@@ -229,6 +227,8 @@ settingsUserList = {
       }
       else{
         data.id = this.scriptId;
+        data['deletedScriptUserPermissions'] = this.deletedUserPermissions;
+
         this._scriptService.updateScript(data).subscribe(() => {
           this._toastrService.success("Successfull","Updated Successfully");
         })
@@ -260,9 +260,6 @@ settingsUserList = {
         userId : row.userId,
         permissionId: row.permissionId
       });
-      // this.addOrUpdatedUserPermissions = this.addOrUpdatedUserPermissions.filter(obj => {
-      //   return obj.userId != row.userId;
-      // });
     }
   }
   openUsersModal()
@@ -281,14 +278,6 @@ settingsUserList = {
         if(!isExist)
         {
           this.sourceUserList.prepend(item);
-          // this.addOrUpdatedUserPermissions.push({
-          //   scriptId : this.scriptId != 0 ? this.scriptId : null,
-          //   userId : item.userId,
-          //   permissionId: item.permissionId
-          // });
-          // this.deletedUserPermissions = this.deletedUserPermissions.filter(obj => {
-          //   return obj.userId != item.userId;
-          // });
         }
         })
       })

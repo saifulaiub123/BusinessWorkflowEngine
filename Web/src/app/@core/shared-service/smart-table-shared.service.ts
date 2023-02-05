@@ -7,21 +7,22 @@ import { BehaviorSubject } from 'rxjs';
 export class SmartTableSharedervice {
 
   private deleteRow$ = new BehaviorSubject<boolean>(false);
-
-  private deleteScript$ = new BehaviorSubject<boolean>(false);
-  private deleteSharedUser$ = new BehaviorSubject<boolean>(false);
-
-
-
   idDeleteRow$ = this.deleteRow$.asObservable();
 
+  private deleteScript$ = new BehaviorSubject(null);
   isDeleteScript$ = this.deleteScript$.asObservable();
+
+  private deleteSharedUser$ = new BehaviorSubject<boolean>(false);
   isDeleteSharedUser$ = this.deleteSharedUser$.asObservable();
 
   constructor() {}
   deleteScript(row: any)
   {
     this.deleteScript$.next(row);
+  }
+  unsetDeleteScript()
+  {
+    this.deleteScript$.next(null);
   }
 
   deleteSharedUser(row: any)

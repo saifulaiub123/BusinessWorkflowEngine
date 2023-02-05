@@ -22,7 +22,7 @@ namespace BWE.Infrastructure.Configuration
             builder.HasOne(x => x.Script)
                 .WithMany(x => x.ScriptUserPermissions)
                 .HasForeignKey(x => x.ScriptId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.User)
                 .WithMany(x => x.ScriptUserPermissions)
@@ -32,7 +32,7 @@ namespace BWE.Infrastructure.Configuration
             builder.HasOne(x => x.Permission)
                 .WithMany(x => x.ScriptUserPermissions)
                 .HasForeignKey(x => x.PermissionId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
 
 

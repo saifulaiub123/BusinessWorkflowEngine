@@ -14,6 +14,8 @@ namespace BWE.Infrastructure.DBContext
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUser currentUser) : base(options)
         {
             _currentUser = currentUser;
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            this.ChangeTracker.LazyLoadingEnabled = false;
         }
 
         public DbSet<Otp> Otps { get; set; }

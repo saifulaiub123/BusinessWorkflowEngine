@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BWE.Domain.Model
 {
@@ -15,7 +11,7 @@ namespace BWE.Domain.Model
         public string Content { get; set; }
         public int CreatedBy { get; set; }
 
-        public List<ScriptUserPermissionModel> AddOrUpdatedScriptUserPermissions { get; set; }
-        public List<ScriptUserPermissionModel> DeletedScriptUserPermissions { get; set; }
+        public List<ScriptUserPermissionModel>? ScriptUserPermissions { get; set; }
+        public List<ScriptUserPermissionModel>? DeletedScriptUserPermissions { get; set; }
     }
 }
