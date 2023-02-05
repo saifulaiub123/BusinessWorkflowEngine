@@ -7,5 +7,7 @@ export class Script {
   destinationServerName?: string;
   content?: string;
   createdBy?: number;
+  dateCreated?: string;
+  lastUpdated?: string;
   scriptUserPermissions?: ScriptUserPermission[];
 }

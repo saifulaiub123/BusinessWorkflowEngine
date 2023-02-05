@@ -12,6 +12,7 @@ import * as _ from "underscore";
 import { NbToastrService } from '@nebular/theme';
 import { ROLES } from '../../../auth/roles';
 import { first, take, takeUntil, takeWhile } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'ngx-list',
@@ -67,6 +68,23 @@ export class ListComponent implements OnInit, OnDestroy  {
         title: 'Created By',
         type: 'string',
         filter: true,
+      },
+      dateCreated: {
+        title: 'Created On',
+        type: 'string',
+        filter:false,
+        valuePrepareFunction: (value, row, cell) => {
+          return new Date(value).toLocaleDateString('en-US', { hour: 'numeric',minute: 'numeric', hour12: true });
+          //return new DatePipe('en-US').transform(value, 'YYYY/MM/DD hh:mm')
+        }
+      },
+      lastUpdated: {
+        title: 'Modified On',
+        type: 'string',
+        filter:false,
+        valuePrepareFunction: (value, row, cell) => {
+          return new Date(value).toLocaleDateString('en-US', { hour: 'numeric',minute: 'numeric', hour12: true });
+        }
       },
       action: {
         title: 'Action',

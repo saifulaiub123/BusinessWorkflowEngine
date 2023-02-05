@@ -103,8 +103,6 @@ namespace BWE.Application.Service
                 existingScript.Description = script.Description;
                 existingScript.DestinationServerId = script.DestinationServerId;
                 existingScript.Content = script.Content;
-                //await _scriptRepository.Update(existingScript);
-                //await _scriptRepository.SaveAsync();
                 await _unitOfWork.ScriptRepository.Update(existingScript);
             }
             foreach(var deletedScript in script.DeletedScriptUserPermissions)
@@ -115,10 +113,8 @@ namespace BWE.Application.Service
                     if (data != null)
                     {
                         await _unitOfWork.ScriptUserPermissionRepository.Delete(data);
-                        //await _scriptUserPermissionRepository.Delete(data);
                     }
-                }
-                
+                } 
             }
             foreach (var addOrUpdateScript in script.ScriptUserPermissions)
             {
@@ -127,43 +123,18 @@ namespace BWE.Application.Service
                 {
                     data.PermissionId = addOrUpdateScript.PermissionId;
                     await _unitOfWork.ScriptUserPermissionRepository.Update(data);
-                    //await _scriptUserPermissionRepository.Update(data);
-                    //await _scriptUserPermissionRepository.SaveAsync();
                 }
                 else
                 {
-                    var mappedResult = _mapper.Map<ScriptUserPermission>(addOrUpdateScript);
-                    //await _scriptUserPermissionRepository.Insert(mappedResult);
-                    //await _scriptUserPermissionRepository.SaveAsync();
+                    var mappedResult = _mapper.Map<ScriptUserPermission>(addOrUpdateScript);                  
                     await _unitOfWork.ScriptUserPermissionRepository.Insert(mappedResult);
                 }
             }
-
             await _unitOfWork.CommitAsync();
         }
 
         public async Task DeleteScript(int id)
         {
-            //var scriptPermissions = (await _scriptUserPermissionRepository.GetAll(x => x.ScriptId == id)).ToList();
-            //if(scriptPermissions.Count > 0)
-            //{
-            //    await _scriptUserPermissionRepository.DeleteRange(scriptPermissions);
-            //    await _scriptUserPermissionRepository.SaveAsync();
-            //}
-
-            //await _scriptRepository.Delete(id);
-            //await _scriptRepository.SaveAsync();
-            //var scriptPermissions = (await _unitOfWork.ScriptUserPermissionRepository.GetAll(x => x.ScriptId == id)).ToList();
-            //if (scriptPermissions.Count > 0)
-            //{
-            //    await _unitOfWork.ScriptUserPermissionRepository.DeleteRange(scriptPermissions);
-            //    //await _scriptUserPermissionRepository.SaveAsync();
-            //}
-
-            //await _unitOfWork.ScriptRepository.Delete(id);
-            //await _scriptRepository.SaveAsync();
-
-            //var script = await _unitOfWork.ScriptRepository.FindBy(x => x.Id == id, includes => includes.ScriptUserPermissions);
             var script = await _unitOfWork.ScriptRepository.GetById(id);
             await _unitOfWork.ScriptRepository.Delete(script);
 
