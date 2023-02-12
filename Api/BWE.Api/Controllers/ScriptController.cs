@@ -4,6 +4,7 @@ using BWE.Domain.Constant;
 using BWE.Domain.IEntity;
 using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
@@ -152,7 +153,8 @@ namespace BWE.Api.Controllers
                 return Forbid();
             }
             var script = await _scriptService.GetScriptById(scriptId);
-            await _powerShellHelper.RunPowerShellScript(script);
+            var jobId = BackgroundJob.Enqueue(() => _powerShellHelper.RunPowerShellScript(script));
+            //await _powerShellHelper.RunPowerShellScript(script);
             return Ok();
 
         }

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Hangfire;
 
 namespace BWE.Api
 {
@@ -50,6 +51,8 @@ namespace BWE.Api
                 options => options.UseSqlServer(Configuration.GetConnectionString(ConfigOptions.DbConnName),
                             options => options.EnableRetryOnFailure())
                 );
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString(ConfigOptions.DbConnName)));
+            services.AddHangfireServer();
 
             services.AddServices();
             services.AddRepositories();
@@ -107,6 +110,7 @@ namespace BWE.Api
             }
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseHangfireDashboard();
             app.UseRouting();
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseCors();

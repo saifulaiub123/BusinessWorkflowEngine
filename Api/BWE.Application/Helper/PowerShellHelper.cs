@@ -1,9 +1,5 @@
 ﻿using BWE.Application.IHelper;
 using BWE.Domain.ViewModel;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Security;
