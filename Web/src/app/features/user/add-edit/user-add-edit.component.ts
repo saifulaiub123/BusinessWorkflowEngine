@@ -94,9 +94,10 @@ pageTitle: string = "User Edit"
     ) { }
 
 
-    get name() { return this.userAddEditFormGroup.get('name'); }
+    get firstName() { return this.userAddEditFormGroup.get('firstName'); }
+    get lastName() { return this.userAddEditFormGroup.get('lastName'); }
     get email() { return this.userAddEditFormGroup.get('email'); }
-    get phoneNumber() { return this.userAddEditFormGroup.get('phoneNumber'); }
+    // get phoneNumber() { return this.userAddEditFormGroup.get('phoneNumber'); }
     get roles() { return <FormArray> this.userAddEditFormGroup.get('roles'); }
 
 
@@ -108,9 +109,10 @@ pageTitle: string = "User Edit"
   {
     this.userAddEditFormGroup = this._fb.group({
       id: this._fb.control(null, [Validators.required]),
-      name: this._fb.control(null, [Validators.required]),
+      firstName: this._fb.control(null, [Validators.required]),
+      lastName: this._fb.control(null, [Validators.required]),
       email: this._fb.control(null, [Validators.required]),
-      phoneNumber: this._fb.control(null, []),
+      // phoneNumber: this._fb.control(null, []),
       roles: this._fb.array([],Validators.min(1))
     });
   }

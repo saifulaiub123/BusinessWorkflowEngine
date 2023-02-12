@@ -18,12 +18,12 @@ namespace BWE.Api.Controllers
             _roleManager= roleManager;
         }
 
-        //[HttpGet]
-        //[Route("GetRoles")]
-        //public async Task<IActionResult> GetRoles()
-        //{
-        //    var roles = await _roleManager.Roles.ToListAsync();
-        //    return Ok(roles);
-        //}
+        [HttpGet]
+        [Route("GetRoles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roles = await _roleManager.Roles.ToListAsync();
+            return Ok(roles);
+        }
     }
 }

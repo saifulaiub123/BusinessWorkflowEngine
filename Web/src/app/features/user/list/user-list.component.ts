@@ -37,18 +37,21 @@ sourceUser: LocalDataSource = new LocalDataSource();
     name: {
       title: 'Name',
       type: 'string',
-      filter: true,
+      filter: false,
+      valuePrepareFunction: (value, row, cell) => {
+        return row.firstName + " " + row.lastName;
+      },
     },
     email: {
       title: 'Email',
       type: 'string',
       filter:true,
     },
-    phoneNumber: {
-      title: 'Phone Number',
-      type: 'string',
-      filter:true,
-    },
+    // phoneNumber: {
+    //   title: 'Phone Number',
+    //   type: 'string',
+    //   filter:true,
+    // },
     action: {
       title: 'Action',
       type: 'custom',

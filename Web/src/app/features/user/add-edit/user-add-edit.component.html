@@ -11,17 +11,31 @@
             <div class="row show-grid">
               <div class="col-6 col-sm-12">
                 <div class="form-group row">
-                  <label for="inputName" class="label col-sm-4 col-form-label">Name*</label>
+                  <label for="inputName" class="label col-sm-4 col-form-label">First Name*</label>
                   <div class="col-sm-8">
                     <input type="text"
                       nbInput
-                      formControlName="name"
+                      formControlName="firstName"
                       fullWidth
-                      id="inputName"
+                      id="inputFirstName"
                       fieldSize="medium"
-                      placeholder="Name"
+                      placeholder="First Name"
                     >
-                    <ngx-validation-message label="Name" [showRequired]="name?.errors?.required && name.touched"></ngx-validation-message>
+                    <ngx-validation-message label="First name" [showRequired]="name?.errors?.required && name.touched"></ngx-validation-message>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputName" class="label col-sm-4 col-form-label">Last Name*</label>
+                  <div class="col-sm-8">
+                    <input type="text"
+                      nbInput
+                      formControlName="lastName"
+                      fullWidth
+                      id="inputLastName"
+                      fieldSize="medium"
+                      placeholder="Last Name"
+                    >
+                    <ngx-validation-message label="Last name" [showRequired]="name?.errors?.required && name.touched"></ngx-validation-message>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -39,7 +53,7 @@
                     <ngx-validation-message label="Email" [showRequired]="email?.errors?.required && email.touched"></ngx-validation-message>
                   </div>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                   <label for="inputPhoneNumber" class="label col-sm-4 col-form-label">Phone Number</label>
                   <div class="col-sm-8">
                     <input type="text"
@@ -51,7 +65,7 @@
                       placeholder="Phone number"
                     >
                   </div>
-                </div>
+                </div> -->
                 <div class="form-group row">
                   <label for="inputRole" class="label col-sm-4 col-form-label">Role</label>
                   <div class="col-sm-8">

@@ -39,15 +39,15 @@ const routes: Routes = [{
       loadChildren: () => import('./script/script.module')
       .then(m => m.ScriptModule),
     },
-    // {
-    //   path: 'settings',
-    //   canActivate: [AuthGuard],
-    //   data: {
-    //     role: ['Admin','User','Partner']
-    //   },
-    //   loadChildren: () => import('./settings/settings.module')
-    //   .then(m => m.SettingsModule),
-    // },
+    {
+      path: 'settings',
+      canActivate: [AuthGuard],
+      data: {
+        role: ['Admin','User','Partner']
+      },
+      loadChildren: () => import('./settings/settings.module')
+      .then(m => m.SettingsModule),
+    },
     {
       path: '',
       redirectTo: 'dashboard',
