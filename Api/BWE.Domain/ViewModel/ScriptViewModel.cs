@@ -7,5 +7,6 @@ namespace BWE.Domain.ViewModel
         public string UserName { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime? LastUpdated { get; set; }
+        public ServerViewModel Server { get; set; }
     }
 }

@@ -1,10 +1,16 @@
-﻿using BWE.Application.IService;
+﻿using BWE.Application.IHelper;
+using BWE.Application.IService;
 using BWE.Domain.Constant;
 using BWE.Domain.IEntity;
 using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
+using System.Security;
+using System.Text;
 
 namespace BWE.Api.Controllers
 {
@@ -15,12 +21,15 @@ namespace BWE.Api.Controllers
         private readonly IScriptUserPermissionService _scriptUserPermissionService;
         private readonly IUserService _usrService;
         private readonly ICurrentUser _currentUser;
-        public ScriptController(IScriptService scriptService, ICurrentUser currentUser, IUserService usrService, IScriptUserPermissionService scriptUserPermissionService)
+
+        private readonly IPowerShellHelper _powerShellHelper;
+        public ScriptController(IScriptService scriptService, ICurrentUser currentUser, IUserService usrService, IScriptUserPermissionService scriptUserPermissionService, IPowerShellHelper powerShellHelper)
         {
             _scriptService = scriptService;
             _currentUser = currentUser;
             _usrService = usrService;
             _scriptUserPermissionService = scriptUserPermissionService;
+            _powerShellHelper = powerShellHelper;
         }
 
         [HttpPost]
@@ -131,6 +140,21 @@ namespace BWE.Api.Controllers
             }
             await _scriptService.DeleteScript(id);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("RunScript")]
+        public async Task<ActionResult> RunScript([FromQuery] int scriptId)
+        {
+            var hasPermission = await _scriptService.HasPermissionToModify((int)scriptId, _currentUser.User.Id);
+            if (!hasPermission)
+            {
+                return Forbid();
+            }
+            var script = await _scriptService.GetScriptById(scriptId);
+            await _powerShellHelper.RunPowerShellScript(script);
+            return Ok();
+
         }
 
     }

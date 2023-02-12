@@ -97,7 +97,6 @@ export class ListComponent implements OnInit, OnDestroy  {
             isEditable : true,
             isDeletable : true,
             isRunnable : true,
-
           };
         },
         filter: false,
@@ -180,10 +179,16 @@ export class ListComponent implements OnInit, OnDestroy  {
   subscribeSharedData(){
       this._tableSharedService.isDeleteScript$.pipe(takeUntil(this.ngDestroy)).subscribe((row : any) => {
         if(!_.isEmpty(row))
-          {
+        {
           this.sourceScripts.remove(row);
-            this.sourceSharedScripts.remove(row);
-            this.deleteScript(row.id);
+          this.sourceSharedScripts.remove(row);
+          this.deleteScript(row.id);
+        }
+      });
+      this._tableSharedService.isRunScript$.pipe(takeUntil(this.ngDestroy)).subscribe((row : any) => {
+        if(!_.isEmpty(row))
+        {
+          this.runScript(row.id);
         }
       });
   }
@@ -210,7 +215,12 @@ export class ListComponent implements OnInit, OnDestroy  {
   {
     this._scriptService.deleteScript(id).subscribe((data) =>{
       this._toastrService.success("Successfull","Deleted Successfully");
-      this._tableSharedService.unsetDeleteScript();
+    })
+  }
+  runScript(id: number)
+  {
+    this._scriptService.runScript(id).subscribe((data) => {
+
     })
   }
   navigateToAddScript()
@@ -221,5 +231,7 @@ export class ListComponent implements OnInit, OnDestroy  {
   ngOnDestroy(): void {
     this.ngDestroy.next(true);
     this.ngDestroy.complete();
+    this._tableSharedService.unsetDeleteScript();
+    this._tableSharedService.unsetRunScript();
   }
 }

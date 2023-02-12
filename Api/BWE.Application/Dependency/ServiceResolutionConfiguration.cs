@@ -1,4 +1,6 @@
-﻿using BWE.Application.IService;
+﻿using BWE.Application.Helper;
+using BWE.Application.IHelper;
+using BWE.Application.IService;
 using BWE.Application.Service;
 using BWE.Domain.IEntity;
 using BWE.Domain.UnitOfWork;
@@ -19,6 +21,10 @@ namespace BWE.Application.Dependency
             services.AddScoped<IScriptService, ScriptService>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IScriptUserPermissionService, ScriptUserPermissionService>();
+
+
+
+            services.AddScoped<IPowerShellHelper, PowerShellHelper>();
 
             return services;
         }

@@ -31,7 +31,7 @@ export class ScriptActionComponent implements OnInit {
   }
   runScript()
   {
-
+    this._tableSharedService.runScript(this.rowData);
   }
   deleteScript()
   {

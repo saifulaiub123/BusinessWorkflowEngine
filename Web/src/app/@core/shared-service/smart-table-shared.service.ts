@@ -15,6 +15,9 @@ export class SmartTableSharedervice {
   private deleteSharedUser$ = new BehaviorSubject<boolean>(false);
   isDeleteSharedUser$ = this.deleteSharedUser$.asObservable();
 
+  private runScript$ = new BehaviorSubject(null);
+  isRunScript$ = this.runScript$.asObservable();
+
   constructor() {}
   deleteScript(row: any)
   {
@@ -33,5 +36,14 @@ export class SmartTableSharedervice {
   deleteRow(row: any)
   {
     this.deleteRow$.next(row);
+  }
+
+  runScript(row: any)
+  {
+    this.runScript$.next(row);
+  }
+  unsetRunScript()
+  {
+    this.runScript(null);
   }
 }
