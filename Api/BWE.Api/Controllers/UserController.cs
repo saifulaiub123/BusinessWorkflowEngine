@@ -69,7 +69,7 @@ namespace BWE.Api.Controllers
         [Route("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
-            var user = await _userManager.FindByIdAsync(changePasswordModel.Id.ToString());
+            var user = await _userManager.FindByIdAsync(_currentUser.User.Id.ToString());
             await _userManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
             return Ok();
         }

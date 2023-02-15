@@ -4,7 +4,6 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Security;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BWE.Application.Helper
 {
@@ -37,7 +36,6 @@ namespace BWE.Application.Helper
                 {
                     sb.AppendLine(x.ToString());
                 }
-
             }
             runspace.Close();
         }

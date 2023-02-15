@@ -177,20 +177,20 @@ export class ListComponent implements OnInit, OnDestroy  {
     this.loadData();
   }
   subscribeSharedData(){
-      this._tableSharedService.isDeleteScript$.pipe(takeUntil(this.ngDestroy)).subscribe((row : any) => {
-        if(!_.isEmpty(row))
-        {
-          this.sourceScripts.remove(row);
-          this.sourceSharedScripts.remove(row);
-          this.deleteScript(row.id);
-        }
-      });
-      this._tableSharedService.isRunScript$.pipe(takeUntil(this.ngDestroy)).subscribe((row : any) => {
-        if(!_.isEmpty(row))
-        {
-          this.runScript(row.id);
-        }
-      });
+    this._tableSharedService.isDeleteScript$.pipe(takeUntil(this.ngDestroy)).subscribe((row : any) => {
+      if(!_.isEmpty(row))
+      {
+        this.sourceScripts.remove(row);
+        this.sourceSharedScripts.remove(row);
+        this.deleteScript(row.id);
+      }
+    });
+    this._tableSharedService.isRunScript$.pipe(takeUntil(this.ngDestroy)).subscribe((row : any) => {
+      if(!_.isEmpty(row))
+      {
+        this.runScript(row.id);
+      }
+    });
   }
   loadData()
   {

@@ -154,7 +154,6 @@ namespace BWE.Api.Controllers
             }
             var script = await _scriptService.GetScriptById(scriptId);
             var jobId = BackgroundJob.Enqueue(() => _powerShellHelper.RunPowerShellScript(script));
-            //await _powerShellHelper.RunPowerShellScript(script);
             return Ok();
 
         }
