@@ -64,7 +64,10 @@ namespace BWE.Application.Helper
                     scriptHistory.CreatedBy = userId;
                     scriptHistory.UpdatedBy = userId;
                     await _scriptHistoryService.Update(scriptHistory);
-                    BackgroundJob.Enqueue(() => _mailHelper.SendEmail(script.SendTo, "Script Execution", $"Script with id {script.Id} has been executed successfully"));
+                    if(script.SendTo != null)
+                    {
+                        BackgroundJob.Enqueue(() => _mailHelper.SendEmail(script.SendTo, "Script Execution", $"Script with id {script.Id} has been executed successfully"));
+                    }
                 }
                 runspace.Close();
             }
