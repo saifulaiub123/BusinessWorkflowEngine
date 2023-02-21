@@ -11,7 +11,9 @@ namespace BWE.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         IRepository<Script, int> ScriptRepository { get; }
+        IRepository<ScriptHistory, int> ScriptHistoryRepository { get; }
         IRepository<ScriptUserPermission, int> ScriptUserPermissionRepository { get; }
+        void ClearChangeTracker();
         void Commit();
         void Rollback();
         Task CommitAsync();

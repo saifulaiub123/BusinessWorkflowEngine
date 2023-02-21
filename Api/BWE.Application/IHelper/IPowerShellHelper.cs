@@ -9,6 +9,6 @@ namespace BWE.Application.IHelper
 {
     public interface IPowerShellHelper
     {
-        Task RunPowerShellScript(ScriptViewModel script);
+        Task RunPowerShellScript(ScriptViewModel script,int userId);
     }
 }

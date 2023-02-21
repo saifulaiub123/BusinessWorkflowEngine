@@ -15,7 +15,7 @@ namespace BWE.Infrastructure.UnitOfWork
     {
         private readonly ApplicationDbContext _dbContext;
         public IRepository<Script, int> _scriptRepository;
-
+        public IRepository<ScriptHistory, int> _scriptHistoryRepository;
         public IRepository<ScriptUserPermission, int> _scriptUserPermissionRepository;
 
         public UnitOfWork(ApplicationDbContext dbContext)
@@ -27,13 +27,20 @@ namespace BWE.Infrastructure.UnitOfWork
         {
             get { return _scriptRepository = _scriptRepository ?? new Repository<Script, int>(_dbContext); }
         }
+        public IRepository<ScriptHistory, int> ScriptHistoryRepository
+        {
+            get { return _scriptHistoryRepository = _scriptHistoryRepository ?? new Repository<ScriptHistory, int>(_dbContext); }
+        }
 
         public IRepository<ScriptUserPermission, int> ScriptUserPermissionRepository
         {
             get { return _scriptUserPermissionRepository = _scriptUserPermissionRepository ?? new Repository<ScriptUserPermission, int>(_dbContext); }
         }
 
-        
+        public void ClearChangeTracker()
+        {
+            _dbContext.ChangeTracker.Clear();
+        }
 
         public void Commit()
             => _dbContext.SaveChanges();

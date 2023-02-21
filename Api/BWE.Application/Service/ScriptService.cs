@@ -13,7 +13,6 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace BWE.Application.Service
 {
-    [Authorize]
     public class ScriptService : IScriptService
     {
         private readonly IRepository<Script, int> _scriptRepository;
