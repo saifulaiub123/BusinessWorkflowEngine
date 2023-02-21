@@ -102,6 +102,7 @@ namespace BWE.Application.Service
                 existingScript.Description = script.Description;
                 existingScript.DestinationServerId = script.DestinationServerId;
                 existingScript.Content = script.Content;
+                existingScript.SendTo = script.SendTo;
                 await _unitOfWork.ScriptRepository.Update(existingScript);
             }
             foreach(var deletedScript in script.DeletedScriptUserPermissions)

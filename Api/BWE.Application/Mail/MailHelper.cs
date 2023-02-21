@@ -2,6 +2,7 @@
 using BWE.Domain.Settings;
 using MailKit.Security;
 using MimeKit;
+using Serilog;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace BWE.Application.Mail
@@ -50,7 +51,7 @@ namespace BWE.Application.Mail
             }
             catch(System.Exception ex)
             {
-                var p = ex;
+                Log.Error(ex.Message);
             }
             
         }

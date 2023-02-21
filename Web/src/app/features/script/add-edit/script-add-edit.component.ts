@@ -172,6 +172,7 @@ settingsUserList = {
       id: this._fb.control(null, []),
       name: this._fb.control({value: null,disabled: this.actionMode == 'view'}, [Validators.required]),
       description: this._fb.control({value: null,disabled: this.actionMode == 'view'}, []),
+      sendTo: this._fb.control({value: null,disabled: this.actionMode == 'view'}, []),
       destinationServerId: this._fb.control({value: null,disabled: this.actionMode == 'view'}, [Validators.required]),
       content: this._fb.control({value: null,disabled: this.actionMode == 'view'},[Validators.required])
     });

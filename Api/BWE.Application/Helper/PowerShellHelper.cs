@@ -8,6 +8,7 @@ using System.Text;
 using BWE.Domain.Model;
 using BWE.Application.Enum;
 using BWE.Application.Mail;
+using Hangfire;
 
 namespace BWE.Application.Helper
 {
@@ -63,7 +64,7 @@ namespace BWE.Application.Helper
                     scriptHistory.CreatedBy = userId;
                     scriptHistory.UpdatedBy = userId;
                     await _scriptHistoryService.Update(scriptHistory);
-                    await _mailHelper.SendEmail("saifulprogrammer@gmail.com","Script Execution",$"Script with id {script.Id} has been executed successfully");
+                    BackgroundJob.Enqueue(() => _mailHelper.SendEmail(script.SendTo, "Script Execution", $"Script with id {script.Id} has been executed successfully"));
                 }
                 runspace.Close();
             }
@@ -88,7 +89,6 @@ namespace BWE.Application.Helper
                     });
                 }
                 runspace.Close();
-                await _mailHelper.SendEmail("saifulprogrammer@gmail.com", "Script Execution", $"Script with id {script.Id} execution failed");
             }
         }
     }
