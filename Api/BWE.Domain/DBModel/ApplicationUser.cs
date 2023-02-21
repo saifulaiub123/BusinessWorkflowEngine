@@ -29,6 +29,9 @@ namespace BWE.Domain.DBModel
         public virtual ScriptUserPermission CreatedByScriptUserPermission { get; set; }
         public virtual ScriptUserPermission? UpdatedByScriptUserPermission { get; set; }
 
-        
+        public virtual ScriptHistory CreatedByScriptHistory { get; set; }
+        public virtual ScriptHistory? UpdatedByScriptHistory { get; set; }
+
+
     }
 }

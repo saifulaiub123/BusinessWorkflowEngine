@@ -44,5 +44,35 @@ namespace BWE.Api.Authentication
             return await Task.Run(() => new JwtSecurityTokenHandler().WriteToken(token));
 
         }
+
+        public bool IsTokenValid(string token)
+        {
+
+            if (token == null)
+                return false;
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]);
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                //var userId = int.Parse(jwtToken.Claims.First(x => x.Type == ClaimConstant.Id).Value);
+                //return userId;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
