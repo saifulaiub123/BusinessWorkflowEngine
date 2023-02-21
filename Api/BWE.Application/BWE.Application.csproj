@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
     <PackageReference Include="System.Management.Automation" Version="7.2.9" />
   </ItemGroup>
 

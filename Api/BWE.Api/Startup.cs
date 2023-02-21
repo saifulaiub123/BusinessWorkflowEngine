@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Hangfire;
+using BWE.Domain.Settings;
 
 namespace BWE.Api
 {
@@ -93,6 +94,7 @@ namespace BWE.Api
                     }
                 });
             });
+            services.AddSingleton(Configuration.GetSection(ConfigOptions.MailSettingsConfigName).Get<MailSettings>());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

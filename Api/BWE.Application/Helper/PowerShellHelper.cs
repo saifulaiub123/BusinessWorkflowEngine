@@ -7,17 +7,19 @@ using System.Security;
 using System.Text;
 using BWE.Domain.Model;
 using BWE.Application.Enum;
-using Microsoft.AspNetCore.Http;
+using BWE.Application.Mail;
 
 namespace BWE.Application.Helper
 {
     public class PowerShellHelper : IPowerShellHelper
     {
         private readonly IScriptHistoryService _scriptHistoryService;
+        private readonly IMailHelper _mailHelper;
 
-        public PowerShellHelper(IScriptHistoryService scriptHistoryService)
+        public PowerShellHelper(IScriptHistoryService scriptHistoryService, IMailHelper mailHelper)
         {
             _scriptHistoryService = scriptHistoryService;
+            _mailHelper = mailHelper;
         }
 
         public async Task RunPowerShellScript(ScriptViewModel script,int userId)
@@ -61,6 +63,7 @@ namespace BWE.Application.Helper
                     scriptHistory.CreatedBy = userId;
                     scriptHistory.UpdatedBy = userId;
                     await _scriptHistoryService.Update(scriptHistory);
+                    await _mailHelper.SendEmail("saifulprogrammer@gmail.com","Script Execution",$"Script with id {script.Id} has been executed successfully");
                 }
                 runspace.Close();
             }
@@ -85,6 +88,7 @@ namespace BWE.Application.Helper
                     });
                 }
                 runspace.Close();
+                await _mailHelper.SendEmail("saifulprogrammer@gmail.com", "Script Execution", $"Script with id {script.Id} execution failed");
             }
         }
     }
