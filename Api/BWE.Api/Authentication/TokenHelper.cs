@@ -42,14 +42,12 @@ namespace BWE.Api.Authentication
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
             return await Task.Run(() => new JwtSecurityTokenHandler().WriteToken(token));
-
         }
 
-        public bool IsTokenValid(string token)
+        public List<Claim> ValidateToken(string token)
         {
-
             if (token == null)
-                return false;
+                return new List<Claim>();
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]);
@@ -67,11 +65,11 @@ namespace BWE.Api.Authentication
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 //var userId = int.Parse(jwtToken.Claims.First(x => x.Type == ClaimConstant.Id).Value);
                 //return userId;
-                return true;
+                return jwtToken.Claims.ToList();
             }
             catch(Exception ex)
             {
-                return false;
+                return null;
             }
         }
     }

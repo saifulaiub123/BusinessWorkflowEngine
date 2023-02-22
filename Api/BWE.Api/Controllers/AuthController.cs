@@ -81,7 +81,6 @@ namespace BWE.Api.Controllers
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var token = await _jwtExt.GetToken(user, userRoles);
-            var isValid = _jwtExt.IsTokenValid(token);
             return Ok(new LoginResponse()
             {
                 Token = token,

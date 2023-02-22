@@ -1,5 +1,6 @@
 
 {
+  "backendUrl": "https://localhost:44371",
   "apiUrl": "https://localhost:44371/api"
 }
 

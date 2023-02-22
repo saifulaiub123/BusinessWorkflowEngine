@@ -1,3 +1,4 @@
+
 import { RewardPointsComponent } from './reward-points/reward-points.component';
 import { UserAddEditComponent } from './user/add-edit/user-add-edit.component';
 import { NgModule } from '@angular/core';
@@ -15,6 +16,8 @@ import { AccessDeniedComponent } from '../page/access-denied/access-denied.compo
 import { SettingsModule } from './settings/settings.module';
 import { OrderComponent } from './order/order.component';
 import { ReportsComponent } from './reports/reports.component';
+import { HangfireComponent } from './hangfire/hangfire.component';
+import { PipeModule } from '../@core/pipe/pipe.module';
 
 @NgModule({
   imports: [
@@ -26,6 +29,7 @@ import { ReportsComponent } from './reports/reports.component';
     NbButtonModule,
     ComponentsModule,
     ReactiveFormsModule,
+    PipeModule,
   ],
   declarations: [
     FeaturesComponent,
@@ -33,6 +37,7 @@ import { ReportsComponent } from './reports/reports.component';
     OrderComponent,
     RewardPointsComponent,
     ReportsComponent,
+    HangfireComponent
   ],
 })
 export class FeaturesModule {

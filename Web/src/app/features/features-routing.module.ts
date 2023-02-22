@@ -1,3 +1,4 @@
+import { HangfireComponent } from './hangfire/hangfire.component';
 import { ReportsComponent } from './reports/reports.component';
 import { RewardPointsComponent } from './reward-points/reward-points.component';
 import { OrderComponent } from './order/order.component';
@@ -38,6 +39,14 @@ const routes: Routes = [{
       },
       loadChildren: () => import('./script/script.module')
       .then(m => m.ScriptModule),
+    },
+    {
+      path: 'hangfire',
+      canActivate: [AuthGuard],
+      data: {
+        role: ['Admin']
+      },
+      component: HangfireComponent,
     },
     {
       path: 'settings',

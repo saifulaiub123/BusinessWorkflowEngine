@@ -17,6 +17,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Hangfire;
 using BWE.Domain.Settings;
+using Hangfire.Dashboard;
+using BWE.Api.Filter;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BWE.Api
 {
@@ -112,6 +115,16 @@ namespace BWE.Api
             }
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            var hangFireDashboardOptions = new DashboardOptions
+            {
+                DashboardTitle = "Scheduler",
+                AppPath = null,
+                Authorization = new IDashboardAuthorizationFilter[]
+                {
+                    new HangfireAuthorizationFilter("Admin")
+                }
+            };
             app.UseHangfireDashboard();
             app.UseRouting();
             app.UseMiddleware<ErrorHandlingMiddleware>();

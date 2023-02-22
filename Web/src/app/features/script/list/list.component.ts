@@ -14,6 +14,8 @@ import { ROLES } from '../../../auth/roles';
 import { first, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
+const settings = require('../../../../environments/settings.json');
+
 @Component({
   selector: 'ngx-list',
   templateUrl: './list.component.html',
@@ -226,6 +228,15 @@ export class ListComponent implements OnInit, OnDestroy  {
   navigateToAddScript()
   {
     this.router.navigateByUrl('feature/script/add-edit')
+  }
+  navigateToScriptHistory()
+  {
+    this.router.navigateByUrl('feature/script/add-edit')
+  }
+  navigateToJobDashboard()
+  {
+    //window.open(settings.backendUrl + "/hangfire", "_blank");
+    this.router.navigateByUrl('feature/hangfire')
   }
 
   ngOnDestroy(): void {
