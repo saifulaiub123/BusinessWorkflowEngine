@@ -4,12 +4,17 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using BWE.Domain.Constant;
 using BWE.Domain.DBModel;
+using BWE.Domain.Model;
+using Microsoft.AspNetCore.Identity;
+using Azure.Core;
+using System.Data;
 
 namespace BWE.Api.Authentication
 {
     public class TokenHelper
     {
         private readonly IConfiguration _configuration;
+        
         public TokenHelper(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -44,10 +49,11 @@ namespace BWE.Api.Authentication
             return await Task.Run(() => new JwtSecurityTokenHandler().WriteToken(token));
         }
 
-        public List<Claim> ValidateToken(string token)
+        public async Task<List<string>> ValidateToken(string token)
         {
+            var roles = new List<string>();
             if (token == null)
-                return new List<Claim>();
+                return null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]);
@@ -63,9 +69,19 @@ namespace BWE.Api.Authentication
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                //var userId = int.Parse(jwtToken.Claims.First(x => x.Type == ClaimConstant.Id).Value);
-                //return userId;
-                return jwtToken.Claims.ToList();
+                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == ClaimConstant.Id).Value);
+                if (userId <= 0) return null;
+
+                foreach (var item in jwtToken.Claims)
+                {
+                    switch (item.Type)
+                    {
+                        case ClaimTypes.Role:
+                            roles.Add(item.Value);
+                            break;
+                    }
+                }
+                return roles;
             }
             catch(Exception ex)
             {

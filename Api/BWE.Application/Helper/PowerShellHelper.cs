@@ -22,7 +22,7 @@ namespace BWE.Application.Helper
             _scriptHistoryService = scriptHistoryService;
             _mailHelper = mailHelper;
         }
-
+        [AutomaticRetry(Attempts = 0, LogEvents = false, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public async Task RunPowerShellScript(ScriptViewModel script,int userId)
         {
             var scriptHistory = new ScriptHistoryModel();
@@ -73,7 +73,7 @@ namespace BWE.Application.Helper
             }
             catch(System.Exception ex)
             {
-                if(scriptHistory.Id != 0)
+                if (scriptHistory.Id != 0)
                 {
                     scriptHistory.Status = (int)ScriptHistoryStatusEnum.Failed;
                     scriptHistory.Output = ex.Message;
@@ -92,6 +92,11 @@ namespace BWE.Application.Helper
                     });
                 }
                 runspace.Close();
+                if (script.SendTo != null)
+                {
+                    BackgroundJob.Enqueue(() => _mailHelper.SendEmail(script.SendTo, "Script Execution", $"Script with id {script.Id} has been failed to execute"));
+                }
+                throw;
             }
         }
     }

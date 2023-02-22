@@ -20,6 +20,7 @@ using BWE.Domain.Settings;
 using Hangfire.Dashboard;
 using BWE.Api.Filter;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.CookiePolicy;
 
 namespace BWE.Api
 {
@@ -64,6 +65,21 @@ namespace BWE.Api
             services.TokenAuthentication(Configuration);
 
             services.AddAutoMapper(typeof(ApplicationUserMapping).Assembly);
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+
+                // prevent access from javascript 
+                options.HttpOnly = HttpOnlyPolicy.Always;
+
+                // If the URI that provides the cookie is HTTPS, 
+                // cookie will be sent ONLY for HTTPS requests 
+                // (refer mozilla docs for details) 
+                options.Secure = CookieSecurePolicy.SameAsRequest;
+
+                // refer "SameSite cookies" on mozilla website 
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+
+            });
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
@@ -115,17 +131,18 @@ namespace BWE.Api
             }
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseCookiePolicy();
 
             var hangFireDashboardOptions = new DashboardOptions
             {
                 DashboardTitle = "Scheduler",
                 AppPath = null,
-                Authorization = new IDashboardAuthorizationFilter[]
-                {
-                    new HangfireAuthorizationFilter("Admin")
-                }
+                //Authorization = new IDashboardAuthorizationFilter[]
+                //{
+                //    new HangfireAuthorizationFilter("Admin")
+                //}
             };
-            app.UseHangfireDashboard();
+            app.UseHangfireDashboard("/job/hangfire", hangFireDashboardOptions);
             app.UseRouting();
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseCors();

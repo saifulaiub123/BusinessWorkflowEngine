@@ -13,6 +13,7 @@ import { NbToastrService } from '@nebular/theme';
 import { ROLES } from '../../../auth/roles';
 import { first, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { NbAuthService } from '@nebular/auth';
 
 const settings = require('../../../../environments/settings.json');
 
@@ -235,8 +236,7 @@ export class ListComponent implements OnInit, OnDestroy  {
   }
   navigateToJobDashboard()
   {
-    //window.open(settings.backendUrl + "/hangfire", "_blank");
-    this.router.navigateByUrl('feature/hangfire')
+      this.router.navigateByUrl('feature/hangfire')
   }
 
   ngOnDestroy(): void {
