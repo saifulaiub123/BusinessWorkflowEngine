@@ -66,7 +66,11 @@ namespace BWE.Application.Helper
                     await _scriptHistoryService.Update(scriptHistory);
                     if(!string.IsNullOrEmpty(script.SendTo))
                     {
-                        BackgroundJob.Enqueue(() => _mailHelper.SendEmail(script.SendTo, "Script Execution", $"Script with id {script.Id} has been executed successfully"));
+                        BackgroundJob.Enqueue(() => _mailHelper.SendEmail(
+                            script.SendTo,
+                            "Script Execution", $"Script with id <b>{script.Id}</b> has been executed successfully  <br/>" +
+                            $"<b>Output:</b>  <br/> {sb.ToString()}"
+                            ));
                     }
                 }
                 runspace.Close();
@@ -94,7 +98,10 @@ namespace BWE.Application.Helper
                 runspace.Close();
                 if (!string.IsNullOrEmpty(script.SendTo))
                 {
-                    BackgroundJob.Enqueue(() => _mailHelper.SendEmail(script.SendTo, "Script Execution", $"Script with id {script.Id} has been failed to execute"));
+                    BackgroundJob.Enqueue(() => _mailHelper.SendEmail(script.SendTo,
+                        "Script Execution", $"Script with id {script.Id} has been failed to execute. <br/>" +
+                        $"Pleas check log for details"
+                    ));
                 }
                 throw;
             }

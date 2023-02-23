@@ -32,7 +32,7 @@ namespace BWE.Application.Service
         {
             var data = await _unitOfWork.ScriptHistoryRepository.GetAll(x => !x.IsDeleted, y => y.Script, y => y.CreatedByUser, y => y.Script.CreatedByUser);
             var result = _mapper.Map<List<ScriptHistoryViewModel>>(data);
-            return result;
+            return result.OrderByDescending(x=> x.DateCreated).ToList();
         }
 
         public async Task<ScriptHistoryViewModel> GetById(int id)
@@ -46,7 +46,7 @@ namespace BWE.Application.Service
         {
             var data = await _unitOfWork.ScriptHistoryRepository.GetAll(x => !x.IsDeleted && x.CreatedBy == userId, y=> y.Script, y=> y.CreatedByUser, y=> y.Script.CreatedByUser);
             var result = _mapper.Map<List<ScriptHistoryViewModel>>(data);
-            return result;
+            return result.OrderByDescending(x=> x.DateCreated).ToList();
         }
 
         public async Task Update(ScriptHistoryModel scriptHistory)
