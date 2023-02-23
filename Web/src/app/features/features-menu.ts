@@ -9,6 +9,12 @@ export const MENU_ITEMS = [
     home: true,
   },
   {
+    title: 'Hangfire Dashboard',
+    icon: 'keypad-outline',
+    link: '/feature/hangfire',
+    role: ['Admin'],
+  },
+  {
     title: 'Script',
     icon: 'keypad-outline',
     link: '/feature/script',
