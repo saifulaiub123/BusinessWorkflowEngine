@@ -1,8 +1,11 @@
 
 import { Component, Input, OnInit } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
+import { UserService } from '../../../@core/services/user.service';
 import { DashboardComponent } from '../../../features/dashboard/dashboard/dashboard.component';
 import { UserAddEditComponent } from '../../../features/user/add-edit/user-add-edit.component';
+import { UserSharedService } from '../../../features/user/user-shared.service';
+import { ConfirmModalComponent } from '../../modal/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'ngx-user-custom-action',
@@ -13,7 +16,11 @@ export class UserCustomActionComponent implements OnInit {
 
   @Input() value: number;
 
-  constructor(private _dialogService: NbDialogService,) { }
+  constructor
+  (
+    private _dialogService: NbDialogService,
+    private _userSharedService: UserSharedService,
+  ) { }
 
   ngOnInit() {
   }
@@ -29,13 +36,20 @@ export class UserCustomActionComponent implements OnInit {
       }
     })
     .onClose.subscribe(value => {
-      if(value)
-      {
 
+    }
+    );
+  }
+  delete()
+  {
+    this._dialogService.open(ConfirmModalComponent)
+    .onClose.subscribe((isDelete: boolean) => {
+      if(isDelete)
+      {
+        this._userSharedService.deleteUser(this.value);
       }
     }
     );
-
   }
 
 }

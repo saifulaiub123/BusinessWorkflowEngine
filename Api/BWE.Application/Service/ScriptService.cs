@@ -42,7 +42,7 @@ namespace BWE.Application.Service
         }
         public async Task<List<ScriptViewModel>> GetAll()
         {
-            var data = (await _scriptRepository.GetAll(x => !x.IsDeleted, include => include.Server, includes => includes.CreatedByUser))
+            var data = (await _scriptRepository.GetAll(x => !x.IsDeleted && x.CreatedByUser.Status != 0, include => include.Server, includes => includes.CreatedByUser))
                 .OrderByDescending(x => x.DateCreated)
                 .ToList();
             var result = _mapper.Map<List<ScriptViewModel>>(data);
@@ -66,7 +66,7 @@ namespace BWE.Application.Service
 
         public async Task<List<ScriptViewModel>> GetSharedScriptsByUserId(int userId)
         {
-            var sharedScript = (await _scriptUserPermissionRepository.GetAll(x => x.UserId == userId && !x.Script.IsDeleted, 
+            var sharedScript = (await _scriptUserPermissionRepository.GetAll(x => x.UserId == userId && !x.Script.IsDeleted && x.Script.CreatedByUser.Status != 0, 
                 include => include.Script, 
                 include => include.Script.Server, 
                 include => include.Script.CreatedByUser,
@@ -80,7 +80,7 @@ namespace BWE.Application.Service
         }
         public async Task<List<SharedScriptUserViewModel>> GetScriptSharedUser(int scriptId)
         {
-            var sharedScript = (await _scriptUserPermissionRepository.GetAll(x => x.ScriptId == scriptId && !x.Script.IsDeleted, 
+            var sharedScript = (await _scriptUserPermissionRepository.GetAll(x => x.ScriptId == scriptId && !x.Script.IsDeleted && x.User.Status != 0, 
                 include => include.User,
                 include => include.Permission
                 ))

@@ -63,5 +63,14 @@ namespace BWE.Application.Service
                 await _userManager.UpdateAsync(exist);
             }
         }
+        public async Task Delete(int id)
+        {
+            var exist = await _userRepository.GetUserById(id);
+            if (exist != null)
+            {
+                exist.Status = 0;
+                await _userManager.UpdateAsync(exist);
+            }
+        }
     }
 }

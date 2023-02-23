@@ -65,6 +65,13 @@ namespace BWE.Api.Controllers
             await _userService.UpdateUser(user);
             return Ok();
         }
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _userService.Delete(id);
+            return Ok();
+        }
         [HttpPatch]
         [Route("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)

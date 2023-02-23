@@ -1,1 +1,6 @@
-<button nbButton type="button" status="primary" size="medium" style="float: left" (click)="openEditModal()">Edit</button>
+
+<div class="custom-action">
+  <nb-icon icon="edit-2-outline" status="primary" title="Edit User" (click)="openEditModal()"></nb-icon>
+  <nb-icon icon="trash-2-outline" status="danger" title="Delete User" (click)="delete()"></nb-icon>
+</div>
+
