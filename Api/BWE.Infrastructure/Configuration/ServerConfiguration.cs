@@ -22,6 +22,8 @@ namespace BWE.Infrastructure.Configuration
                 .HasMaxLength(100);
             builder.Property(x => x.Password)
                 .HasMaxLength(250);
+            builder.Property(x => x.IsDeleted)
+                .HasDefaultValue(false);
 
             builder.HasMany(s => s.Scripts)
                 .WithOne(g => g.Server)

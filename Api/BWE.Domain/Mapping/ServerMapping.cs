@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BWE.Domain.DBModel;
+using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
 
 namespace BWE.Domain.Mapping
@@ -8,8 +9,8 @@ namespace BWE.Domain.Mapping
     {
         public ServerMapping()
         {
-            CreateMap<ServerViewModel, Server>()
-                .ReverseMap();
+            CreateMap<ServerViewModel, Server>().ReverseMap();
+            CreateMap<ServerModel, Server>().ReverseMap();
         }
     }
 }

@@ -16,10 +16,12 @@ namespace BWE.Api.Controllers
     {
         private readonly IScriptHistoryService _scriptHistoryService;
         private ICurrentUser _currentUser;
-        public ScriptHistoryController(IScriptHistoryService scriptHistoryService, ICurrentUser currentUser)
+        private IUserService _userService;
+        public ScriptHistoryController(IScriptHistoryService scriptHistoryService, ICurrentUser currentUser, IUserService userService)
         {
             _scriptHistoryService = scriptHistoryService;
             _currentUser = currentUser;
+            _userService = userService;
         }
 
         //[HttpPost]
@@ -58,15 +60,15 @@ namespace BWE.Api.Controllers
         [Route("GetByUserId")]
         public async Task<ActionResult> GetByUserId([FromQuery] int userId)
         {
-            //var isAdmin = await _usrService.IsAdmin(userId);
-            //if (isAdmin)
-            //{
-            //    return Ok(await _scriptService.GetAll());
-            //}
-            //if (!isAdmin && _currentUser.User.Id != userId)
-            //{
-            //    return Forbid();
-            //}
+            var isAdmin = await _userService.IsAdmin(userId);
+            if (isAdmin)
+            {
+                return Ok(await _scriptHistoryService.GetAll());
+            }
+            if (!isAdmin && _currentUser.User.Id != userId)
+            {
+                return Forbid();
+            }
             var result = await _scriptHistoryService.GetByUserId(userId);
             return Ok(result);
         }

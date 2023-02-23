@@ -147,7 +147,7 @@ namespace BWE.Api.Controllers
         [Route("RunScript")]
         public async Task<ActionResult> RunScript([FromQuery] int scriptId)
         {
-            var hasPermission = await _scriptService.HasPermissionToModify((int)scriptId, _currentUser.User.Id);
+            var hasPermission = await _scriptService.HasPermissionToView((int)scriptId, _currentUser.User.Id);
             if (!hasPermission)
             {
                 return Forbid();

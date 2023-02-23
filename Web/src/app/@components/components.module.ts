@@ -22,6 +22,9 @@ import { CustomDeleteComponent } from './custom-smart-table-components/custom-de
 import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.component';
 import { BackComponent } from './back/back.component';
 import { ScriptRunConfirmationComponent } from './modal/script-run-confirmation/script-run-confirmation.component';
+import { ScriptHistoryResultComponent } from './custom-smart-table-components/script-history-result/script-history-result.component';
+import { ShowContentComponent } from './modal/show-content/show-content.component';
+import { ScriptHistoryStatusComponent } from './custom-smart-table-components/script-history-status/script-history-status.component';
 
 const COMPONENTS = [
   NgxValidationMessageComponent,
@@ -47,7 +50,7 @@ const COMPONENTS = [
     NbCardModule,
   ],
   exports: [...COMPONENTS],
-  declarations: [...COMPONENTS, ScriptRunConfirmationComponent],
+  declarations: [...COMPONENTS, ScriptRunConfirmationComponent, ScriptHistoryResultComponent, ShowContentComponent, ScriptHistoryStatusComponent],
   entryComponents: [
     NgxFilterByNumberComponent,
   ],

@@ -1,3 +1,4 @@
+import { ScriptHistoryComponent } from './script-history/script-history.component';
 import { AuthGuard } from './../../auth/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -30,6 +31,14 @@ const routes: Routes = [{
         role: ['Admin','User']
       },
       component: ScriptAddEditComponent,
+    },
+    {
+      path: 'history',
+      canActivate: [AuthGuard],
+      data: {
+        role: ['Admin','User']
+      },
+      component: ScriptHistoryComponent,
     },
     {
       path: '',

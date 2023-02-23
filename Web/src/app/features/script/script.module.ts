@@ -11,6 +11,7 @@ import { UserRoutingModule } from '../user/user-routing.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsRoutingModule } from '../../pages/forms/forms-routing.module';
+import { ScriptHistoryComponent } from './script-history/script-history.component';
 
 
 
@@ -18,6 +19,7 @@ import { FormsRoutingModule } from '../../pages/forms/forms-routing.module';
   declarations: [
     ScriptAddEditComponent,
     ListComponent,
+    ScriptHistoryComponent,
   ],
   imports: [
     CommonModule,

@@ -9,7 +9,7 @@ namespace BWE.Application.IService
         Task<ScriptHistoryModel> AddReturn(ScriptHistoryModel scriptHistory);
         Task Update(ScriptHistoryModel scriptHistory);
         Task<ScriptHistoryViewModel> GetById(int id);
-        Task<ScriptHistoryViewModel> GetByUserId(int userId);
+        Task<List<ScriptHistoryViewModel>> GetByUserId(int userId);
         Task<List<ScriptHistoryViewModel>> GetAll();
     }
 }

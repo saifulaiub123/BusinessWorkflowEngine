@@ -15,6 +15,12 @@ export const MENU_ITEMS = [
     role: ['Admin','User']
   },
   {
+    title: 'Script History',
+    icon: 'keypad-outline',
+    link: '/feature/script/history',
+    role: ['Admin','User']
+  },
+  {
     title: 'User',
     icon: 'keypad-outline',
     link: '/feature/user',

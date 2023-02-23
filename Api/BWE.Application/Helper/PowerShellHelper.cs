@@ -64,7 +64,7 @@ namespace BWE.Application.Helper
                     scriptHistory.CreatedBy = userId;
                     scriptHistory.UpdatedBy = userId;
                     await _scriptHistoryService.Update(scriptHistory);
-                    if(script.SendTo != null)
+                    if(!string.IsNullOrEmpty(script.SendTo))
                     {
                         BackgroundJob.Enqueue(() => _mailHelper.SendEmail(script.SendTo, "Script Execution", $"Script with id {script.Id} has been executed successfully"));
                     }
@@ -92,7 +92,7 @@ namespace BWE.Application.Helper
                     });
                 }
                 runspace.Close();
-                if (script.SendTo != null)
+                if (!string.IsNullOrEmpty(script.SendTo))
                 {
                     BackgroundJob.Enqueue(() => _mailHelper.SendEmail(script.SendTo, "Script Execution", $"Script with id {script.Id} has been failed to execute"));
                 }
