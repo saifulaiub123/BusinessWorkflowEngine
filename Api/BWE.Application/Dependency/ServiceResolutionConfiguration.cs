@@ -17,6 +17,7 @@ namespace BWE.Application.Dependency
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            #region Services
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IOtpService, OtpService>();
             services.AddScoped<ICurrentUser, CurrentUser>();
@@ -28,6 +29,7 @@ namespace BWE.Application.Dependency
             services.AddScoped<IScriptUserPermissionService, ScriptUserPermissionService>();
             services.AddScoped<IPowerShellHelper, PowerShellHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
+            #endregion
 
             return services;
         }

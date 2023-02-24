@@ -9,6 +9,7 @@ namespace BWE.Infrastructure.Dependency
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            #region Services
             //services.AddScoped(typeof(Domain.IRepository.IRepository<typeof(Script),int>), typeof(Repository.Repository<typeof(Script),int>));
             services.AddScoped<IOtpRepository, OtpRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -17,6 +18,7 @@ namespace BWE.Infrastructure.Dependency
             services.AddScoped<IRepository<Script, int>, Repository<Script,int>>();
             services.AddScoped<IRepository<ScriptHistory, int>, Repository<ScriptHistory, int>>();
             services.AddScoped<IRepository<ScriptUserPermission, int>, Repository<ScriptUserPermission, int>>();
+            #endregion
             return services;
         }
     }

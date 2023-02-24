@@ -22,6 +22,9 @@ namespace BWE.Infrastructure.UnitOfWork
         {
             _dbContext = dbContext;
         }
+        #region Repositories
+
+        #endregion
 
         public IRepository<Script, int> ScriptRepository
         {
