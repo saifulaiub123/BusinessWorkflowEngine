@@ -72,7 +72,7 @@ namespace BWE.Api.Controllers
             var result = await _signInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password,true,false);
             if (!result.Succeeded)
             {
-                return BadRequest();
+                return BadRequest("Incorrect username/password");
             }
 
             var user = await _userManager.FindByNameAsync(loginModel.Email);

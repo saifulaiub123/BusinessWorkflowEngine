@@ -174,7 +174,7 @@ namespace BWE.Application.Service
             var isScriptOwner = await _scriptRepository.FindBy(x => x.Id == scriptId && x.CreatedBy == userId);
             if (isScriptOwner != null) return true;
 
-            var hasPermissionToView = await _scriptUserPermissionRepository.FindBy(x => x.ScriptId == scriptId && x.UserId == userId && x.PermissionId == (int)PermissionEnum.Read);
+            var hasPermissionToView = await _scriptUserPermissionRepository.FindBy(x => x.ScriptId == scriptId && x.UserId == userId && (x.PermissionId == (int)PermissionEnum.Read || x.PermissionId == (int)PermissionEnum.Modify));
             if (hasPermissionToView != null) return true;
 
             return false;

@@ -84,6 +84,11 @@ export class ScriptHistoryComponent implements OnInit {
           return value;
         }
       },
+      createdByName: {
+        title: 'Executed By',
+        type: 'string',
+        filter: false,
+      },
       scriptOwnerName: {
         title: 'Script Owner',
         type: 'string',
