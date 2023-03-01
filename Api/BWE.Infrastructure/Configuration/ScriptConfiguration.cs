@@ -19,7 +19,9 @@ namespace BWE.Infrastructure.Configuration
             builder.Property(x => x.Name)
                 .HasMaxLength(250);
             builder.Property(x => x.Description)
-                .HasMaxLength(250); 
+                .HasMaxLength(250);
+            builder.Property(x => x.Parameter)
+                .HasMaxLength(500);
             builder.Property(x => x.SendTo)
                 .HasMaxLength(250);
             builder.Property(x => x.IsDeleted)

@@ -6,6 +6,7 @@ export class Script {
   destinationServerId?: string;
   destinationServerName?: string;
   content?: string;
+  Parameter?: string;
   sendTo?: string;
   createdBy?: number;
   dateCreated?: string;

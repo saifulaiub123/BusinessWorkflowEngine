@@ -8,6 +8,7 @@ namespace BWE.Domain.DBModel
         public string? Description { get; set; }
         public int DestinationServerId { get; set; }
         public string Content { get; set; }
+        public string? Parameter { get; set; }
         public string? SendTo { get; set; }
         public bool IsDeleted { get; set; }
         

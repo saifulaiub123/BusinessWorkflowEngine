@@ -18,7 +18,7 @@
                     <div class="row show-grid">
                       <div class="col-6 col-sm-12">
                         <div class="form-group row">
-                          <label for="inputName" class="label col-sm-4 col-form-label">Name*</label>
+                          <label for="inputName" class="label col-sm-4 col-form-label">Name<span class="text-danger">*</span></label>
                           <div class="col-sm-8">
                             <input type="text"
                               nbInput
@@ -47,7 +47,7 @@
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="inputDestinationServer" class="label col-sm-4 col-form-label">Destination Server*</label>
+                          <label for="inputDestinationServer" class="label col-sm-4 col-form-label">Destination Server<span class="text-danger">*</span></label>
                           <div class="col-sm-8">
                               <nb-select id="inputDestinationServer" formControlName="destinationServerId" placeholder="Destination Server">
                                 <nb-option *ngFor="let server of serverData" [value]="server.id">{{server.name}}</nb-option>
@@ -71,7 +71,7 @@
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="inputContent" class="label col-sm-4 col-form-label">Content*</label>
+                          <label for="inputContent" class="label col-sm-4 col-form-label">Content<span class="text-danger">*</span></label>
                           <div class="col-sm-8">
 
                               <input nbInput type="file" *ngIf="actionMode != 'view'" id="avatar" name="avatar" accept=".txt, .ps" (change)="onChange($event.target.files)">
@@ -80,6 +80,12 @@
                               </div>
                               <textarea rows="15" nbInput fullWidth formControlName="content"  placeholder="Copy Powershell Script"></textarea>
                           <ngx-validation-message label="Powershell script" [showRequired]="content?.errors?.required && content.touched"></ngx-validation-message>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="inputParameter" class="label col-sm-4 col-form-label">Parameters</label>
+                          <div class="col-sm-8">
+                              <textarea rows="5" nbInput fullWidth formControlName="parameter"  placeholder="Add Parameters"></textarea>
                           </div>
                         </div>
                       </div>

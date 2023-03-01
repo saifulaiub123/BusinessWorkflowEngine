@@ -143,6 +143,7 @@ settingsUserList = {
     get description() { return this.scriptAddEditFormGroup.get('description'); }
     get destinationServerId() { return this.scriptAddEditFormGroup.get('destinationServerId'); }
     get content() { return this.scriptAddEditFormGroup.get('content'); }
+    get parameter() { return this.scriptAddEditFormGroup.get('parameter'); }
 
 
   ngOnInit(): void {
@@ -174,7 +175,8 @@ settingsUserList = {
       description: this._fb.control({value: null,disabled: this.actionMode == 'view'}, []),
       sendTo: this._fb.control({value: null,disabled: this.actionMode == 'view'}, []),
       destinationServerId: this._fb.control({value: null,disabled: this.actionMode == 'view'}, [Validators.required]),
-      content: this._fb.control({value: null,disabled: this.actionMode == 'view'},[Validators.required])
+      content: this._fb.control({value: null,disabled: this.actionMode == 'view'},[Validators.required]),
+      parameter: this._fb.control({value: null,disabled: this.actionMode == 'view'}, []),
     });
   }
 

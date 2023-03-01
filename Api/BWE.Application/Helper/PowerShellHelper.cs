@@ -45,7 +45,7 @@ namespace BWE.Application.Helper
                 {
                     ps.Runspace = runspace;
                     ps.AddScript(script.Content);
-                    //ps.AddArgument(@"Argument1");
+                    ps.AddArgument(script.Parameter);
                     StringBuilder sb = new StringBuilder();
                     scriptHistory = await _scriptHistoryService.AddReturn(new ScriptHistoryModel()
                     {
