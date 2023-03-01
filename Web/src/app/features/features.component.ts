@@ -52,16 +52,30 @@ export class FeaturesComponent implements OnInit,OnDestroy {
         }
       }
     })
-    this.menuService.addItems(this.menu, 'menu');
+    this.menuService.addItems(this.menu,'menu');
   }
 
   addMenuItem(item: any,index: number)
   {
-    this.menu.push({
+    let newMenu = {
       title: item.title,
       icon: item.icon,
-      link: item.link,
-      home: index === 0? true : false
-    });
+      link: item.link
+      //home: index === 0? true : false
+    }
+    if(item.children && item.children.length > 0)
+    {
+      newMenu['children'] = [];
+      item.children.forEach((item,index) => {
+        newMenu['children'].push({
+          title : item.title,
+          icon: item.icon,
+          link : item.link,
+          hidden: item.hidden
+        })
+      })
+
+    }
+    this.menu.push(newMenu);
   }
 }

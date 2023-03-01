@@ -3,32 +3,45 @@ import { NbMenuItem } from '@nebular/theme';
 export const MENU_ITEMS = [
   {
     title: 'Dashboard',
-    icon: 'keypad-outline',
+    icon: 'grid-outline',
     link: '/feature/dashboard',
     role: ['Admin','User','Partner'],
     home: true,
   },
   {
     title: 'Hangfire Dashboard',
-    icon: 'keypad-outline',
+    icon: 'activity-outline',
     link: '/feature/hangfire',
     role: ['Admin'],
   },
   {
     title: 'Script',
-    icon: 'keypad-outline',
+    icon: 'book-open-outline',
     link: '/feature/script',
-    role: ['Admin','User']
+    role: ['Admin','User'],
+    children: [
+      {
+        title: 'List',
+        icon: 'list-outline',
+        link: '/feature/script/list',
+        hidden: false,
+      },{
+        title: 'Add',
+        icon: 'file-add-outline',
+        link: '/feature/script/add-edit',
+        hidden: false,
+      }
+    ]
   },
   {
     title: 'Script History',
-    icon: 'keypad-outline',
+    icon: 'file-text-outline',
     link: '/feature/script/history',
     role: ['Admin','User']
   },
   {
     title: 'User',
-    icon: 'keypad-outline',
+    icon: 'people-outline',
     link: '/feature/user',
     role: ['Admin']
   },
