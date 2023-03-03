@@ -143,17 +143,17 @@ namespace BWE.Api.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("RunScript")]
-        public async Task<ActionResult> RunScript([FromQuery] int scriptId)
+        public async Task<ActionResult> RunScript([FromBody] RunScriptModel model)
         {
-            var hasPermission = await _scriptService.HasPermissionToView((int)scriptId, _currentUser.User.Id);
+            var hasPermission = await _scriptService.HasPermissionToView((int)model.ScriptId, _currentUser.User.Id);
             if (!hasPermission)
             {
                 return Forbid();
             }
-            var script = await _scriptService.GetScriptById(scriptId);
-            var jobId = BackgroundJob.Enqueue(() => _powerShellHelper.RunPowerShellScript(script,_currentUser.User.Id));
+            var script = await _scriptService.GetScriptById(model.ScriptId);
+            var jobId = BackgroundJob.Enqueue(() => _powerShellHelper.RunPowerShellScript(script,model.DynamicValues, _currentUser.User.Id));
             return Ok();
 
         }

@@ -38,9 +38,9 @@ export class SmartTableSharedervice {
     this.deleteRow$.next(row);
   }
 
-  runScript(row: any)
+  runScript(data: any)
   {
-    this.runScript$.next(row);
+    this.runScript$.next(data);
   }
   unsetRunScript()
   {

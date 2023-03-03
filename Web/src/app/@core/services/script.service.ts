@@ -36,7 +36,7 @@ export class ScriptService {
   deleteScript(id: Number): Observable<any>{
     return this.http.delete<any>(`${this.api}/DeleteScript?id=`+id);
   }
-  runScript(id: Number): Observable<any>{
-    return this.http.get<any>(`${this.api}/RunScript?scriptId=`+id);
+  runScript(data : any): Observable<any>{
+    return this.http.post<any>(`${this.api}/RunScript`,data);
   }
 }

@@ -47,7 +47,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.toastrService.show('Error',err.message,{ duration : 10000, status : 'danger' });
         }
 
-        return throwError(err);
+          return throwError(err);
       }
       ));
   }

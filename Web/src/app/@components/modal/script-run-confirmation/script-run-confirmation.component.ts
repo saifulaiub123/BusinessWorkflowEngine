@@ -8,16 +8,17 @@ import { NbDialogRef } from '@nebular/theme';
 })
 export class ScriptRunConfirmationComponent implements OnInit {
 
+  dynamicValues: string = "";
   constructor(protected _ref: NbDialogRef<ScriptRunConfirmationComponent>) { }
 
   ngOnInit(): void {
   }
   ok()
   {
-    this._ref.close(true);
+    this._ref.close({values : this.dynamicValues,isRun : true});
   }
   cancel(){
-    this._ref.close(false);
+    this._ref.close({values : null,isRun : false});
   }
 
 }

@@ -34,11 +34,11 @@ export class ScriptActionComponent implements OnInit {
   runScript()
   {
     this._dialogService.open(ScriptRunConfirmationComponent)
-    .onClose.subscribe((isRun: boolean) => {
-      if(isRun)
+    .onClose.subscribe((data: any) => {
+      if(data.isRun == true)
       {
         this._toastrService.info("Run script","A mail will be sent after executing the script",{ duration: 12000});
-        this._tableSharedService.runScript(this.rowData);
+        this._tableSharedService.runScript({dynamicValues : data.values != null ? data.values : "", scriptId: this.rowData.id});
       }
     }
     );
@@ -48,7 +48,7 @@ export class ScriptActionComponent implements OnInit {
     this._dialogService.open(ConfirmModalComponent)
     .onClose.subscribe((isDelete: boolean) => {
       if(isDelete)
-      { 
+      {
         this._tableSharedService.deleteScript(this.rowData);
       }
     }

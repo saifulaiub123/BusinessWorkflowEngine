@@ -188,10 +188,10 @@ export class ListComponent implements OnInit, OnDestroy  {
         this.deleteScript(row.id);
       }
     });
-    this._tableSharedService.isRunScript$.pipe(takeUntil(this.ngDestroy)).subscribe((row : any) => {
-      if(!_.isEmpty(row))
+    this._tableSharedService.isRunScript$.pipe(takeUntil(this.ngDestroy)).subscribe((data : any) => {
+      if(data !== null)
       {
-        this.runScript(row.id);
+        this.runScript(data);
       }
     });
   }
@@ -220,9 +220,9 @@ export class ListComponent implements OnInit, OnDestroy  {
       this._toastrService.success("Successfull","Deleted Successfully");
     })
   }
-  runScript(id: number)
+  runScript(data: any)
   {
-    this._scriptService.runScript(id).subscribe((data) => {
+    this._scriptService.runScript(data).subscribe((data) => {
 
     })
   }

@@ -1,9 +1,29 @@
-<nb-card>
-  <nb-card-body>
-    <p>Are you sure?</p>
-  </nb-card-body>
+
+
+
+  <nb-card class="nb-card-main">
+    <nb-card-header>
+      Run Script
+    </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+            <div class="row show-grid">
+              <div class="col-6 col-sm-12">
+
+                <div class="form-group row">
+                  <label for="inputParameter" class="label col-sm-2 col-form-label">Dynamic Values</label>
+                  <div class="col-sm-10">
+                      <textarea rows="5" [(ngModel)]="dynamicValues" nbInput fullWidth placeholder="New-Variable -Name name -Value value"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
   <nb-card-footer>
-    <button class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
-    <button nbButton status="success" (click)="ok()">Ok</button>
+    <button nbButton status="success" style="float:right;margin-left: 5px" (click)="ok()">Ok</button>
+    <button class="cancel" nbButton status="danger" style="float:right" (click)="cancel()">Cancel</button>
   </nb-card-footer>
-</nb-card>

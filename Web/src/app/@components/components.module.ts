@@ -1,4 +1,4 @@
-import { NbCardModule, NbSelectModule } from '@nebular/theme';
+import { NbCardModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 /*
  * Copyright (c) Akveo 2019. All Rights Reserved.
  * Licensed under the Single Application / Multi Application License.
@@ -48,6 +48,7 @@ const COMPONENTS = [
     NbIconModule,
     NbSelectModule,
     NbCardModule,
+    NbInputModule
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS, ScriptRunConfirmationComponent, ScriptHistoryResultComponent, ShowContentComponent, ScriptHistoryStatusComponent],

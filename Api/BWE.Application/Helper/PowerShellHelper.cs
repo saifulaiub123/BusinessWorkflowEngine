@@ -23,10 +23,11 @@ namespace BWE.Application.Helper
             _mailHelper = mailHelper;
         }
         [AutomaticRetry(Attempts = 0, LogEvents = false, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        public async Task RunPowerShellScript(ScriptViewModel script,int userId)
+        public async Task RunPowerShellScript(ScriptViewModel script, string dynamicValues, int userId)
         {
             var scriptHistory = new ScriptHistoryModel();
             var securestring = new SecureString();
+            var content = (dynamicValues !=null ? dynamicValues : "")+ System.Environment.NewLine + script.Content;
             foreach (Char c in script.Server.Password)
             {
                 securestring.AppendChar(c);
@@ -44,8 +45,8 @@ namespace BWE.Application.Helper
                 using (PowerShell ps = PowerShell.Create())
                 {
                     ps.Runspace = runspace;
-                    ps.AddScript(script.Content);
-                    ps.AddArgument(script.Parameter);
+                    ps.AddScript(content);
+                    //ps.AddArgument(script.Parameter);
                     StringBuilder sb = new StringBuilder();
                     scriptHistory = await _scriptHistoryService.AddReturn(new ScriptHistoryModel()
                     {
