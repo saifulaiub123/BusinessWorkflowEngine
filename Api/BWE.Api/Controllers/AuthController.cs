@@ -53,7 +53,7 @@ namespace BWE.Api.Controllers
                 Email = registerModel.Email,
                 UserName = registerModel.Email,
                 PasswordHash = registerModel.Password,
-                Status = 1
+                Status = 2
             };
             var result = await _userManager.CreateAsync(user, registerModel.Password);
             if (!result.Succeeded)

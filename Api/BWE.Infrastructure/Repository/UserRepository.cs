@@ -35,6 +35,10 @@ namespace BWE.Infrastructure.Repository
         {
             return await _context.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).Where(x => x.Id == id && x.Status == 1).FirstOrDefaultAsync();
         }
+        public async Task<List<ApplicationUser>> GetPendingUsers()
+        {
+            return await _context.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).Where(x => x.Status == 1).ToListAsync();
+        }
 
         public async Task UpdateUserRole(UserRole userRole)
         {

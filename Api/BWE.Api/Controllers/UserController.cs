@@ -58,6 +58,13 @@ namespace BWE.Api.Controllers
             var user = await _userService.GetUserById(id);
             return Ok(user);
         }
+        [HttpGet]
+        [Route("GetPendingUsers")]
+        public async Task<IActionResult> GetPendingUsers()
+        {
+            var user = await _userService.GetPendingUsers();
+            return Ok(user);
+        }
         [HttpPatch]
         [Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UserModel user)

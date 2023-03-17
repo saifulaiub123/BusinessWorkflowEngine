@@ -28,6 +28,13 @@ namespace BWE.Application.Service
 
             return result;
         }
+        public async Task<List<UserViewModel>> GetPendingUsers()
+        {
+            var user = await _userRepository.GetPendingUsers();
+            var result = _mapper.Map<List<UserViewModel>>(user);
+
+            return result;
+        }
 
         public async Task<bool> IsAdmin(int userId)
         {
