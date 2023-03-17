@@ -75,7 +75,7 @@ namespace BWE.Application.Service
             var exist = await _userRepository.GetUserById(id);
             if (exist != null)
             {
-                exist.Status = 0;
+                exist.StatusId = 0;
                 await _userManager.UpdateAsync(exist);
             }
         }

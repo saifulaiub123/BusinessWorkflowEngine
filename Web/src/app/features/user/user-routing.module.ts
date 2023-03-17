@@ -3,6 +3,7 @@ import { UserListComponent } from './list/user-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from '../../auth/auth.guard';
+import { UserPendingComponent } from './user-pending/user-pending.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,6 +15,14 @@ const routes: Routes = [{
         role: ['Admin']
       },
       component: UserListComponent,
+    },
+    {
+      path: 'pending',
+      canActivate: [AuthGuard],
+      data: {
+        role: ['Admin']
+      },
+      component: UserPendingComponent,
     },
     {
       path: 'add-edit',

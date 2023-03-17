@@ -33,23 +33,26 @@ INSERT INTO [dbo].[AspNetRoles]([Id],[ConcurrencyStamp],[Name],[NormalizedName])
 end
 
 
+SET IDENTITY_INSERT Status ON
 
---if not exists (select [name] from UserStatus where [name]='Active')
---begin
---INSERT INTO [dbo].[UserStatus]([Id],[Name]) VALUES (1,'Active');
---end
+if not exists (select [name] from Status where [name]='Active')
+begin
+INSERT INTO [dbo].[Status]([Id],[Name],[DateCreated],[CreatedBy]) VALUES (1,'Active',GETDATE(),1);
+end
 
---if not exists (select [name] from UserStatus where [name]='Pending')
---begin
---INSERT INTO [dbo].[UserStatus]([Id],[Name]) VALUES (2,'Pending');
---end
+if not exists (select [name] from Status where [name]='Pending')
+begin
+INSERT INTO [dbo].[Status]([Id],[Name],[DateCreated],[CreatedBy]) VALUES (2,'Pending',GETDATE(),1);
+end
 
---if not exists (select [name] from UserStatus where [name]='Inactive')
---begin
---INSERT INTO [dbo].[UserStatus]([Id],[Name]) VALUES (3,'Inactive');
---end
+if not exists (select [name] from Status where [name]='Inactive')
+begin
+INSERT INTO [dbo].[Status]([Id],[Name],[DateCreated],[CreatedBy]) VALUES (3,'Inactive',GETDATE(),1);
+end
 
---if not exists (select [name] from UserStatus where [name]='Blocked')
---begin
---INSERT INTO [dbo].[UserStatus]([Id],[Name]) VALUES (4,'Blocked');
---end
+if not exists (select [name] from Status where [name]='Blocked')
+begin
+INSERT INTO [dbo].[Status]([Id],[Name],[DateCreated],[CreatedBy]) VALUES (4,'Blocked',GETDATE(),1);
+end
+
+SET IDENTITY_INSERT Status OFF

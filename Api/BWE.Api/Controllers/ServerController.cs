@@ -1,9 +1,6 @@
 ﻿using BWE.Application.IService;
-using BWE.Application.Service;
-using BWE.Domain.Constant;
 using BWE.Domain.IEntity;
 using BWE.Domain.Model;
-using BWE.Domain.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

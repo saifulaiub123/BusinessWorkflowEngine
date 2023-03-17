@@ -4,6 +4,7 @@ using BWE.Infrastructure.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BWE.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230317101938_add-status-table")]
+    partial class addstatustable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,8 +105,6 @@ namespace BWE.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("StatusId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -568,17 +569,6 @@ namespace BWE.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BWE.Domain.DBModel.ApplicationUser", b =>
-                {
-                    b.HasOne("BWE.Domain.DBModel.Status", "Status")
-                        .WithOne("UserStatusApplicationUser")
-                        .HasForeignKey("BWE.Domain.DBModel.ApplicationUser", "StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Status");
-                });
-
             modelBuilder.Entity("BWE.Domain.DBModel.Permission", b =>
                 {
                     b.HasOne("BWE.Domain.DBModel.ApplicationUser", "CreatedByUser")
@@ -831,12 +821,6 @@ namespace BWE.Infrastructure.Migrations
             modelBuilder.Entity("BWE.Domain.DBModel.Server", b =>
                 {
                     b.Navigation("Scripts");
-                });
-
-            modelBuilder.Entity("BWE.Domain.DBModel.Status", b =>
-                {
-                    b.Navigation("UserStatusApplicationUser")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

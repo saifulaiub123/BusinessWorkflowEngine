@@ -8,7 +8,7 @@ namespace BWE.Domain.DBModel
         
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int Status { get; set; }
+        public int StatusId { get; set; }
         public virtual ICollection<IdentityUserClaim<int>> Claims { get; set; }
         public virtual ICollection<IdentityUserLogin<int>> Logins { get; set; }
         public virtual ICollection<IdentityUserToken<int>> Tokens { get; set; }
@@ -16,6 +16,8 @@ namespace BWE.Domain.DBModel
 
         public virtual ICollection<ScriptUserPermission>? ScriptUserPermissions { get; set; }
 
+
+        public virtual Status Status { get; set; }
 
         public virtual Permission CreatedByPermission { get; set; }
         public virtual Permission? UpdatedByPermission { get; set; }

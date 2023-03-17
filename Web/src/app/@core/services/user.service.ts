@@ -19,6 +19,9 @@ export class UserService {
   getUsers(): Observable<User[]>{
     return this.http.get<User[]>(`${this.api}/GetUsers`);
   }
+  getPendingUsers(): Observable<User[]>{
+    return this.http.get<User[]>(`${this.api}/GetPendingUsers`);
+  }
   getShareableUsers(): Observable<User[]>{
     return this.http.get<User[]>(`${this.api}/GetShareableUsers`);
   }

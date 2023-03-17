@@ -8,6 +8,9 @@ namespace BWE.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
+            builder.HasIndex(x => x.StatusId)
+                .IsUnique(false);
+
             builder.Property(x => x.FirstName)
                 .IsRequired()
                 .HasMaxLength(250);
@@ -19,7 +22,7 @@ namespace BWE.Infrastructure.Configuration
                 .HasMaxLength(250);
             builder.Property(x => x.PasswordHash)
                 .IsRequired();
-            builder.Property(x => x.Status)
+            builder.Property(x => x.StatusId)
                .IsRequired()
                .HasMaxLength(10);
         }

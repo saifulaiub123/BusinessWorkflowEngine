@@ -15,11 +15,8 @@ namespace BWE.Domain.Mapping
                 .ReverseMap();
 
             CreateMap<ApplicationUser, UserViewModel>()
-                //.ForMember(u => u.Id, opt => opt.MapFrom(x => x.Id))
-                .ForMember(u => u.Name, opt => opt.MapFrom(x => x.FirstName +" "+x.LastName))
-                //.ForMember(u => u.Email, opt => opt.MapFrom(x => x.Email))
-                //.ForMember(u => u.PhoneNumber, opt => opt.MapFrom(x => x.PhoneNumber))
-                //.ForMember(u => u.UserRoles, opt => opt.MapFrom(x => x.PhoneNumber))
+                .ForMember(u => u.Name, opt => opt.MapFrom(x => x.FirstName + " " + x.LastName))
+                .ForMember(u => u.Status, opt => opt.MapFrom(x => x.Status.Name))
                 .ReverseMap();
 
             CreateMap<UserRole, UserRoleViewModel>().ReverseMap();

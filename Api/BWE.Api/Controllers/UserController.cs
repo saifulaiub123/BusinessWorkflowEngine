@@ -37,7 +37,10 @@ namespace BWE.Api.Controllers
         [Route("GetUsers")]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).Where(x => x.Status == 1).ToListAsync();
+            var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role)
+                //.Include(x => x.Status)
+                .ToListAsync();
+            var result = _mapper.Map<List<UserViewModel>>(users);
             return Ok(users);
         }
         [HttpGet]

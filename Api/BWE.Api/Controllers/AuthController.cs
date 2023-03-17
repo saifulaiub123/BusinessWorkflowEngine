@@ -53,7 +53,7 @@ namespace BWE.Api.Controllers
                 Email = registerModel.Email,
                 UserName = registerModel.Email,
                 PasswordHash = registerModel.Password,
-                Status = 2
+                StatusId = 2
             };
             var result = await _userManager.CreateAsync(user, registerModel.Password);
             if (!result.Succeeded)
@@ -77,7 +77,7 @@ namespace BWE.Api.Controllers
 
             var user = await _userManager.FindByNameAsync(loginModel.Email);
 
-            if (user == null || user.Status == 0) return BadRequest();
+            if (user == null || user.StatusId == 0) return BadRequest();
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
