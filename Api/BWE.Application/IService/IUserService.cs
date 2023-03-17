@@ -6,6 +6,7 @@ namespace BWE.Application.IService
     public interface IUserService
     {
         Task<UserViewModel> GetUserById(int id);
+        Task<List<StatusViewModel>> GetAllStatus();
         Task<List<UserViewModel>> GetPendingUsers();
         Task UpdateUser(UserModel user);
         Task Delete(int id);

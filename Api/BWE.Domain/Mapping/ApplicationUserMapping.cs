@@ -21,6 +21,7 @@ namespace BWE.Domain.Mapping
 
             CreateMap<UserRole, UserRoleViewModel>().ReverseMap();
             CreateMap<Role, RoleViewModel>().ReverseMap();
+            CreateMap<Status, StatusViewModel>().ReverseMap();
         }
     }
 }

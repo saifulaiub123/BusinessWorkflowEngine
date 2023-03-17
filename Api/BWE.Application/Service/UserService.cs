@@ -6,6 +6,7 @@ using BWE.Domain.IRepository;
 using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
 using BWE.Domain.Constant;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace BWE.Application.Service
 {
@@ -25,6 +26,14 @@ namespace BWE.Application.Service
         {
             var user = await _userRepository.GetUserById(id);
             var result = _mapper.Map<UserViewModel>(user);
+
+            return result;
+        }
+        
+        public async Task<List<StatusViewModel>> GetAllStatus()
+        {
+            var status = await _userRepository.GetAllStatus();
+            var result = _mapper.Map<List<StatusViewModel>>(status);
 
             return result;
         }
@@ -53,6 +62,8 @@ namespace BWE.Application.Service
                 exist.FirstName = user.FirstName;
                 exist.LastName = user.LastName;
                 exist.PhoneNumber = user.PhoneNumber;
+                exist.Status = await _userRepository.GetStatusById(user.StatusId);
+                exist.StatusId = user.StatusId;
                 foreach (var existUserRole in exist.UserRoles)
                 {
                     if (!user.Roles.Any(x => x == existUserRole.RoleId))

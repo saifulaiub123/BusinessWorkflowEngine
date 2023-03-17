@@ -33,7 +33,7 @@ namespace BWE.Infrastructure.Repository
 
         public async Task<ApplicationUser> GetUserById(int id)
         {
-            return await _context.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).Where(x => x.Id == id && x.StatusId == 1).FirstOrDefaultAsync();
+            return await _context.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).Include(x=> x.Status).Where(x => x.Id == id).FirstOrDefaultAsync();
         }
         public async Task<List<ApplicationUser>> GetPendingUsers()
         {
@@ -44,6 +44,15 @@ namespace BWE.Infrastructure.Repository
         {
             _context.UserRoles.Update(userRole);
             await _context.SaveChangesAsync();
+        }
+ 
+        public async Task<List<Status>> GetAllStatus()
+        {
+            return await _context.Status.ToListAsync();
+        }
+        public async Task<Status> GetStatusById(int id)
+        {
+            return await _context.Status.Where(x=> x.Id == id).FirstOrDefaultAsync();
         }
     }
 }

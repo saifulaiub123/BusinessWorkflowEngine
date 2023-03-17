@@ -1,6 +1,6 @@
 import { UserRoutingModule } from './user-routing.module';
 import { NgModule } from '@angular/core';
-import { NbCardComponent, NbMenuModule, NbCardModule, NbButtonModule, NbInputModule, NbSpinnerModule, NbCheckboxModule } from '@nebular/theme';
+import { NbCardComponent, NbMenuModule, NbCardModule, NbButtonModule, NbInputModule, NbSpinnerModule, NbCheckboxModule, NbSelectModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +25,7 @@ import { UserPendingComponent } from './user-pending/user-pending.component';
     CommonModule,
     NbCardModule,
     NbCheckboxModule,
+    NbSelectModule
   ],
   declarations: [
     UserListComponent,

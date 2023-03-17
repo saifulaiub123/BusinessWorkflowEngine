@@ -9,6 +9,7 @@ import { User } from '../../../@core/model/user';
 import { RoleService } from '../../../@core/services/role.service';
 import { UserService } from '../../../@core/services/user.service';
 import { UserSharedService } from '../user-shared.service';
+import { Status } from '../../../@core/model/status';
 
 @Component({
   selector: 'app-user-add-edit',
@@ -21,6 +22,8 @@ export class UserAddEditComponent implements OnInit {
 
 user: User = {};
 rolesData: Role[] = [];
+statusData: Status[] = [];
+
 selectedRoles: number[] = [];
 checkArray: FormArray;
 userAddEditFormGroup: FormGroup;
@@ -99,6 +102,7 @@ pageTitle: string = "User Edit"
     get email() { return this.userAddEditFormGroup.get('email'); }
     // get phoneNumber() { return this.userAddEditFormGroup.get('phoneNumber'); }
     get roles() { return <FormArray> this.userAddEditFormGroup.get('roles'); }
+    get statusId() { return <FormArray> this.userAddEditFormGroup.get('statusId'); }
 
 
   ngOnInit(): void {
@@ -113,7 +117,8 @@ pageTitle: string = "User Edit"
       lastName: this._fb.control(null, [Validators.required]),
       email: this._fb.control(null, [Validators.required]),
       // phoneNumber: this._fb.control(null, []),
-      roles: this._fb.array([],Validators.min(1))
+      roles: this._fb.array([],Validators.min(1)),
+      statusId: this._fb.control(null, [Validators.required])
     });
   }
 
@@ -121,6 +126,9 @@ pageTitle: string = "User Edit"
   {
     this._roleService.getRoles().subscribe(data => {
       this.rolesData = data;
+    })
+    this._userService.getAllStatus().subscribe(data => {
+      this.statusData = data;
     })
     if(this.userId != 0)
     {

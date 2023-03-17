@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
+import { Status } from "../model/status";
 import { User } from '../model/user';
 
 const settings = require('../../../environments/settings.json');
@@ -21,6 +22,9 @@ export class UserService {
   }
   getPendingUsers(): Observable<User[]>{
     return this.http.get<User[]>(`${this.api}/GetPendingUsers`);
+  }
+  getAllStatus(): Observable<Status[]>{
+    return this.http.get<Status[]>(`${this.api}/GetAllStatus`);
   }
   getShareableUsers(): Observable<User[]>{
     return this.http.get<User[]>(`${this.api}/GetShareableUsers`);

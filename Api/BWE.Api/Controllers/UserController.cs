@@ -38,10 +38,10 @@ namespace BWE.Api.Controllers
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role)
-                //.Include(x => x.Status)
+                .Include(x => x.Status)
                 .ToListAsync();
             var result = _mapper.Map<List<UserViewModel>>(users);
-            return Ok(users);
+            return Ok(result);
         }
         [HttpGet]
         [Route("GetShareableUsers")]
@@ -89,6 +89,13 @@ namespace BWE.Api.Controllers
             var user = await _userManager.FindByIdAsync(_currentUser.User.Id.ToString());
             await _userManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
             return Ok();
+        }
+        [HttpGet]
+        [Route("GetAllStatus")]
+        public async Task<IActionResult> GetAllStatus()
+        {
+            var result = await _userService.GetAllStatus();
+            return Ok(result);
         }
     }
 }

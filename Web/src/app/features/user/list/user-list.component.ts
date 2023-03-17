@@ -48,11 +48,11 @@ sourceUser: LocalDataSource = new LocalDataSource();
       type: 'string',
       filter:true,
     },
-    // phoneNumber: {
-    //   title: 'Phone Number',
-    //   type: 'string',
-    //   filter:true,
-    // },
+    status: {
+      title: 'Status',
+      type: 'string',
+      filter:true,
+    },
     action: {
       title: 'Action',
       type: 'custom',
