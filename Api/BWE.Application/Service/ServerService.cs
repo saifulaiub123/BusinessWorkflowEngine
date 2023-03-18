@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BWE.Application.Helper;
 using BWE.Application.IService;
 using BWE.Domain.DBModel;
 using BWE.Domain.IRepository;
@@ -20,6 +21,7 @@ namespace BWE.Application.Service
 
         public async Task Add(ServerModel model)
         {
+            model.Password = PasswordHelper.EncodePassword(model.Password);
             var data = _mapper.Map<Server>(model);
             await _serverRepository.Insert(data);
             await _serverRepository.SaveAsync();
@@ -41,13 +43,22 @@ namespace BWE.Application.Service
         {
             var result = await _serverRepository.GetAll(x=> !x.IsDeleted);
             var data =  _mapper.Map<List<ServerViewModel>>(result);
-            return data;
+            var customData = data.Select(x => new ServerViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                IpAddress = x.IpAddress,
+                MachineName = x.MachineName,
+                UserName = x.UserName
+            }).ToList();
+            return customData;
         }
 
         public async Task<ServerViewModel> GetById(int id)
         {
             var data = await _serverRepository.FindBy(x => x.Id == id && !x.IsDeleted);
             var result = _mapper.Map<ServerViewModel>(data);
+            result.Password = PasswordHelper.DecodePassword(result.Password);
             return result;
         }
 
@@ -60,7 +71,7 @@ namespace BWE.Application.Service
                 existingData.IpAddress = server.IpAddress;
                 existingData.MachineName = server.MachineName;
                 existingData.UserName = server.UserName;
-                existingData.Password = server.Password;
+                existingData.Password = PasswordHelper.EncodePassword(server.Password);
 
                 await _serverRepository.Update(existingData);
                 await _serverRepository.SaveAsync();

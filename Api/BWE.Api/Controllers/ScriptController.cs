@@ -1,4 +1,5 @@
-﻿using BWE.Application.IHelper;
+﻿using BWE.Application.Helper;
+using BWE.Application.IHelper;
 using BWE.Application.IService;
 using BWE.Domain.Constant;
 using BWE.Domain.IEntity;
@@ -153,6 +154,7 @@ namespace BWE.Api.Controllers
                 return Forbid();
             }
             var script = await _scriptService.GetScriptById(model.ScriptId);
+            script.Server.Password = PasswordHelper.DecodePassword(script.Server.Password);
             var jobId = BackgroundJob.Enqueue(() => _powerShellHelper.RunPowerShellScript(script,model.DynamicValues, _currentUser.User.Id));
             return Ok();
 
