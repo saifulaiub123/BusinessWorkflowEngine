@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { FeaturesComponent } from './features.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { AuthGuard } from '../auth/auth.guard';
+import { ServerListComponent } from './server/list/list.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,6 +31,16 @@ const routes: Routes = [{
       },
       loadChildren: () => import('./user/user.module')
       .then(m => m.UserModule),
+    },
+    {
+      path: 'server',
+      canActivate: [AuthGuard],
+      component: ServerListComponent,
+      data: {
+        role: ['Admin']
+      },
+      loadChildren: () => import('./server/server.module')
+      .then(m => m.ServerModule),
     },
     {
       path: 'script',

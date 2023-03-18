@@ -18,7 +18,7 @@ export class ScriptActionComponent implements OnInit {
   constructor(private _dialogService: NbDialogService,
     private _router : Router,
     private _tableSharedService: SmartTableSharedervice,
-    private _toastrService: NbToastrService,) { }
+    private _toastrService: NbToastrService) { }
 
   ngOnInit() {
   }

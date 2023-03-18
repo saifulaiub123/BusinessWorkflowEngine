@@ -37,7 +37,7 @@ import { PipeModule } from '../@core/pipe/pipe.module';
     OrderComponent,
     RewardPointsComponent,
     ReportsComponent,
-    HangfireComponent
+    HangfireComponent,
   ],
 })
 export class FeaturesModule {

@@ -1,0 +1,14 @@
+<nb-card>
+  <nb-card-header>
+    <ngx-back></ngx-back>
+    <button nbButton type="button" status="basic" size="medium" style="float: left" (click)="navigateToAddServer()"><nb-icon icon="plus-outline"></nb-icon>Add Server</button>
+  </nb-card-header>
+  <nb-card-body>
+      <ng2-smart-table
+        [settings]="settingsSourceServer"
+        [source]="sourceServer"
+      ></ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+

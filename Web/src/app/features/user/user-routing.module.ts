@@ -17,14 +17,6 @@ const routes: Routes = [{
       component: UserListComponent,
     },
     {
-      path: 'pending',
-      canActivate: [AuthGuard],
-      data: {
-        role: ['Admin']
-      },
-      component: UserPendingComponent,
-    },
-    {
       path: 'add-edit',
       canActivate: [AuthGuard],
       data: {

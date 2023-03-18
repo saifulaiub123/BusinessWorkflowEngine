@@ -27,7 +27,6 @@ statusData: Status[] = [];
 selectedRoles: number[] = [];
 checkArray: FormArray;
 userAddEditFormGroup: FormGroup;
-sourceUser: LocalDataSource = new LocalDataSource();
 
 submitted: boolean = false;
 loading = false;
@@ -35,57 +34,6 @@ isFormValid = false;
 isEditMode = this.userId != 0 ? true : false;
 
 pageTitle: string = "User Edit"
-
-
-
- settingsSourceUser = {
-  edit : false,
-    delete : false,
-    add : false,
-  actions: {
-    add: false,
-    delete: false,
-    edit: false
-  },
-   hideSubHeader : false,
-   noDataMessage : "No data found",
-   columns: {
-    id: {
-      title: 'Id',
-      type: 'number',
-      filter: false,
-      hide: true
-    },
-    name: {
-      title: 'Name',
-      type: 'string',
-      filter: true,
-    },
-    email: {
-      title: 'Email',
-      type: 'string',
-      filter:true,
-    },
-    phoneNumber: {
-      title: 'Phone Number',
-      type: 'string',
-      filter:true,
-    },
-    action: {
-      title: 'Action',
-      type: 'custom',
-      renderComponent: UserCustomActionComponent,
-      valuePrepareFunction: (value, row, cell) => {
-        return value;
-      },
-      filter: false,
-    }
-  },
-  attr: {
-    class: 'table table-bordered'
-  }
-};
-
 
   constructor(
     private _userService: UserService,

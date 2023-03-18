@@ -4,6 +4,7 @@ using BWE.Domain.DBModel;
 using BWE.Domain.IRepository;
 using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
+using Microsoft.AspNetCore.Hosting.Server;
 
 namespace BWE.Application.Service
 {
@@ -26,13 +27,19 @@ namespace BWE.Application.Service
 
         public async Task Delete(int id)
         {
-            await _serverRepository.Delete(id);
-            await _serverRepository.SaveAsync();
+            var existingData = await _serverRepository.FindBy(x => x.Id == id && !x.IsDeleted);
+            if (existingData != null)
+            {
+                existingData.IsDeleted = true;
+
+                await _serverRepository.Update(existingData);
+                await _serverRepository.SaveAsync();
+            }
         }
 
         public async Task<List<ServerViewModel>> GetAllServer()
         {
-            var result = await _serverRepository.GetAll();
+            var result = await _serverRepository.GetAll(x=> !x.IsDeleted);
             var data =  _mapper.Map<List<ServerViewModel>>(result);
             return data;
         }

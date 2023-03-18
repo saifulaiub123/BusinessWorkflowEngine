@@ -2,6 +2,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { UserService } from '../../../@core/services/user.service';
+import { SmartTableSharedervice } from '../../../@core/shared-service/smart-table-shared.service';
 import { DashboardComponent } from '../../../features/dashboard/dashboard/dashboard.component';
 import { UserAddEditComponent } from '../../../features/user/add-edit/user-add-edit.component';
 import { UserSharedService } from '../../../features/user/user-shared.service';
@@ -15,11 +16,13 @@ import { ConfirmModalComponent } from '../../modal/confirm-modal/confirm-modal.c
 export class UserCustomActionComponent implements OnInit {
 
   @Input() value: number;
+  @Input() rowData: any = {};
+
 
   constructor
   (
     private _dialogService: NbDialogService,
-    private _userSharedService: UserSharedService,
+    private _tableSharedService: SmartTableSharedervice,
   ) { }
 
   ngOnInit() {
@@ -46,7 +49,7 @@ export class UserCustomActionComponent implements OnInit {
     .onClose.subscribe((isDelete: boolean) => {
       if(isDelete)
       {
-        this._userSharedService.deleteUser(this.value);
+        this._tableSharedService.deleteScript(this.rowData);
       }
     }
     );

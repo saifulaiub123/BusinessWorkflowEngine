@@ -18,6 +18,18 @@ export class ServerService {
   getAllServer(): Observable<Server[]>{
     return this.http.get<Server[]>(`${this.api}/GetAllServer`);
   }
+  getServerById(id:number): Observable<Server>{
+    return this.http.get<Server>(`${this.api}/GetById?id=`+id);
+  }
+  addServer(data: any): Observable<any>{
+    return this.http.post(`${this.api}/Add`,data);
+  }
+  updateServer(data: any): Observable<any>{
+    return this.http.patch(`${this.api}/Update`,data);
+  }
+  delete(id: number): Observable<any>{
+    return this.http.delete(`${this.api}/Delete?id=${id}`);
+  }
 
 
 }

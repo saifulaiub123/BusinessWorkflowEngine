@@ -25,6 +25,7 @@ import { ScriptRunConfirmationComponent } from './modal/script-run-confirmation/
 import { ScriptHistoryResultComponent } from './custom-smart-table-components/script-history-result/script-history-result.component';
 import { ShowContentComponent } from './modal/show-content/show-content.component';
 import { ScriptHistoryStatusComponent } from './custom-smart-table-components/script-history-status/script-history-status.component';
+import { ServerCustomActionComponent } from './custom-smart-table-components/server-custom-action/server-custom-action.component';
 
 const COMPONENTS = [
   NgxValidationMessageComponent,
@@ -35,7 +36,8 @@ const COMPONENTS = [
   ConfirmModalComponent,
   CustomDeleteComponent,
   CustomNg2CheckboxComponent,
-  BackComponent
+  BackComponent,
+  ServerCustomActionComponent
 ];
 
 @NgModule({

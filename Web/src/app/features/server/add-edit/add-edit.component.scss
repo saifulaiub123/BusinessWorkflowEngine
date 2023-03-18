@@ -1,4 +1,3 @@
-
 .add-form{
   width: 100%;
 }
@@ -33,7 +32,6 @@ input::placeholder {
   max-height: 96vh;
   overflow-y: scroll;
 }
-
 
   ::ng-deep nb-layout-column {
     height: 80vw;
@@ -71,16 +69,16 @@ input::placeholder {
     font-size:0.5rem !important;
     }
 
-    .form-control-sm
-    {
-      font-size: 0.5rem !important;
-    }
+  .form-control-sm
+  {
+    font-size: 0.5rem !important;
+  }
 
-    .nb-card-main {
-      height: 700px;
-      width: 800px;
-      max-width: 1800px;
-      max-height: 900px;
-    }
+  .nb-card-main {
+    height: 700px;
+    width: 800px;
+    max-width: 1800px;
+    max-height: 900px;
+  }
 
 

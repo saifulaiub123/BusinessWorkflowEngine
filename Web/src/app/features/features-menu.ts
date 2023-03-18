@@ -45,4 +45,10 @@ export const MENU_ITEMS = [
     link: '/feature/user',
     role: ['Admin']
   },
+  {
+    title: 'Server',
+    icon: 'people-outline',
+    link: '/feature/server',
+    role: ['Admin']
+  },
 ];
