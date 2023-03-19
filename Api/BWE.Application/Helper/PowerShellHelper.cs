@@ -9,6 +9,7 @@ using BWE.Domain.Model;
 using BWE.Application.Enum;
 using BWE.Application.Mail;
 using Hangfire;
+using System.Xml;
 
 namespace BWE.Application.Helper
 {
@@ -27,8 +28,26 @@ namespace BWE.Application.Helper
         {
             var scriptHistory = new ScriptHistoryModel();
             var securestring = new SecureString();
-            var content = (dynamicValues !=null ? dynamicValues : "")+ System.Environment.NewLine + script.Content;
-            foreach (Char c in script.Server.Password)
+            StringBuilder parameter = new StringBuilder();
+            if (!string.IsNullOrEmpty(dynamicValues))
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(dynamicValues);
+                XmlNodeList nodeList = xmlDoc.GetElementsByTagName("parameters");
+                foreach (XmlNode node in nodeList)
+                {
+                    if (node.HasChildNodes)
+                    {
+                        for (int i = 0; i < node.ChildNodes.Count; i++)
+                        {
+                            parameter.Append($"New-Variable -Name {node.ChildNodes[i].Name} -Value {node.ChildNodes[i].InnerText} {System.Environment.NewLine}");
+                        }
+                    }
+                }
+            }
+            
+            var content = $"{parameter.ToString()} {System.Environment.NewLine} {script.Content}";
+            foreach (Char c in PasswordHelper.DecodePassword(script.Server.Password))
             {
                 securestring.AppendChar(c);
             }
@@ -38,7 +57,6 @@ namespace BWE.Application.Helper
             connectionInfo.ComputerName = script.Server.MachineName;
             connectionInfo.Credential = creds;
             Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo);
-            //String psProg = File.ReadAllText(@"path_for_ps.ps1");
             try
             {
                 runspace.Open();
