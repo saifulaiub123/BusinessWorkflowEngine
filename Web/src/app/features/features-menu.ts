@@ -47,7 +47,7 @@ export const MENU_ITEMS = [
   },
   {
     title: 'Server',
-    icon: 'people-outline',
+    icon: 'flip-outline',
     link: '/feature/server',
     role: ['Admin']
   },

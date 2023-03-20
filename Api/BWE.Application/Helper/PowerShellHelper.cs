@@ -24,15 +24,15 @@ namespace BWE.Application.Helper
             _mailHelper = mailHelper;
         }
         [AutomaticRetry(Attempts = 0, LogEvents = false, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        public async Task RunPowerShellScript(ScriptViewModel script, string dynamicValues, int userId)
+        public async Task RunPowerShellScript(ScriptViewModel script, string XmlParameters, int userId)
         {
             var scriptHistory = new ScriptHistoryModel();
             var securestring = new SecureString();
             StringBuilder parameter = new StringBuilder();
-            if (!string.IsNullOrEmpty(dynamicValues))
+            if (!string.IsNullOrEmpty(XmlParameters))
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(dynamicValues);
+                xmlDoc.LoadXml(XmlParameters);
                 XmlNodeList nodeList = xmlDoc.GetElementsByTagName("parameters");
                 foreach (XmlNode node in nodeList)
                 {

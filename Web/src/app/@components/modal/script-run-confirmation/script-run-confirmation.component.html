@@ -14,7 +14,8 @@
                 <div class="form-group row">
                   <label for="inputParameter" class="label col-sm-2 col-form-label">Dynamic Values</label>
                   <div class="col-sm-10">
-                      <textarea rows="5" [(ngModel)]="dynamicValues" nbInput fullWidth placeholder="New-Variable -Name name -Value value"></textarea>
+                      <textarea rows="5" [(ngModel)]="xmlParameters" nbInput fullWidth placeholder="<parameters><key>value</key></parameters>">
+                    </textarea>
                   </div>
                 </div>
               </div>
@@ -22,8 +23,9 @@
         </nb-card-body>
       </nb-card>
     </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="success" style="float:right;margin-left: 5px" (click)="ok()">Ok</button>
+      <button class="cancel" nbButton status="danger" style="float:right" (click)="cancel()">Cancel</button>
+    </nb-card-footer>
   </nb-card>
-  <nb-card-footer>
-    <button nbButton status="success" style="float:right;margin-left: 5px" (click)="ok()">Ok</button>
-    <button class="cancel" nbButton status="danger" style="float:right" (click)="cancel()">Cancel</button>
-  </nb-card-footer>
+

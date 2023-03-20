@@ -154,7 +154,7 @@ namespace BWE.Api.Controllers
                 return Forbid();
             }
             var script = await _scriptService.GetScriptById(model.ScriptId);
-            var jobId = BackgroundJob.Enqueue(() => _powerShellHelper.RunPowerShellScript(script,model.DynamicValues, _currentUser.User.Id));
+            var jobId = BackgroundJob.Enqueue(() => _powerShellHelper.RunPowerShellScript(script,model.XmlParameters, _currentUser.User.Id));
             return Ok();
 
         }
