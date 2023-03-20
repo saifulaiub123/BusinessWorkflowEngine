@@ -1,29 +1,7 @@
-/*
- * Copyright (c) Akveo 2019. All Rights Reserved.
- * Licensed under the Single Application / Multi Application License.
- * See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
- */
-
 import { Observable } from 'rxjs';
 import { DataSource } from 'ng2-smart-table/lib/lib/data-source/data-source';
-import { Settings } from './settings';
 import { UserRole } from '../../model/user-role';
 import { ILoginUser } from './ILoginUser';
-
-// export interface User {
-//   id: number;
-//   role: string;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   name?: string;
-//   age: number;
-//   login: string;
-//   picture: string;
-//   address: Address;
-//   settings: Settings;
-// }
-
 export interface IUser {
   id?: number;
   firstName?: string;

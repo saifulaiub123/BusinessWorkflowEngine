@@ -35,7 +35,6 @@ import { NgxAuthComponent } from './auth.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DateHttpInterceptor } from '../@core/interceptor/date-http-interceptor';
 import { InitUserService } from '../@theme/services/init-user.service';
-import { UserData } from '../@core/data/users';
 
 const GUARDS = [AuthGuard, AdminGuard];
 const PIPES = [AuthPipe];
