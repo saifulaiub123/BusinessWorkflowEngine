@@ -7,8 +7,6 @@ using BWE.Api.Authentication;
 using BWE.Domain.DBModel;
 using BWE.Domain.Model;
 using AutoMapper;
-using System.Linq;
-using System.Net;
 
 namespace BWE.Api.Controllers
 {

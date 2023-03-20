@@ -10,7 +10,6 @@ import { ComponentsModule } from '../../@components/components.module';
 import { UserRoutingModule } from '../user/user-routing.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { ThemeModule } from '../../@theme/theme.module';
-import { FormsRoutingModule } from '../../pages/forms/forms-routing.module';
 import { ScriptHistoryComponent } from './script-history/script-history.component';
 
 
@@ -40,7 +39,6 @@ import { ScriptHistoryComponent } from './script-history/script-history.componen
     NbCheckboxModule,
     NbRadioModule,
     NbDatepickerModule,
-    FormsRoutingModule,
     NbSelectModule,
     // ngFormsModule,
 

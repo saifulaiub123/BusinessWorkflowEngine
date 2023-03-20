@@ -6,7 +6,6 @@ using BWE.Domain.IRepository;
 using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
 using BWE.Domain.Constant;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace BWE.Application.Service
 {
