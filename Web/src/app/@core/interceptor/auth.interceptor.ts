@@ -37,16 +37,9 @@ export class AuthInterceptor implements HttpInterceptor {
           this.tokenService.clear();
           this.router.navigate(['auth/login']);
         }
-        else if (err.status === 400) {
-          this.toastrService.show('Error',err.error,{ duration : 10000, status : 'danger' });
-        }
         else if (err.status === 403) {
           this.router.navigate(['page/access-denied']);
         }
-        else{
-          this.toastrService.show('Error',err.message,{ duration : 10000, status : 'danger' });
-        }
-
           return throwError(err);
       }
       ));

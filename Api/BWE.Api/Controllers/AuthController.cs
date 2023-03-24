@@ -75,7 +75,7 @@ namespace BWE.Api.Controllers
 
             var user = await _userManager.FindByNameAsync(loginModel.Email);
 
-            if (user == null) return BadRequest();
+            if (user == null) return BadRequest("User doesn't exist");
             if (user.StatusId != 1) return BadRequest("User not approved, please contact administrator");
 
             var userRoles = await _userManager.GetRolesAsync(user);

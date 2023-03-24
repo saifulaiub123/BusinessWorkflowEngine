@@ -25,14 +25,6 @@ const routes: Routes = [{
       path: 'logout',
       component: LogoutComponent,
     }
-    // {
-    //   path: 'request-password',
-    //   component: NgxRequestPasswordComponent,
-    // },
-    // {
-    //   path: 'reset-password',
-    //   component: NgxResetPasswordComponent,
-    // },
   ],
 }];
 

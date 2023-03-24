@@ -38,7 +38,6 @@ export class NgxAuthComponent implements OnDestroy {
   authenticated: boolean = false;
   token: string = '';
 
-  // showcase of how to use the onAuthenticationChange method
   constructor(protected auth: NbAuthService, protected location: Location) {
 
     this.subscription = auth.onAuthenticationChange()

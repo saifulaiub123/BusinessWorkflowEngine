@@ -90,14 +90,7 @@ export class RegisterComponent implements OnInit {
         this._toastrService.success("Successfull","Account Created Successfully");
         this.router.navigateByUrl("auth/login");
       } else {
-        this.errors = result.getErrors();
-      }
-
-      const redirect = result.getRedirect();
-      if (redirect) {
-        setTimeout(() => {
-          return this.router.navigateByUrl(redirect);
-        }, this.redirectDelay);
+        this.errors = result.getResponse().error.errors;
       }
       this.cd.detectChanges();
     });

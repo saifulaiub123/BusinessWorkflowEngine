@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   isEmailRequired: boolean = this.getConfigValue('forms.validation.email.required');
   isPasswordRequired: boolean = this.getConfigValue('forms.validation.password.required');
 
-  errors: string[] = [];
+  error: string = "";
   messages: string[] = [];
   user: ILoginUser = {};
   submitted: boolean = false;
@@ -83,28 +83,26 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    //this.user = this.loginForm.value;
-    this.errors = [];
+    this.error = "";
     this.messages = [];
     this.submitted = true;
     this.service.authenticate(this.strategy, this.loginForm.value).subscribe((result: NbAuthResult) => {
       this.submitted = false;
+      const redirect = result.getRedirect();
 
       if (result.isSuccess()) {
         localStorage.setItem("UserData",JSON.stringify(result.getResponse().body))
         this.messages = result.getMessages();
         this.user = result.getResponse().body;
         this.userStore.setUser(this.user);
-        //this.initUserService.initCurrentUser().subscribe();
-      } else {
-        this.errors = result.getErrors();
-      }
 
-      const redirect = result.getRedirect();
-      if (redirect) {
-        setTimeout(() => {
-          return this.router.navigateByUrl(redirect);
-        }, this.redirectDelay);
+        if (redirect) {
+          setTimeout(() => {
+            return this.router.navigateByUrl(redirect);
+          }, this.redirectDelay);
+        }
+      } else {
+        this.error = result.getResponse().error;
       }
       this.cd.detectChanges();
     });
