@@ -25,6 +25,9 @@ namespace BWE.Infrastructure.Configuration
             builder.Property(x => x.StatusId)
                .IsRequired()
                .HasMaxLength(10);
+            builder.Property(x => x.IsDeleted)
+               .HasDefaultValue(false);
+               
         }
     }
 }

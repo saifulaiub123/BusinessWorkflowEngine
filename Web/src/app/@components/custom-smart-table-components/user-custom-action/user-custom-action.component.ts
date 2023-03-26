@@ -23,6 +23,7 @@ export class UserCustomActionComponent implements OnInit {
   (
     private _dialogService: NbDialogService,
     private _tableSharedService: SmartTableSharedervice,
+    private _userSharedService: UserSharedService,
   ) { }
 
   ngOnInit() {
@@ -49,7 +50,7 @@ export class UserCustomActionComponent implements OnInit {
     .onClose.subscribe((isDelete: boolean) => {
       if(isDelete)
       {
-        this._tableSharedService.deleteScript(this.rowData);
+        this._userSharedService.deleteUser(this.rowData.id);
       }
     }
     );

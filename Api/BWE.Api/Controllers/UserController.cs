@@ -39,6 +39,7 @@ namespace BWE.Api.Controllers
         {
             var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role)
                 .Include(x => x.Status)
+                .Where(x=> !x.IsDeleted)
                 .ToListAsync();
             var result = _mapper.Map<List<UserViewModel>>(users);
             return Ok(result);

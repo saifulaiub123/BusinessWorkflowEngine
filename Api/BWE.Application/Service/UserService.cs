@@ -85,7 +85,7 @@ namespace BWE.Application.Service
             var exist = await _userRepository.GetUserById(id);
             if (exist != null)
             {
-                exist.StatusId = 0;
+                exist.IsDeleted = true;
                 await _userManager.UpdateAsync(exist);
             }
         }

@@ -9,6 +9,7 @@ namespace BWE.Domain.DBModel
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int StatusId { get; set; }
+        public bool IsDeleted { get; set; }
         public virtual ICollection<IdentityUserClaim<int>> Claims { get; set; }
         public virtual ICollection<IdentityUserLogin<int>> Logins { get; set; }
         public virtual ICollection<IdentityUserToken<int>> Tokens { get; set; }
