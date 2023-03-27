@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BWE.Application.IService;
@@ -9,7 +8,6 @@ using BWE.Domain.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using BWE.Application.Enum;
 using BWE.Domain.IEntity;
-using AutoMapper.QueryableExtensions;
 using AutoMapper;
 using Z.EntityFramework.Plus;
 

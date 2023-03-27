@@ -1,8 +1,5 @@
 ﻿using BWE.Api.Authentication;
-using BWE.Domain.DBModel;
 using Hangfire.Dashboard;
-using Microsoft.AspNetCore.Identity;
-using System.Data;
 
 namespace BWE.Api.Filter
 {

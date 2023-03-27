@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace BWE.Domain.Model
 {
     public class UpdateScriptModel

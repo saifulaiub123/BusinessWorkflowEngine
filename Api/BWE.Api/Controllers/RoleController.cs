@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BWE.Application.Enum;
-using BWE.Application.Response;
-using BWE.Domain.DBModel;
-using BWE.Domain.Model;
 
 namespace BWE.Api.Controllers
 {

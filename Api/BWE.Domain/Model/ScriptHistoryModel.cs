@@ -1,5 +1,4 @@
 ﻿using BWE.Domain.DBModel;
-using System;
 
 namespace BWE.Domain.Model
 {

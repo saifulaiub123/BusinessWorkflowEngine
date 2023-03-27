@@ -4,10 +4,6 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using BWE.Domain.Constant;
 using BWE.Domain.DBModel;
-using BWE.Domain.Model;
-using Microsoft.AspNetCore.Identity;
-using Azure.Core;
-using System.Data;
 
 namespace BWE.Api.Authentication
 {

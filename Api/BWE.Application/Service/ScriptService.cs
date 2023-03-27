@@ -7,9 +7,7 @@ using BWE.Domain.IRepository;
 using BWE.Domain.Model;
 using BWE.Domain.UnitOfWork;
 using BWE.Domain.ViewModel;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Cryptography.X509Certificates;
 
 namespace BWE.Application.Service
 {

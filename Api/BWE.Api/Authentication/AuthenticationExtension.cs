@@ -18,7 +18,6 @@ namespace BWE.Api.Authentication
 
             services.AddIdentity<ApplicationUser, Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            //.AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -60,19 +59,6 @@ namespace BWE.Api.Authentication
                         ValidateLifetime = true
                     };
                 });
-
-                //services.AddIdentity<ApplicationUser, Role>(options =>
-                //{
-                //    options.Password.RequiredLength = 4;
-                //    options.Password.RequireDigit = false;
-                //    options.Password.RequireUppercase = false;
-
-                //    options.Password.RequireLowercase = false;
-                //    options.Password.RequireNonAlphanumeric = false;
-                //    options.Password.RequiredUniqueChars = 0;
-                //})
-                //.AddEntityFrameworkStores<ApplicationDbContext>()
-                //.AddDefaultTokenProviders();
             return services;
         }
     }

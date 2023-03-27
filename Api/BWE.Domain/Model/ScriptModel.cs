@@ -1,6 +1,4 @@
 ﻿
-using BWE.Domain.DBModel;
-
 namespace BWE.Domain.Model
 {
     public class ScriptModel

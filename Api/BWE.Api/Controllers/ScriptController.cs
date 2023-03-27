@@ -1,5 +1,4 @@
-﻿using BWE.Application.Helper;
-using BWE.Application.IHelper;
+﻿using BWE.Application.IHelper;
 using BWE.Application.IService;
 using BWE.Domain.Constant;
 using BWE.Domain.IEntity;
@@ -8,11 +7,6 @@ using BWE.Domain.ViewModel;
 using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
-using System.Management.Automation;
-using System.Management.Automation.Runspaces;
-using System.Security;
-using System.Text;
 
 namespace BWE.Api.Controllers
 {

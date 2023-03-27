@@ -5,7 +5,6 @@ using BWE.Domain.DBModel;
 using BWE.Domain.IRepository;
 using BWE.Domain.Model;
 using BWE.Domain.ViewModel;
-using Microsoft.AspNetCore.Hosting.Server;
 
 namespace BWE.Application.Service
 {

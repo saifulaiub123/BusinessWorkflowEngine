@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BWE.Domain.DBModel;
 using BWE.Domain.IRepository;
-using BWE.Domain.ViewModel;
 using BWE.Infrastructure.DBContext;
 
 namespace BWE.Infrastructure.Repository

@@ -3,11 +3,6 @@ using BWE.Domain.IRepository;
 using BWE.Domain.UnitOfWork;
 using BWE.Infrastructure.DBContext;
 using BWE.Infrastructure.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BWE.Infrastructure.UnitOfWork
 {

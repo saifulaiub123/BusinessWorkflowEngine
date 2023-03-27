@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using BWE.Domain.Constant;
-using BWE.Domain.DBModel;
 using BWE.Domain.IEntity;
 
 namespace BWE.Domain.Model
