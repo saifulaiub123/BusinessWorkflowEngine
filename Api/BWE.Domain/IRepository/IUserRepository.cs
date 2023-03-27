@@ -1,5 +1,4 @@
 ﻿using BWE.Domain.DBModel;
-using BWE.Domain.ViewModel;
 
 namespace BWE.Domain.IRepository
 {
@@ -12,6 +11,5 @@ namespace BWE.Domain.IRepository
         Task DeleteUserRole(UserRole userRole);
         Task AddUserRole(UserRole userRole);
         Task UpdateUserRole(UserRole userRole);
-        //Task UpdateUser(ApplicationUser user);
     }
 }

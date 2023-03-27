@@ -11,11 +11,6 @@ namespace BWE.Application.Helper
     {
         public static string EncodePassword(string password)
         {
-
-            //byte[] encData_byte = new byte[password.Length];
-            //encData_byte = System.Text.Encoding.UTF8.GetBytes(password);
-            //string encodedData = Convert.ToBase64String(encData_byte);
-            //return encodedData;
             string EncryptionKey = "MAKV2SPBNI99212";
             byte[] clearBytes = Encoding.Unicode.GetBytes(password);
             using (Aes encryptor = Aes.Create())

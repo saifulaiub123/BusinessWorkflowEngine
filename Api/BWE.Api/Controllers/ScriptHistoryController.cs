@@ -1,12 +1,6 @@
-﻿using BWE.Application.IHelper;
-using BWE.Application.IService;
-using BWE.Domain.Constant;
+﻿using BWE.Application.IService;
 using BWE.Domain.IEntity;
-using BWE.Domain.Model;
-using BWE.Domain.ViewModel;
-using Hangfire;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BWE.Api.Controllers

@@ -7,19 +7,14 @@ using BWE.Api.Dependency;
 using BWE.Api.Middleware;
 using BWE.Application.Dependency;
 using BWE.Domain.Constant;
-using BWE.Domain.DBModel;
 using BWE.Domain.Mapping;
 using BWE.Infrastructure.Dependency;
 using BWE.Infrastructure.DBContext;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Hangfire;
 using BWE.Domain.Settings;
-using Hangfire.Dashboard;
-using BWE.Api.Filter;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.CookiePolicy;
 
 namespace BWE.Api

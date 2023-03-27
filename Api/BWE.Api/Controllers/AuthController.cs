@@ -81,17 +81,6 @@ namespace BWE.Api.Controllers
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var token = await _jwtExt.GetToken(user, userRoles);
-            //var cookieOptions = new CookieOptions()
-            //{
-            //    HttpOnly = false,
-            //    IsEssential = true,
-            //    Secure = false,
-            //    SameSite = SameSiteMode.None,
-            //    Domain = "localhost", //using https://localhost:44340/ here doesn't work
-            //    Expires = DateTime.UtcNow.AddDays(1)
-            //};
-
-            //Response.Cookies.Append("HangFireCookie", token, cookieOptions);
             return Ok(new LoginResponse()
             {
                 Token = token,
@@ -99,7 +88,6 @@ namespace BWE.Api.Controllers
                 FirstName = user.FirstName,
                 LastName= user.LastName,
                 Email = user.Email,
-                //Role = string.Join(",",userRoles.ToList())
                 Role = userRoles.ToList()
             });
         }

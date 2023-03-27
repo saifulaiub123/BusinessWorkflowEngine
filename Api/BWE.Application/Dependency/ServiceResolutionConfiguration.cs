@@ -3,13 +3,10 @@ using BWE.Application.IHelper;
 using BWE.Application.IService;
 using BWE.Application.Mail;
 using BWE.Application.Service;
-using BWE.Domain.Constant;
 using BWE.Domain.IEntity;
-using BWE.Domain.Settings;
 using BWE.Domain.UnitOfWork;
 using BWE.Infrastructure.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
 
 namespace BWE.Application.Dependency
 {
