@@ -14,6 +14,7 @@ import { EMAIL_PATTERN } from '../../../@core/const/constants';
 import { InitUserService } from '../../../@theme/services/init-user.service';
 import { UserStore } from '../../../@core/stores/user.store';
 import { ILoginUser } from '../../../@core/interfaces/common/ILoginUser';
+import { AuthService } from '../../../@core/services/auth.service';
 
 @Component({
   selector: 'ngx-login',
@@ -52,6 +53,7 @@ export class LoginComponent implements OnInit {
     protected router: Router,
     protected initUserService: InitUserService,
     protected userStore: UserStore,
+    protected _authServie: AuthService,
     ) {
       this.service.getToken().subscribe((data : any) =>
         {
@@ -86,6 +88,10 @@ export class LoginComponent implements OnInit {
     this.error = "";
     this.messages = [];
     this.submitted = true;
+    this._authServie.login(this.loginForm.value).subscribe((data) => {
+      this.submitted = false;
+
+    })
     this.service.authenticate(this.strategy, this.loginForm.value).subscribe((result: NbAuthResult) => {
       this.submitted = false;
       const redirect = result.getRedirect();

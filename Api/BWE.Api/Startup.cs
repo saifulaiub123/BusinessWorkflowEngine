@@ -21,6 +21,8 @@ using Hangfire.Dashboard;
 using BWE.Api.Filter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.CookiePolicy;
+using System;
+using Hangfire.SqlServer;
 
 namespace BWE.Api
 {
@@ -56,7 +58,12 @@ namespace BWE.Api
                 options => options.UseSqlServer(Configuration.GetConnectionString(ConfigOptions.DbConnName),
                             options => options.EnableRetryOnFailure())
                 );
-            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString(ConfigOptions.DbConnName)));
+            services.AddHangfire(x => 
+                x.UseSqlServerStorage(Configuration.GetConnectionString(ConfigOptions.DbConnName),
+                new SqlServerStorageOptions
+                {
+                    PrepareSchemaIfNecessary = true
+                }));
             services.AddHangfireServer();
 
             services.AddServices();
@@ -116,8 +123,9 @@ namespace BWE.Api
             services.AddSingleton(Configuration.GetSection(ConfigOptions.MailSettingsConfigName).Get<MailSettings>());
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext dbContext)
         {
+            //dbContext.Database.Migrate();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
